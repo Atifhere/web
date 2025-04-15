@@ -1,0 +1,283 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+  scroll-behavior: smooth;
+}
+#toast-container {
+  opacity:1;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+body {
+  height: 100%;
+  min-height: 100vh;
+  background-color: white;
+  background-image: linear-gradient(to bottom, white, #224abe);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: 'font-family: Roboto, "Helvetica Neue", sans-serif';
+}
+
+/* 
+mat-card{
+    margin-top: 1%;
+    text-align: left;
+    width: 98%;
+    margin-left: 1%;
+    border: 1px solid #ccc;
+}
+mat-card{
+    margin: 2%;
+    text-align: left;
+    width: 50%;
+    margin-left: 25%;
+    border: 1px solid #ccc;
+} */
+
+.mat-mdc-form-field {
+  width: 98%;
+  margin: 1%;
+}
+
+.mat-50 {
+  width: 48%;
+  margin: 1%;
+}
+
+.div-50 {
+  width: 48%;
+  margin: 1%;
+  display: inline;
+}
+
+.mat-mdc-raised-button {
+  width: 98%;
+}
+
+button {
+  margin: 2px;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  color: rgb(82, 92, 86);
+  text-transform: uppercase;
+  font-weight: 450;
+}
+
+.mat-mdc-row:nth-child(even) {
+  background-color: #e2dff4 !important;
+  color: rgb(75, 42, 19);
+  font-weight: 450;
+  text-transform: uppercase;
+}
+
+.MatCard{
+  padding: 2px;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  text-align: left;
+  width: 90%;
+  margin-left: 5%;
+  border: 0.25px solid lightgrey;
+  border-radius: 20px;
+}
+
+
+.table-header {
+  border-top-left-radius: 5%;
+  background-color: #004a9f;
+  color: white;
+  text-transform: uppercase;
+}
+
+
+
+.mat-mdc-raised-button {
+  width: auto;
+}
+
+.table-header {
+  border-top-left-radius: 5%;
+  background-color: #004a9f;
+  color: white;
+  text-transform: uppercase;
+}
+
+.empty-state__message {
+  color: #38a169;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 0.85rem;
+  text-align: center;
+  margin-bottom: 1%;
+}
+
+.empty-state__help {
+  color: #a2a5b9;
+  font-size: 0.875rem;
+  text-align: center;
+  margin-bottom: 1%;
+}
+
+
+
+.table-container {
+  border-radius: 12px;
+  overflow: auto;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.styled-table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.mat-header-row {
+  background-color: #004a9f;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.mat-header-cell, .mat-cell {
+  padding: 14px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mat-row:hover {
+  background-color: #f5f9ff;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.action-buttons mat-icon {
+  cursor: pointer;
+  color: #004a9f;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.action-buttons mat-icon:hover {
+  color: #003571;
+  transform: scale(1.2);
+}
+
+.delete-icon {
+  color: red !important;
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  margin-top: 20px;
+}
+
+.empty-state__message {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.empty-state__help {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+
+.company-list-header {
+  background-color: #f4f7fb;
+  padding: 16px 24px;
+  border-bottom: 1px solid #dce3ed;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.add-button {
+  background-color: #004a9f !important;
+  color: #fff;
+  font-weight: 500;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #003571 !important;
+}
+
+.mat-row:hover td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.mat-row:hover td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.company-select {
+  width: 50%;
+}
+
+.add-button {
+  margin-left: auto;
+}
+
+.action-buttons mat-icon {
+  margin-right: 8px;
+  cursor: pointer;
+  color: #3f51b5;
+}
+
+.delete-icon {
+  color: red !important;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #666;
+}
+

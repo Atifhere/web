@@ -1,0 +1,63 @@
+<form [formGroup]="companyForm" (ngSubmit)="SaveCompany()">
+  <mat-card>
+    <mat-card-header>
+      <h1>{{ companyName != null ? companyName.toUpperCase() : "" }}</h1>
+      <br />
+    </mat-card-header>
+    <div class="MatCard">
+      <mat-card-content>
+        <h2>{{ Title }}</h2>
+        <mat-form-field>
+          <mat-label>Branch Name</mat-label>
+          <input formControlName="branchName" matInput />
+        </mat-form-field>
+
+        <mat-form-field class="">
+          <mat-label>Branch Address</mat-label>
+          <input formControlName="address" matInput />
+        </mat-form-field>
+
+        <!-- <mat-form-field class="mat-50">
+          <mat-label>Email Address</mat-label>
+          <input formControlName="email" matInput />
+        </mat-form-field> -->
+
+        <mat-form-field class="mat-50">
+          <mat-label>Mobile Number</mat-label>
+          <input formControlName="mobileNumber" matInput />
+        </mat-form-field>
+
+        <mat-form-field class="mat-50">
+          <mat-label>Arabic Name</mat-label>
+          <input formControlName="arabicName" matInput />
+        </mat-form-field>
+
+        <mat-form-field class="mat-50">
+          <mat-label>Land line Number</mat-label>
+          <input formControlName="phoneNumber" matInput />
+        </mat-form-field>
+
+        <div class="div-50">
+          <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <div class="div-50">
+          <button type="submit" mat-raised-button color="primary">Save</button>
+        </div>
+
+        <div class="div-50">
+          <a
+            class="mat-button"
+            (click)="Cancel()"
+            mat-raised-button
+            color="accent"
+          >
+            Cancel</a
+          >
+        </div>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</form>

@@ -1,0 +1,35 @@
+.mat-mdc-raised-button {
+    width: auto;
+  }
+  
+  .table-header {
+    border-top-left-radius: 5%;
+    background-color: #604ff7;
+    color: white;
+    text-transform: uppercase;
+  }
+  
+  .empty-state__message {
+    color: #38a169;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 0.85rem;
+    text-align: center;
+    margin-bottom: 1%;
+  }
+  
+  .empty-state__help {
+    color: #a2a5b9;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-bottom: 1%;
+  }
+  
+
+  .Addrecord{
+    margin-left: auto; margin-top: 1%; background-color: rgb(89, 86, 242);
+  }
+
+  .matColor{
+    background-color: rgb(233, 235, 239);
+  }

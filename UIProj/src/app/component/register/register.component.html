@@ -1,0 +1,198 @@
+<div class="container">
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+    <div class="col-xl-10 col-lg-12 col-md-9">
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image">
+            </div> -->
+            <div class="col-lg-12">
+              <form [formGroup]="regForm" (ngSubmit)="Register()">
+                <mat-card>
+                  <mat-card-content>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        padding-left: 1%;
+                        padding-right: 1%;
+                      "
+                    >
+                      <h1
+                        class="h4 text-gray-900 mb-4"
+                        style="display: flex; justify-content: start"
+                      >
+                        REGISTER
+                      </h1>
+                      <svg
+                        style="display: flex; justify-content: end"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="35px"
+                        viewBox="0 -960 960 960"
+                        width="35px"
+                        fill="#5f6368"
+                      >
+                        <path
+                          d="M140-160q-24.75 0-42.37-17.63Q80-195.25 80-220v-34q0-34 17-62.5t51-43.5q72-32 132-46t120-14q14 0 29 .75t27 2.25q12.12 1.55 20.56 11.64 8.44 10.08 6.44 22.5-2 10.86-11.5 18.36T450-358q-14-1-27-1.5t-23-.5q-58 0-105.5 10.5T172-306q-17 8-24.5 23t-7.5 29v34h319q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5H140Zm485-68 192-192q9-9 21-9t21 9q9 9 9 21t-9 21L646-165q-9 9-21 9t-21-9l-99-99q-9-9-9-21t9-21q9-9 21-9t21 9l78 78ZM400-482q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42Zm45 248Zm-45-308q39 0 64.5-25.5T490-632q0-39-25.5-64.5T400-722q-39 0-64.5 25.5T310-632q0 39 25.5 64.5T400-542Zm0-90Z"
+                        />
+                      </svg>
+                    </div>
+
+                    @if(showError) {
+                    <div class="text-center">
+                      <span class="text-danger">Login Failed</span>
+                    </div>
+                    }
+                    <mat-form-field>
+                      <mat-label><small><b>Email</b></small></mat-label>
+                      <input
+                        formControlName="email"
+                        class="form-control"
+                        matInput
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-50">
+                      <mat-label><small><b>First Name</b></small></mat-label>
+                      <input
+                        formControlName="firstName"
+                        class="form-control"
+                        matInput
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-50">
+                      <mat-label><small><b>Last Name</b></small></mat-label>
+                      <input
+                        formControlName="lastName"
+                        class="form-control"
+                        matInput
+                      />
+                    </mat-form-field>
+                    <!-- <mat-form-field>
+                      <mat-label>UserName</mat-label>
+                      <input
+                        formControlName="userName"
+                        class="form-control"
+                        matInput
+                      />
+                    </mat-form-field> -->
+                    <mat-form-field class="mat-50">
+                      <mat-label><small><b>Password</b></small></mat-label>
+                      <input
+                        formControlName="password"
+                        class="form-control"
+                        matInput type="password"
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-50">
+                      <mat-label><small><b>Confirm Password</b></small></mat-label>
+                      <input
+                        formControlName="confirmPassword"
+                        class="form-control"
+                        matInput
+                        type="password"
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label><small><b>Phone</b></small></mat-label>
+                      <input
+                        formControlName="phone"
+                        class="form-control"
+                        matInput
+                      />
+                    </mat-form-field>
+
+                    <mat-card-actions
+                      style="display: flex; justify-content: end"
+                    >
+                      <div style="display: flex; justify-content: start">
+                        <button type="submit" mat-raised-button color="primary">
+                          Register
+                        </button>
+                      </div>
+
+                      <div style="display: flex; justify-content: end">
+                        <a
+                          class="mat-button"
+                          routerLink="/login"
+                          mat-raised-button
+                          color="accent"
+                        >
+                          Cancel</a
+                        >
+                      </div>
+                    </mat-card-actions>
+                  </mat-card-content>
+                </mat-card>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <form [formGroup]="regForm" (ngSubmit)="Register()">
+      <mat-card>
+        <mat-card-header>
+          <h1>User Registeration</h1>
+        </mat-card-header>
+
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>UserName</mat-label>
+            <input formControlName="userName"  class="form-control"  matInput />
+          </mat-form-field>
+
+          <mat-form-field class="mat-50">
+            <mat-label>Password</mat-label>
+            <input formControlName="password"  class="form-control"  matInput />
+          </mat-form-field>
+
+          <mat-form-field class="mat-50">
+            <mat-label>Confirm Password</mat-label>
+            <input formControlName="confirmPassword"  class="form-control"  matInput />
+          </mat-form-field>
+
+          <mat-form-field class="mat-50">
+            <mat-label>Name</mat-label>
+            <input formControlName="name"  class="form-control"  matInput />
+          </mat-form-field>
+
+          <mat-form-field class="mat-50">
+            <mat-label>Email</mat-label>
+            <input formControlName="email"  class="form-control"  matInput />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Phone</mat-label>
+            <input formControlName="phone"  class="form-control"  matInput />
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <div class="div-50">
+            <button type="submit" mat-raised-button color="primary">
+              Register
+            </button>
+          </div>
+
+          <div class="div-50">
+            <a
+              class="mat-button"
+              routerLink="/login"
+              mat-raised-button
+              color="accent"
+            >
+              Cancel</a
+            >
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </form> -->

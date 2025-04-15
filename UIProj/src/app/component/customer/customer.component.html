@@ -1,0 +1,87 @@
+<mat-card>
+  <mat-card-header>
+    <h1>Customer Listing</h1>
+    @if(permission.haveadd) {
+    <button
+      style="margin-left: auto"
+      mat-raised-button
+      color="primary"
+      routerLink="/customer/Add"
+    >
+      Add Customer
+    </button>
+    }
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+        <td mat-cell *matCellDef="let element">{{ element.code }}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+        <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="creditlimit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Credit Limit</th>
+        <td mat-cell *matCellDef="let element">{{ element.creditlimit }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="taxcode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>taxcode</th>
+        <td mat-cell *matCellDef="let element">{{ element.taxcode }}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          @if(permission.haveedit) {
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="Edit(element.id)"
+          >
+            Edit
+          </button>
+          } @if(permission.havedelete) {
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="Delete(element.id)"
+          >
+            Delete
+          </button>
+          }
+        </td>
+      </ng-container>
+      <tr
+        class="table-header"
+        mat-header-row
+        *matHeaderRowDef="displayedColumns"
+      ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card-content>
+  <br />
+
+  <mat-card-footer>
+    <mat-paginator
+      [pageSizeOptions]="[10, 20, 50]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-footer>
+</mat-card>

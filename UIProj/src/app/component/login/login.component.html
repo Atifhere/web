@@ -1,0 +1,316 @@
+<header>
+  <h2 class="logo-text">Manage <span class="highlight">Salons</span></h2>
+  <nav>
+    <a style="cursor: pointer" (click)="scrollToSection('features')"
+      >Features</a
+    >
+    <a style="cursor: pointer" (click)="scrollToSection('pricing')">Pricing</a>
+    <a style="cursor: pointer" (click)="scrollToSection('contact')">Contact</a>
+    <!-- <a style="cursor: pointer" href="privacy">Privacy</a> -->
+  </nav>
+</header>
+
+<div class="hero-section py-15 py-md-5">
+  <div class="" style="padding-left: 6%; padding-right: 6%">
+    <div class="row align-items-center gx-5">
+      <!-- Logo / Illustration -->
+      <div class="col-md-5 text-center mb-5 mb-md-0">
+        <img
+          src="assets/images/AppLogo.png"
+          alt="Manage Salons Logo"
+          class="img-fluid hero-img animate-float"
+        />
+      </div>
+
+      <!-- Content -->
+      <div class="col-md-7 text-md-start text-center">
+        <span class="slogan d-inline-block mb-3 text-uppercase"
+          >Track. Manage. Grow.</span
+        >
+        <h3 class="display-3 fw-bold text-flash mb-4">
+          Welcome to <span class="gradient-text">Manage Salons</span>
+        </h3>
+        <p class="lead text-muted mb-4">
+          Optimize your salon’s operations, elevate team performance, and scale
+          your business seamlessly — all within a sleek, modern platform.
+        </p>
+        <!-- <a href="#get-started" class="btn btn-primary btn-lg px-4 shadow-lg rounded-pill cta-btn" style="width: 100%;">
+          Get Started
+        </a> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Combined Login + Features Section -->
+<section class="login-features-section" id="features">
+  <div class="login-features-container">
+    <div class="features-list-card">
+      <h2 class="feature-title">Key Features</h2>
+      <ul>
+        <!-- <li>Create and manage salon company profiles</li> -->
+        <li class="animate-slide-in">
+          Manage company branches under a unified system and Live activity
+          tracking of all on-duty employees
+        </li>
+        <li class="animate-slide-in">
+          Rich Mobile app for staff to log daily work and track their own work
+          to meet the targets
+        </li>
+        <li class="animate-slide-in">
+          Real-time employee performance and productivity dashboard
+        </li>
+        <li class="animate-slide-in">
+          Analyze best-performing services and top employees across all branches
+          seamlessly
+        </li>
+        <li class="animate-slide-in">
+          Business dashboard with detailed, real-time earnings insights
+        </li>
+      </ul>
+    </div>
+    <div class="login-card">
+      <h2 class="feature-title">Access Your Salon Management Dashboard</h2>
+      <form class="user" [formGroup]="loginForm" (ngSubmit)="Login()">
+        <mat-form-field appearance="fill" class="w-100 mb-3">
+          <mat-label>Username</mat-label>
+          <input formControlName="userName" class="form-control" matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100 mb-3">
+          <mat-label>Password</mat-label>
+          <input
+            formControlName="password"
+            class="form-control"
+            matInput
+            type="password"
+          />
+        </mat-form-field>
+
+        <mat-card-actions class="d-flex justify-content-center">
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            style="width: 100%"
+          >
+            Sign In to Your Account
+          </button>
+        </mat-card-actions>
+      </form>
+
+      <div class="text-center mt-4">
+        <span>Don’t have an account? </span>
+        <a routerLink="/register">Create one here</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="owner-dashboard-section">
+  <div class="container">
+    <h2 class="section-title">Rich Dashboard Features</h2>
+    <div class="features-grid">
+      <div class="feature-card animate-slide-in">
+        <h3>Top-Performing Employees</h3>
+        <p>Monitor top-performing employees for the day and month.</p>
+      </div>
+      <div class="feature-card animate-slide-in delay-1">
+        <h3>Real-Time Updates</h3>
+        <p>
+          Receive real-time updates on employee activities and service logs.
+        </p>
+      </div>
+      <div class="feature-card animate-slide-in delay-2">
+        <h3>Service Insights</h3>
+        <p>Gain insights into the most popular and high-revenue services.</p>
+      </div>
+      <div class="feature-card animate-slide-in delay-3">
+        <h3>Underperforming Services</h3>
+        <p>Identify underperforming services for strategic improvement.</p>
+      </div>
+      <div class="feature-card animate-slide-in delay-4">
+        <h3>Branch Performance</h3>
+        <p>Analyze branch-wise performance to highlight top achievers.</p>
+      </div>
+      <div class="feature-card animate-slide-in delay-5">
+        <h3>Revenue Tracking</h3>
+        <p>
+          Track daily and monthly revenue with comprehensive earning reports.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing-section">
+  <div class="container">
+    <h2 class="section-title">Affordable Pricing</h2>
+    <p class="section-subtitle">
+      Premium salon management at a price that fits your budget—maximize
+      productivity, minimize costs.
+    </p>
+
+    <div class="pricing-cards">
+      <div class="pricing-card fade-in">
+        <h3 class="pricing-title">For All Salon Sizes</h3>
+        <p>
+          Flexible pricing tailored to fit single or multi-branch salons—scale
+          as you grow.
+        </p>
+      </div>
+      <div class="pricing-card fade-in delay-1">
+        <h3 class="pricing-title">Powerful, Yet Affordable</h3>
+        <p>
+          Access top-tier features like real-time analytics and mobile control
+          at unbeatable rates.
+        </p>
+      </div>
+      <div class="pricing-card fade-in delay-2">
+        <h3 class="pricing-title">Transparent & Value-Packed</h3>
+        <p>
+          Professional-grade tools without hidden costs—just clear, honest
+          pricing.
+        </p>
+      </div>
+      <div class="pricing-card fade-in delay-3">
+        <h3 class="pricing-title">Cost-Efficient Growth</h3>
+        <p>
+          Boost efficiency and cut expenses with a platform designed to scale
+          affordably.
+        </p>
+      </div>
+      <div class="pricing-card fade-in delay-3">
+        <h3 class="pricing-title">Monthly Plan</h3>
+        <p>
+          We have monthly payment plan, Enjoy bunch of benefits with Monthly
+          plan. Click
+          <a routerLink="/register" style="color: blue; font-style: italic">
+            here</a
+          >
+          to get started
+        </p>
+      </div>
+      <div class="pricing-card fade-in delay-3">
+        <h3 class="pricing-title">Yearly Plan</h3>
+        <p>
+          We have monthly payment plans, Enjoy all benefits with yearly plan
+          with extra <strong> 25% discount</strong>. Click
+          <a routerLink="/register" style="color: blue; font-style: italic">
+            here</a
+          >
+          to get started
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Include in index.html if not already -->
+<br />
+<br />
+<section
+  id="contact"
+  class="contact-section py-5"
+  style="background: linear-gradient(to right, #eef2ff, #e0e7ff)"
+>
+  <div class="container px-4 px-md-5">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="text-muted">
+        We’d love to hear from you. Reach out to us anytime.
+      </p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm">
+          <div class="row gy-4">
+            <!-- Email -->
+            <div class="col-md-6 d-flex align-items-start mb-4">
+              <div class="col-md-4 d-flex align-items-start">
+                <h6 class="fw-semibold mb-1">
+                  <i
+                    class="bi bi-envelope-fill text-primary fs-4 me-3 mr-2"
+                  ></i>
+                  Email:
+                </h6>
+              </div>
+              <div class="col-md-8 d-flex align-items-start">
+                <strong class="mb-0 text-muted">{{ email }}</strong>
+              </div>
+            </div>
+
+            <!-- Contact Person -->
+            <div class="col-md-6 d-flex align-items-start mb-4">
+              <div class="col-md-4 d-flex align-items-start">
+                <h6 class="fw-semibold mb-1">
+                  <i class="bi bi-person-fill text-primary fs-4 me-3 mr-2"> </i
+                  >Contact Person:
+                </h6>
+              </div>
+              <div class="col-md-8 d-flex align-items-start">
+                <strong class="mb-0 text-muted">{{ contactPerson }}</strong>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="col-md-6 d-flex align-items-start mb-3">
+              <div class="col-md-4 d-flex align-items-start">
+                <h6 class="fw-semibold mb-1">
+                  <i class="bi bi-telephone-fill text-primary fs-4 me-3 mr-2">
+                  </i
+                  >Phone:
+                </h6>
+              </div>
+              <div class="col-md-8 d-flex align-items-start">
+                <strong class="mb-0 text-muted">{{ contactNumber }}</strong>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="col-md-6 d-flex align-items-start mb-3">
+              <div class="col-md-4 d-flex align-items-start">
+                <h6 class="fw-semibold mb-1">
+                  <i class="bi bi-geo-alt-fill text-primary fs-4 me-3 mr-2"> </i
+                  >Address:
+                </h6>
+              </div>
+              <div class="col-md-8 d-flex align-items-start">
+                <strong class="mb-0 text-muted">{{ address }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-section">
+    <h3>About</h3>
+    <ul>
+      <li><a href="#">Company</a></li>
+      <li><a href="#">Team</a></li>
+      <li><a href="#">Careers</a></li>
+    </ul>
+  </div>
+  <div class="footer-section">
+    <h3>Quick Links</h3>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#privacy">Privacy Policy</a></li>
+    </ul>
+  </div>
+  <div class="footer-section">
+    <h3>Contact</h3>
+    <ul>
+      <li>Email: atifshahzadheregmail.com</li>
+      <li>Phone: +91-553772347</li>
+      <li>Address: Abu Dhabi City, Building C-31</li>
+    </ul>
+  </div>
+  <div class="copy">&copy; 2025 Manage Salons. All rights reserved.</div>
+</footer>

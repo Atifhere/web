@@ -1,0 +1,59 @@
+<form [formGroup]="roleForm" (ngSubmit)="SaveRoles()">
+  <mat-card>
+    <mat-card-header>
+      <h1>User Role assignment</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Select User Role</mat-label>
+        <mat-select formControlName="userRole" (selectionChange)="RoleChange($event)">
+          @for(item of rolesList; track item) {
+          <mat-option value="{{ item.code }}">{{ item.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-card>
+        <mat-card-content>
+          <table style="width: 100%" formArrayName="access">
+            <thead>
+              <tr>
+                <th>Menu Name</th>
+                <th>Can View</th>
+                <th>Can Add</th>
+                <th>Can Update</th>
+                <th>Can Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of GetRows.controls; let i = index"
+                [formGroupName]="i">
+                <td>
+                  {{ item.value.menucode }}
+                </td>
+                <td>
+                  <mat-checkbox formControlName="haveview"></mat-checkbox>
+                </td>
+                <td>
+                  <mat-checkbox formControlName="haveadd"></mat-checkbox>
+                </td>
+                <td>
+                  <mat-checkbox formControlName="haveedit"></mat-checkbox>
+                </td>
+                <td>
+                  <mat-checkbox formControlName="havedelete"></mat-checkbox>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card-actions>
+            <button type="submit" mat-raised-button color="primary">Save</button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</form>
