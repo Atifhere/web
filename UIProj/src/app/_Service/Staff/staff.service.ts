@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Staff } from '../../_model/staff.model';
+import { LatestTransactionDto } from '../../_model/Chart.modal';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,4 +32,8 @@ export class StaffService {
   DeleteStaff(id: string) {
     return this.http.delete(this.baseUrl + 'Remove?code=' + id);
   }
+  getLatestTransactions(): Observable<LatestTransactionDto[]> {
+    return this.http.get<LatestTransactionDto[]>(`${this.baseUrl}GetLatestTransactions`);
+  }
+
 }

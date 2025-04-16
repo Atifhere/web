@@ -2,11 +2,13 @@ import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Company } from '../../_model/company.model';
 import { HttpClient } from '@angular/common/http';
+import { MonthlyRevenueChartDto } from '../../_model/Chart.modal';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
+  monthlyRevenueData: MonthlyRevenueChartDto[] = [];
 
   constructor(private http: HttpClient) { }
   baseUrl = environment.apiUrl + 'Company/';
@@ -44,4 +46,9 @@ export class CompanyService {
     // passing the token through http interceptor.
     return this.http.get<Company>(this.baseUrl + 'GetCompanyEarningSummary');
   }
+  
+  getMonthlyRevenue(){
+    return this.http.get<MonthlyRevenueChartDto[]>(this.baseUrl + 'GetChartRevenue');
+  }
+  
 }

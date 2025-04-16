@@ -73,7 +73,7 @@
             </div>
 
             <div class="mb-0 font-weight-bold text-gray-800">
-              @if(amountEarnedMonth) { {{ amountEarnedMonth }} } @else { 0} AED
+              @if(amountEarnedCurrentYear) { {{ amountEarnedCurrentYear }} } @else { 0} AED
             </div>
           </div>
           <div class="col-auto">
@@ -119,19 +119,70 @@
 </div>
 <!-- Bar Chart -->
 
-<div class="row">
+<div class="row" style="max-height: 500px;">
   <!-- Content Column -->
-  <div class="col-lg-6 mb-4">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Progress Graph</h6>
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm border-0 rounded-4">
+      <div
+        class="card-header py-3 rounded-top-4 text-white"
+        style="background: linear-gradient(to right, #4e73df, #224abe)"
+      >
+        <h6 class="m-0 fw-semibold">📊 Revenue Growth (Last 6 Months)</h6>
       </div>
-      <div class="card-body">
-        <div class="chart-bar">
-          <canvas id="barChart"></canvas>
+      <div class="card-body bg-light rounded-bottom-4">
+        <div class="chart-bar mb-2">
+          <canvas id="barChart" style="max-height: 320px"></canvas>
         </div>
-        <hr />
+        <hr class="my-2 align-items-center" />
+        @if(this.monthlyRevenueData.length >0) {
+        <p class="text-muted small mb-0">
+          Revenue trend over the last 6 months
+        </p>
+        } @else {
+        <b class="text-muted small mb-0">No Data found</b>
+        }
       </div>
+    </div>
+  </div>
+
+  <!-- latest-transactions.component.html -->
+  <div class="col-md-6 mb-2">
+    <div class="card shadow-sm border-0 rounded-4">
+    <div class="table-container dark-theme">
+      <h3 class="table-title">Latest Transactions</h3>
+      <table mat-table [dataSource]="transactions" class="mat-elevation-z8 custom-dark-table">
+    
+        <!-- Staff Name -->
+        <ng-container matColumnDef="staffName">
+          <th mat-header-cell *matHeaderCellDef>Employee</th>
+          <td mat-cell *matCellDef="let transaction">{{ transaction.staffName }}</td>
+        </ng-container>
+    
+        <!-- Branch Name -->
+        <ng-container matColumnDef="serviceName">
+          <th mat-header-cell *matHeaderCellDef>Service</th>
+          <td mat-cell *matCellDef="let transaction">{{ transaction.serviceName }}</td>
+        </ng-container>
+    
+        <!-- Service Fee -->
+        <ng-container matColumnDef="serviceFee">
+          <th mat-header-cell *matHeaderCellDef>Amt</th>
+          <td mat-cell *matCellDef="let transaction" class="currency">
+            {{ transaction.serviceFee | currency: 'AED ' }}
+          </td>
+        </ng-container>
+    
+        <!-- Time -->
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Time</th>
+          <td mat-cell *matCellDef="let transaction">{{ transaction.time | date: 'short' }}</td>
+        </ng-container>
+    
+        <!-- Rows -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
     </div>
   </div>
 </div>
