@@ -27,7 +27,7 @@ export class AppointmentsComponent {
       id: 1,
       customerName: 'Komal Atif',
       appointmentDate: '2025-04-24',
-      appointmentTimeSlot: '10:30:00', // string (hh:mm:ss)
+      appointmentTimeSlot: '18:30:00', // string (hh:mm:ss)
       customerPhone: '1234567890',
       hasArrived: true,
       BranchName: 'Branch A',
@@ -44,20 +44,21 @@ export class AppointmentsComponent {
     {
       id: 3,
       customerName: 'Shayan Atif',
-      appointmentDate: '2025-04-24',
-      appointmentTimeSlot: '10:30:00', // string (hh:mm:ss)
+      appointmentDate: '2025-04-25',
+      appointmentTimeSlot: '12:30:00', // string (hh:mm:ss)
       customerPhone: '1234567890',
       hasArrived: true,
       BranchName: 'Branch B',
     },
+    
     {
-      id: 6,
-      customerName: 'Rameen Atif',
+      id: 3,
+      customerName: 'Shayan Atif',
       appointmentDate: '2025-04-25',
-      appointmentTimeSlot: '14:00:00',
+      appointmentTimeSlot: '08:30:00', // string (hh:mm:ss)
       customerPhone: '1234567890',
-      hasArrived: false,
-      BranchName: 'Branch A',
+      hasArrived: true,
+      BranchName: 'Branch B',
     },
   ];
   handleEventClick(arg: EventClickArg): void {
