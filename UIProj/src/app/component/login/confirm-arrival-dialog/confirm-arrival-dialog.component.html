@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Confirm Arrival</h2>
+<mat-dialog-content>
+  <p>
+    Has <strong>{{ data.customerName }}</strong> arrived for their appointment at
+    <strong>{{ data.appointmentTime | date: 'shortTime' }}</strong>?
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="primary" (click)="confirmArrival()">
+    <mat-icon>check_circle</mat-icon>
+    Yes, Confirm
+  </button>
+  <button mat-stroked-button color="warn" (click)="close()">
+    <mat-icon>cancel</mat-icon>
+    No
+  </button>
+  <button mat-button (click)="close()">Cancel</button>
+</mat-dialog-actions>
+

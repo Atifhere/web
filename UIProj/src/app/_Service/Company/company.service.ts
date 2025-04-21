@@ -60,4 +60,18 @@ export class CompanyService {
     return this.http.get<DashboardInsightsDto>(`${this.baseUrl}GetDashboardStatistics`);
   }
 
+
+  getCompanyById(id: string): Observable<Company> {
+    return this.http.get<Company>(`${this.baseUrl}GetByCode?code=${id}`);
+  }
+
+  getAppointments(): Observable<any[]> {
+    return this.http.get<any[]>('/appointments');
+  }
+  getAppointmentDetails(appointmentId: string): Observable<any> {
+    return this.http.get<any>(`/api/appointments/${appointmentId}`);
+  }
+  markUserAsArrived(appointmentId: string): Observable<any> {
+    return this.http.post(`/api/appointments/${appointmentId}/arrived`, {});
+  }
 }

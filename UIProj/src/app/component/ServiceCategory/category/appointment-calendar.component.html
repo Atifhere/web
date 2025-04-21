@@ -1,0 +1,15 @@
+<div class="calendar-header">
+    <div class="header-content">
+      <div class="text-section">
+        <h1>📅 Appointment Calendar</h1>
+        <p>View and manage all upcoming salon appointments in one place. Click any date to add or review appointments effortlessly.</p>
+      </div>
+      <button mat-raised-button color="primary" (click)="onAddAppointmentClick()">
+        <mat-icon>add</mat-icon>
+        New Appointment
+      </button>
+    </div>
+  </div>
+<full-calendar [options]="calendarOptions"></full-calendar>
+<!-- <p>Selected Date: {{ selectedDate | date }}</p>
+<p>Selected Time: {{ selectedTime }}</p> -->

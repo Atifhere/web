@@ -16,7 +16,13 @@ import { DashboardInsightsDto } from '../../_model/Dashboard.modal';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAppointmentDialogComponent } from '../login/Appointments/add-appointment-dialog-component';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+
 
 Chart.register(...registerables);
 
@@ -29,6 +35,7 @@ Chart.register(...registerables);
 })
 export class HomeComponent implements OnInit {
   response: any;
+  myBarChart: any;
   amountEarnedToday!: number;
   amountEarnedMonth!: number;
   topPerformerMax: number = 0;
@@ -100,8 +107,11 @@ export class HomeComponent implements OnInit {
   RenderChart() {
     const labels = this.monthlyRevenueData.map((x) => x.monthLabel);
     const data = this.monthlyRevenueData.map((x) => x.revenue);
+    if (this.myBarChart) {
+      this.myBarChart.destroy();
+    }
 
-    const myBarChart = new Chart('barChart', {
+    this.myBarChart = new Chart('barChart', {
       type: 'bar',
       data: {
         labels: labels,
@@ -198,8 +208,9 @@ export class HomeComponent implements OnInit {
       (data1) => {
         this.insights = data1;
         console.log('getDashboardStatistics', this.insights);
-        this.topPerformerMax = Math.max(...this.insights.topPerformersTimeline.map(p => p.workedFor));
-
+        this.topPerformerMax = Math.max(
+          ...this.insights.topPerformersTimeline.map((p) => p.workedFor)
+        );
       },
       (error) => {
         console.error('Error fetching transactions', error);

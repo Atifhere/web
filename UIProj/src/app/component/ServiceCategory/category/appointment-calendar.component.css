@@ -1,0 +1,72 @@
+:host {
+    display: block;
+    padding: 1rem;
+  }
+  
+  .full-calendar {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  ::ng-deep .event-box {
+    background-color: #b4b1fa;
+    color: rgb(10, 10, 10);
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.3;
+    white-space: normal;
+  }
+  
+  ::ng-deep .event-time {
+    font-weight: 600;
+  }
+  
+  ::ng-deep .event-title {
+    font-size: 13px;
+  }
+
+  ::ng-deep .event-phone {
+    font-size: 11px;
+    color: #e0e0e0;
+    margin-top: 2px;
+  }
+
+  .calendar-header {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+  
+      .text-section {
+        max-width: 70%;
+  
+        h1 {
+          margin: 0;
+          font-size: 2rem;
+          font-weight: bold;
+        }
+  
+        p {
+          margin-top: 0.5rem;
+          font-size: 1rem;
+          opacity: 0.9;
+        }
+      }
+  
+      button {
+        margin-top: 1rem;
+        white-space: nowrap;
+      }
+    }
+  }
+  

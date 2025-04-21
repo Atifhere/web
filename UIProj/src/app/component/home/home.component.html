@@ -198,17 +198,20 @@
 
 <!-- Insights Marquee Section -->
 <div class="dashboard-marquee-container">
-  <div class="marquee" onmouseover="this.stop();" onmouseout="this.start();">
+  <div class="marquee">
     <div class="marquee-content">
-      <span>
-        🌟 <strong>Most Used Service:</strong> {{ insights.mostUsedService }} ({{ insights.mostUsedServiceCount }} times)
-      </span>
-      <span>
-        🔻 <strong>Least Used Service:</strong> {{ insights.leastUsedService }} ({{ insights.leastUsedServiceCount }} times)
-      </span>
-      <span>
-        🏆 <strong>Top Branch:</strong> {{ insights.bestPerformingBranch }}
-      </span>
+      @if(insights) {
+        <span>
+          🌟 <strong>Most Used Service:</strong> {{ insights.mostUsedService }} ({{ insights.mostUsedServiceCount }} times)
+        </span>
+        <span>
+          🔻 <strong>Least Used Service:</strong> {{ insights.leastUsedService }} ({{ insights.leastUsedServiceCount }} times)
+        </span>
+        <span>
+          🏆 <strong>Top Branch:</strong> {{ insights.bestPerformingBranch }}
+        </span>
+      } 
+     
     </div>
   </div>
 </div>
