@@ -5,6 +5,11 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../_Service/user.service';
 import { Login } from '../../_model/user.model';
 import { TokenService } from '../../_Service/token.service';
+import { AddAppointmentDialogComponent } from '../login/Appointments/add-appointment-dialog-component';
+import { MatDialog } from '@angular/material/dialog';
+import { Overlay } from '@angular/cdk/overlay';
+
+
 
 @Component({
   selector: 'app-login',
@@ -19,12 +24,13 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private Service: UserService,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private dialog: MatDialog,
+    private overlay: Overlay
   ) {}
 
   ngOnInit(): void {
     // localStorage.clear();
-    debugger
     this.tokenService.Logout();
     this.Service.menuList.set([]);
   }
@@ -82,5 +88,14 @@ export class LoginComponent implements OnInit {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
-
+  openAddAppointmentDialog(): void {
+    this.dialog.open(AddAppointmentDialogComponent, {
+      width: '700px',
+      maxHeight: '60vh',
+      autoFocus: false,             // Prevents scrolling caused by focus
+      restoreFocus: false,          // Prevents jumping back to previously focused element
+      scrollStrategy: this.overlay.scrollStrategies.reposition(), // Ensures it floats without affecting page scroll
+      position: { top: '10vh' }     // Optional: positions it below the top so it's always visible
+    });
+  }
 }

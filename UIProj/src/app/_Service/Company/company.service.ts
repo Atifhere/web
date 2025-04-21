@@ -2,7 +2,9 @@ import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Company } from '../../_model/company.model';
 import { HttpClient } from '@angular/common/http';
-import { MonthlyRevenueChartDto } from '../../_model/Chart.modal';
+import { LatestTransactionDto, MonthlyRevenueChartDto } from '../../_model/Chart.modal';
+import { Observable } from 'rxjs';
+import { DashboardInsightsDto } from '../../_model/Dashboard.modal';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +42,6 @@ export class CompanyService {
       this.baseUrl + 'Remove?code=' + code
     );
   }
-
   
   GetCompanyEarningSummary() {
     // passing the token through http interceptor.
@@ -51,4 +52,12 @@ export class CompanyService {
     return this.http.get<MonthlyRevenueChartDto[]>(this.baseUrl + 'GetChartRevenue');
   }
   
+  getDashboardInsights(): Observable<LatestTransactionDto[]> {
+    return this.http.get<LatestTransactionDto[]>(`${this.baseUrl}GetDashboardInsights`);
+  }
+
+  getDashboardStatistics(): Observable<DashboardInsightsDto> {
+    return this.http.get<DashboardInsightsDto>(`${this.baseUrl}GetDashboardStatistics`);
+  }
+
 }

@@ -10,7 +10,7 @@
   </nav>
 </header>
 
-<div class="hero-section py-15 py-md-5">
+<div class="hero-section">
   <div class="" style="padding-left: 6%; padding-right: 6%">
     <div class="row align-items-center gx-5">
       <!-- Logo / Illustration -->
@@ -18,7 +18,7 @@
         <img
           src="assets/images/AppLogo.png"
           alt="Manage Salons Logo"
-          style="border-radius: 50%;"
+          style="border-radius: 50%"
           class="img-fluid hero-img animate-float"
         />
       </div>
@@ -41,7 +41,66 @@
       </div>
     </div>
   </div>
+  <div class="appointment-dashboard-section mat-elevation-z2">
+    <div class="text-section">
+      <h2 class="section-title">Book Your Next Appointment</h2>
+      <div class="appointment-dashboard-section">
+        <div class="appointment-content">
+          <div class="appointment-text">
+            <div class="row">
+              <div class="col-md-9">
+                <h2>Welcome to Your Premier Salon Experience </h2>
+              </div>
+              <div class="col-md-3 align-items-end d-flex justify-content-end mb-3">
+                <button
+                mat-raised-button
+                color="primary"
+                (click)="openAddAppointmentDialog()"
+              >
+                Get Started
+              </button>
+              </div>
+            </div>
+           
+           
+            <p>
+              Effortless booking starts here. Select your preferred salon branch,
+              choose a convenient time slot, and leave the rest to us. Our expert
+              team is ready to deliver top-tier service tailored just for you.
+            </p>
+            <p>
+              Why wait in line or risk schedule conflicts? With our
+              <strong>easy online appointment system</strong>, you can
+              <strong>book your slot from the comfort of your home</strong>,
+              office, or even on the go.
+            </p>
+            <ul>
+              <li>✅ No more long waits</li>
+              <li>✅ No walk-in surprises</li>
+              <li>✅ Guaranteed availability</li>
+            </ul>
+            <p>
+              Secure your spot in seconds and enjoy a smooth, personalized salon
+              visit —
+              <strong>exactly when it works best for you</strong>. Your time is
+              valuable — let us help you make the most of it.
+            </p>
+         
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="image-section">
+      <img
+        src="assets/images/appointment.png"
+        width="50%"
+        height="50%"
+        alt="Appointment Booking"
+      />
+    </div>
+  </div>
 </div>
+
 
 <!-- Combined Login + Features Section -->
 <section class="login-features-section" id="features">

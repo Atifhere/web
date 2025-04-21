@@ -47,7 +47,6 @@ export class CompanyComponent implements OnInit {
     private toastr: ToastrSrvc
   ) {}
   ngOnInit() {
-    debugger
     this.LoadCompanies();
     this.SetAccess();
     localStorage.setItem('CompanyToAddBranch', '');

@@ -32,8 +32,12 @@ export class StaffService {
   DeleteStaff(id: string) {
     return this.http.delete(this.baseUrl + 'Remove?code=' + id);
   }
+
   getLatestTransactions(): Observable<LatestTransactionDto[]> {
     return this.http.get<LatestTransactionDto[]>(`${this.baseUrl}GetLatestTransactions`);
   }
 
+
+
+  
 }

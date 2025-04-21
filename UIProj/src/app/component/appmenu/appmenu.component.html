@@ -1,6 +1,6 @@
 @if(showMenu) {
 
-<div>
+<div class="page-container">
   <mat-toolbar color="primary" class="mat-elevation-z8">
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
@@ -12,19 +12,29 @@
      Branch management, Rich reporting, Staff Management, Rich Dashboard</marquee> -->
 
     <!-- <button mat-button [matMenuTriggerFor]="profile"><mat-icon>arrow_drop_down</mat-icon> -->
-    <button mat-button [matMenuTriggerFor]="profile" style="cursor: pointer;">
+    <button mat-button [matMenuTriggerFor]="profile" style="cursor: pointer">
       <!-- <p style="font-size: 10px;margin-bottom: 1%;">{{formattedDate}}</p> -->
-      <span style="font-size: 15px;margin-bottom: 1%;">Hello {{ loggedInUser }}</span>
+      <span style="font-size: 15px; margin-bottom: 1%"
+        >Hello {{ loggedInUser }}</span
+      >
     </button>
-    <mat-menu #profile style="margin-top: 1%;">
-      <btton mat-menu-item>User Profile</btton>
-      <btton mat-menu-item routerLink="/resetPassword">Reset Password</btton>
-      <btton mat-menu-item routerLink="/login" (click)="Logout()">Logout</btton>
+    <mat-menu #profile style="margin-top: 1%">
+      <button mat-menu-item>User Profile</button>
+      <button mat-menu-item routerLink="/resetPassword">Reset Password</button>
+      <button mat-menu-item routerLink="/login" (click)="Logout()">
+        Logout
+      </button>
     </mat-menu>
   </mat-toolbar>
 
   <mat-drawer-container autosize>
-    <mat-drawer #drawer opened="true" mode="side" position="start" class="bg-gradient-primary">
+    <mat-drawer
+      #drawer
+      opened="true"
+      mode="side"
+      position="start"
+      class="bg-gradient-primary"
+    >
       <!-- <img
         class="avatar mat-elevation-z8"
         style="border-radius: 50%"
@@ -38,7 +48,12 @@
         alt="Manage Salons Logo"
       />
       <mat-divider></mat-divider>
-      <h3 class="name">Barber software</h3>
+      <h3 class="name">
+        <p class="mb-1 small" style="font-weight: 300; font-size: 12px">
+          Powered by
+        </p>
+        Manage Salons
+      </h3>
       <mat-nav-list>
         <mat-list-item>
           <button
@@ -77,14 +92,48 @@
       </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
-      <div class="content">
+      <div class="content-wrap">
         <router-outlet> </router-outlet>
+
       </div>
+        <footer class="dashboard-footer">
+          <div class="footer-content">
+            <div class="company-info">
+              <h4 class="company-name">✨ MySalon Pro</h4>
+              <p class="slogan">Empowering salons to shine brighter</p>
+            </div>
+            <div class="contact-info">
+              <p>
+                Email:
+                <a href="mailto:support@mysalonpro.com"
+                  >supportmysalonpro.com</a
+                >
+              </p>
+              <p>Phone: +971 50 123 4567</p>
+            </div>
+          </div>
+        </footer>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
 } @else {
 <div>
   <router-outlet></router-outlet>
+
+  <footer class="dashboard-footer">
+    <div class="footer-content">
+      <div class="company-info">
+        <h4 class="company-name">✨ MySalon Pro</h4>
+        <p class="slogan">Empowering salons to shine brighter</p>
+      </div>
+      <div class="contact-info">
+        <p>
+          Email:
+          <a href="mailto:support@mysalonpro.com">supportmysalonpro.com</a>
+        </p>
+        <p>Phone: +971 50 123 4567</p>
+      </div>
+    </div>
+  </footer>
 </div>
 }

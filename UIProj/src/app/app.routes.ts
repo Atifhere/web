@@ -20,10 +20,12 @@ import { AddCompanyComponent } from './component/Company/company/add-company/add
 import { AddBranchComponent } from './component/Company/company-branch/add-branch/add-branch.component';
 import { AddStaffComponent } from './component/Staff/staff/add-staff/add-staff.component';
 import { PrivacyComponent } from './component/privacy/privacy.component';
+import { AddAppointmentDialogComponent } from './component/login/Appointments/add-appointment-dialog-component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, canActivate:[authGuard] },
     { path: 'register', component: RegisterComponent },
+    { path: 'appointment', component: AddAppointmentDialogComponent },
     { path: 'login', component: LoginComponent },
     { path: 'otp', component: ConfirmOTPComponent },
     { path: 'forgetpassword', component: ForgetPasswordComponent },
