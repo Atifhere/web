@@ -61,7 +61,6 @@ export class CompanyService {
     return this.http.get<DashboardInsightsDto>(`${this.baseUrl}GetDashboardStatistics`);
   }
 
-
   getCompanyById(id: string): Observable<Company> {
     return this.http.get<Company>(`${this.baseUrl}GetByCode?code=${id}`);
   }
@@ -69,10 +68,20 @@ export class CompanyService {
   getAppointments(): Observable<AppointmentsDto[]> {
     return this.http.get<AppointmentsDto[]>(`${this.baseUrl}GetAppointments`);
   }
+
   getAppointmentDetails(appointmentId: string): Observable<any> {
     return this.http.get<any>(`/api/appointments/${appointmentId}`);
   }
+
   markUserAsArrived(id: string, hasArrived: boolean): Observable<any> {
     return this.http.post(`${this.baseUrl}${id}/${hasArrived}/arrived`, {});
+  }
+
+  getStates(): Observable<any> {
+    return this.http.get(`${this.baseUrl}states`, {});
+  }
+
+  createAppointment(data: any) {
+    return this.http.post<any>(`${this.baseUrl}CreateAppointment`, data);
   }
 }

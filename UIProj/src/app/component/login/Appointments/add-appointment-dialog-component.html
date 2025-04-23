@@ -1,68 +1,151 @@
 <h2 mat-dialog-title class="dialog-title">Book an Appointment</h2>
-<p class="appointment-description">
-  Please fill in the details below to book your appointment. You can choose your preferred salon branch and time slot.
-  Each time slot has limited availability — so don't wait too long to reserve your spot!
-</p>
 
-<form [formGroup]="appointmentForm" (ngSubmit)="submit()" class="appointment-form">
+<form
+  [formGroup]="appointmentForm"
+  (ngSubmit)="submit()"
+  class="container mb-5"
+>
+  <p class="appointment-description">
+    <strong>Note:</strong> Please fill in the details below to book your
+    appointment. You can choose your preferred salon branch and time slot. Each
+    time slot has limited availability — so don't wait too long to reserve your
+    spot!
+  </p>
 
-  <div class="form-grid">
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Customer Name</mat-label>
-      <input matInput formControlName="customerName" required />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="customerEmail" type="email" required />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Branch</mat-label>
-      <mat-select formControlName="companyBranchId" required>
-        <mat-option *ngFor="let branch of branches" [value]="branch.id">
-          {{ branch.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- <mat-form-field appearance="outline" class="half-width">
-      <mat-label>Appointment Date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="appointmentDate" required />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field> -->
-
-
-    <mat-form-field>
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="appointmentDate" required readonly>
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="half-width">
-      <mat-label>Time Slot</mat-label>
-      <mat-select formControlName="appointmentTimeSlot" required>
-        <mat-option *ngFor="let slot of timeSlots" [value]="slot.value">
-          {{ slot.label }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Notes</mat-label>
-      <textarea matInput formControlName="notes" rows="3"></textarea>
-    </mat-form-field>
-
+  <!-- Customer Name and Email -->
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Customer Name</mat-label>
+        <input matInput formControlName="customerName" required />
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 mb-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="customerEmail" type="email" required />
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 mb-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="customerPhone" required />
+      </mat-form-field>
+    </div>
   </div>
 
-  <div class="actions">
-    <button mat-stroked-button color="warn" type="button" (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="appointmentForm.invalid">
-      Book Appointment
-    </button>
+  <!-- State and Branch Selection -->
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>State</mat-label>
+        <mat-select
+          formControlName="state"
+          (selectionChange)="onStateChange($event.value)"
+          required
+        >
+          <!-- <mat-option value="" disabled>Select State</mat-option> -->
+          <mat-option *ngFor="let state of states" [value]="state.code">
+            {{ state.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 mb-3">
+      <!-- <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Branch</mat-label>
+        <mat-select
+          formControlName="companyBranchId"
+          required
+          (selectionChange)="filterBranches()"
+        >
+          <mat-option
+            *ngFor="let branch of filteredBranches"
+            [value]="branch.id"
+          >
+            {{ branch.branchName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Branch</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="companyBranchControl"
+          [matAutocomplete]="auto"
+          placeholder="Search and select branch"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayBranchName"
+        >
+          <mat-option *ngFor="let branch of filteredBranches" [value]="branch">
+            {{ branch.branchName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <!-- Appointment Date and Time Slot -->
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <mat-form-field class="w-100">
+        <mat-label>Choose a date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="appointmentDate"
+          required
+          readonly
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6 mb-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Time Slot</mat-label>
+        <mat-select formControlName="appointmentTimeSlot" required>
+          <mat-option *ngFor="let slot of timeSlots" [value]="slot.value">
+            {{ slot.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Notes Field -->
+  <div class="row">
+    <div class="col-12 mb-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Submit and Cancel Buttons -->
+  <div class="row">
+    <div class="col d-flex justify-content-end gap-2">
+      <button mat-stroked-button color="warn" type="button" (click)="close()">
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="appointmentForm.invalid"
+      >
+        Book Appointment
+      </button>
+    </div>
   </div>
 </form>

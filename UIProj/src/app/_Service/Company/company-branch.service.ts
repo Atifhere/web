@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { CompanyBranch } from '../../_model/company.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,4 +32,9 @@ export class CompanyBranchService {
   DeleteCompany(id: string) {
     return this.http.delete(this.baseUrl + this.constant.REMOVE + id);
   }
+
+  GetBranchesByState(stateCode: string): Observable<CompanyBranch[]> {
+    return this.http.get<CompanyBranch[]>(this.baseUrl + 'GetBranchesByState?code=' + stateCode);
+  }
+  
 }
