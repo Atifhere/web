@@ -7,11 +7,11 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="dialog-actions">
-  <button mat-stroked-button color="primary" (click)="confirmArrival()">
+  <button mat-stroked-button color="primary" (click)="confirmArrival(true)">
     <mat-icon>check_circle</mat-icon>
     Yes, Confirm
   </button>
-  <button mat-stroked-button color="warn" (click)="close()">
+  <button mat-stroked-button color="warn" (click)="confirmArrival(false)">
     <mat-icon>cancel</mat-icon>
     No
   </button>

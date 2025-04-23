@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,6 +10,8 @@ import { AddAppointmentDialogComponent } from '../../login/Appointments/add-appo
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../../../material.module';
 import { ConfirmArrivalDialogComponent } from '../../login/confirm-arrival-dialog/confirm-arrival-dialog.component';
+import { AppointmentsDto } from '../../../_model/Appointments.modal';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 const calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
 
@@ -22,48 +24,24 @@ const calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
 })
 export class AppointmentsComponent {
   // Define the events for the calendar
-  appointments = [
-    {
-      id: 1,
-      customerName: 'Komal Atif',
-      appointmentDate: '2025-04-24',
-      appointmentTimeSlot: '18:30:00', // string (hh:mm:ss)
-      customerPhone: '1234567890',
-      hasArrived: true,
-      BranchName: 'Branch A',
-    },
-    {
-      id: 2,
-      customerName: 'Komal Atif',
-      appointmentDate: '2025-04-24',
-      appointmentTimeSlot: '10:30:00', // string (hh:mm:ss)
-      customerPhone: '1234567890',
-      hasArrived: false,
-      BranchName: 'Branch A',
-    },
-    {
-      id: 3,
-      customerName: 'Shayan Atif',
-      appointmentDate: '2025-04-25',
-      appointmentTimeSlot: '12:30:00', // string (hh:mm:ss)
-      customerPhone: '1234567890',
-      hasArrived: true,
-      BranchName: 'Branch B',
-    },
-    
-    {
-      id: 3,
-      customerName: 'Shayan Atif',
-      appointmentDate: '2025-04-25',
-      appointmentTimeSlot: '08:30:00', // string (hh:mm:ss)
-      customerPhone: '1234567890',
-      hasArrived: true,
-      BranchName: 'Branch B',
-    },
-  ];
+  appointments: AppointmentsDto[] = [];
+  // Define the calendar options
+  ngOnInit(): void {
+    this.loadAppointments();
+  }
+
+  // loadAppointments() {
+  //   this.companyService.getAppointments().subscribe((appointments: any[]) => {
+  //     this.appointments = appointments;
+  //   });
+  // }
+
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+
+  // Handle the event click
   handleEventClick(arg: EventClickArg): void {
     const appointment = arg.event.extendedProps;
-    this.dialog.open(ConfirmArrivalDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmArrivalDialogComponent, {
       width: '400px',
       data: {
         appointmentId: appointment['id'],
@@ -71,33 +49,28 @@ export class AppointmentsComponent {
         appointmentTime: arg.event.startStr,
       },
     });
+  
+    // After the dialog closes
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.loadAppointments(); // 🔁 Reload the updated data
+      }
+    });
   }
 
   calendarOptions: CalendarOptions = {
     plugins: calendarPlugins,
     initialView: 'dayGridMonth',
-    dateClick: this.onDateClick.bind(this), // bind to preserve `this`
+    dateClick: this.onDateClick.bind(this),
     themeSystem: 'standard',
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay',
     },
-    events: this.appointments.map((appt) => ({
-      title: appt.customerName,
-      start: `${appt.appointmentDate}T${appt.appointmentTimeSlot}`,
-      extendedProps: {
-        phone: appt.customerPhone,
-        id: appt.id,
-        customerName: appt.customerName,
-        hasArrived :appt.hasArrived,
-        BranchName: appt.BranchName,
-      },
-      allDay: false,
-    })),
+    events: [], // start with empty
     eventClick: this.handleEventClick.bind(this),
     eventContent: (arg) => {
-      // Extract time from date string
       const time = new Date(arg.event.startStr).toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
@@ -106,12 +79,15 @@ export class AppointmentsComponent {
       const phone = arg.event.extendedProps['phone'];
       const hasArrived = arg.event.extendedProps['hasArrived'];
       const branchName = arg.event.extendedProps['BranchName'];
-
       return {
         html: `
           <div class="event-box">
-            <div class="event-time">${time} - ${arg.event.title} - ${phone} </div>
-            <div class="event-title"> ${hasArrived ? '✅  ' : ''}  ${branchName}</div>
+            <div class="event-time">${time} - ${
+          arg.event.title
+        } - ${phone}</div>
+            <div class="event-title">${
+              hasArrived ? '✅' : ''
+            } ${branchName}</div>
           </div>
         `,
       };
@@ -128,6 +104,27 @@ export class AppointmentsComponent {
     weekNumbers: true,
   };
 
+  loadAppointments() {
+    this.companyService.getAppointments().subscribe((appointments: any) => {
+      this.appointments = appointments.appointments;
+      const mappedEvents = this.appointments.map((appt) => ({
+        title: appt.customerName,
+        start: `${appt.appointmentDate}T${appt.appointmentTimeSlot}`,
+        extendedProps: {
+          phone: appt.customerPhone,
+          id: appt.id,
+          customerName: appt.customerName,
+          hasArrived: appt.hasArrived,
+          BranchName: appt.branchName,
+        },
+        allDay: false,
+      }));
+
+      const calendarApi = this.calendarComponent.getApi();
+      calendarApi.removeAllEvents(); // remove existing events if needed
+      calendarApi.addEventSource(mappedEvents);
+    });
+  }
   onDateClick(arg: DateClickArg) {
     this.dialog.open(AddAppointmentDialogComponent, {
       data: { date: arg.date },
@@ -139,32 +136,6 @@ export class AppointmentsComponent {
     private companyService: CompanyService,
     private dialog: MatDialog
   ) {}
-
-  ngOnInit(): void {
-    this.loadAppointments();
-  }
-
-  loadAppointments() {
-    this.companyService.getAppointments().subscribe((appointments: any[]) => {
-      // appointments = [
-      //   {
-      //     customerName: 'Alice Johnson',
-      //     appointmentDate: '2025-04-25',
-      //     appointmentTimeSlot: '10:30:00', // string (hh:mm:ss)
-      //   },
-      //   {
-      //     customerName: 'Bob Smith',
-      //     appointmentDate: '2025-04-25',
-      //     appointmentTimeSlot: '14:00:00',
-      //   },
-      // ]; // Mock data for testing
-      // this.calendarOptions.events = appointments.map((a) => ({
-      //   title: a.customerName,
-      //   start: `${a.appointmentDate}T${a.appointmentTimeSlot}`,
-      //   allDay: false,
-      // }));
-    });
-  }
 
   onAddAppointmentClick() {
     this.dialog.open(AddAppointmentDialogComponent, {

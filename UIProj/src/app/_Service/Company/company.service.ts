@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { LatestTransactionDto, MonthlyRevenueChartDto } from '../../_model/Chart.modal';
 import { Observable } from 'rxjs';
 import { DashboardInsightsDto } from '../../_model/Dashboard.modal';
+import { AppointmentsDto } from '../../_model/Appointments.modal';
 
 @Injectable({
   providedIn: 'root'
@@ -65,13 +66,13 @@ export class CompanyService {
     return this.http.get<Company>(`${this.baseUrl}GetByCode?code=${id}`);
   }
 
-  getAppointments(): Observable<any[]> {
-    return this.http.get<any[]>('/appointments');
+  getAppointments(): Observable<AppointmentsDto[]> {
+    return this.http.get<AppointmentsDto[]>(`${this.baseUrl}GetAppointments`);
   }
   getAppointmentDetails(appointmentId: string): Observable<any> {
     return this.http.get<any>(`/api/appointments/${appointmentId}`);
   }
-  markUserAsArrived(appointmentId: string): Observable<any> {
-    return this.http.post(`/api/appointments/${appointmentId}/arrived`, {});
+  markUserAsArrived(id: string, hasArrived: boolean): Observable<any> {
+    return this.http.post(`${this.baseUrl}${id}/${hasArrived}/arrived`, {});
   }
 }

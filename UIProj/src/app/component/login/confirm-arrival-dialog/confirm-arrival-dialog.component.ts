@@ -24,9 +24,8 @@ export class ConfirmArrivalDialogComponent {
 
 
 
-  confirmArrival() {
-
-    this.companyService.markUserAsArrived(this.data.appointmentId).subscribe(() => {
+  confirmArrival(hasArrived: boolean) {
+    this.companyService.markUserAsArrived(this.data.appointmentId, hasArrived).subscribe(() => {
       this.dialogRef.close(true);
     });
   }

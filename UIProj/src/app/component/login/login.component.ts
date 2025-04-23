@@ -89,8 +89,9 @@ export class LoginComponent implements OnInit {
   }
   openAddAppointmentDialog(): void {
     this.dialog.open(AddAppointmentDialogComponent, {
-      width: '700px',
-      maxHeight: '60vh',
+      width: '800px',
+      maxHeight: '90vh', // Prevents the dialog from exceeding the viewport height
+      disableClose: true,            // Prevents closing the dialog by clicking outside
       autoFocus: false,             // Prevents scrolling caused by focus
       restoreFocus: false,          // Prevents jumping back to previously focused element
       scrollStrategy: this.overlay.scrollStrategies.reposition(), // Ensures it floats without affecting page scroll
