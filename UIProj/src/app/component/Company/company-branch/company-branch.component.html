@@ -1,8 +1,12 @@
-<mat-card style="background-color: rgb(233, 235, 239);">
-  <mat-card-header class="company-list-header">
-    <div class="header-content">
+<mat-card class="company-list-card mb-3">
+  <mat-card-header class="page-header mb-3 d-flex flex-column align-items-center">
+    <h1 class="form-title">🏢 Company Branches</h1>
+    <p class="form-subtitle">
+      Manage all the Branches in your system. Add new ones, update their details, or delete if no longer needed.
+    </p>
+    <div class="header-content"><h4>Company:</h4> <br />
       <mat-form-field appearance="fill" class="company-select">
-        <mat-label>Company Name</mat-label>
+        <mat-label>Company</mat-label>
         <mat-select
           [(ngModel)]="selectedCompanyId"
           (selectionChange)="CompanyChange($event)"
@@ -17,7 +21,7 @@
         <button
           mat-raised-button
           color="primary"
-          class="add-button"
+          class="add-button mb-3"
           (click)="AddBranch()"
         >
           <mat-icon class="mr-2">add</mat-icon>
@@ -27,8 +31,8 @@
     </div>
   </mat-card-header>
 
-  <mat-card-content class="table-container mat-elevation-z2" >
-    <table mat-table [dataSource]="dataSource" matSort class="styled-table">
+  <mat-card-content class="table-container mat-elevation-z2 mb-3">
+    <table mat-table [dataSource]="dataSource" matSort class="styled-table mb-3">
       <!-- Branch Name -->
       <ng-container matColumnDef="branchName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch Name</th>
@@ -77,7 +81,7 @@
 
               <mat-icon
                 matTooltip="Edit Branch Details"
-                (click)="Edit(element.id)"
+                (click)="Edit(element.id, element.branchName)"
               >edit</mat-icon>
             }
 

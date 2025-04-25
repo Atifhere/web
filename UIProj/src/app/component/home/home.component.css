@@ -387,3 +387,19 @@
     }
   }
 }
+
+
+
+.no-transactions {
+  text-align: center;
+  padding: 2rem;
+  background-color: #d2d2dc;
+  border-radius: 12px;
+  color: #d1c3c3;
+}
+
+.no-data-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #b90404;
+}

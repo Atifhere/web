@@ -23,7 +23,6 @@ import {
   Validators,
 } from '@angular/forms';
 
-
 Chart.register(...registerables);
 
 @Component({
@@ -58,6 +57,7 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog
   ) {}
   private destroy$ = new Subject<void>();
+  monthlyRevenueData: MonthlyRevenueChartDto[] = [];
 
   ngOnInit(): void {
     this.MonthlyYearData();
@@ -93,13 +93,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  monthlyRevenueData: MonthlyRevenueChartDto[] = [];
 
   getMonthlyRevenue() {
     // Fetching monthly revenue data from the API.
     this.companyService.getMonthlyRevenue().subscribe((item) => {
       this.monthlyRevenueData = item;
-      console.log(item);
       this.RenderChart();
     });
   }
@@ -169,7 +167,7 @@ export class HomeComponent implements OnInit {
               callback: function (value) {
                 return 'AED ' + value;
               },
-              color: '#6c757d',
+              color: '#35393c',
             },
             grid: {
               color: '#e3e6f0',
@@ -217,5 +215,4 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
 }

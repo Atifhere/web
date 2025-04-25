@@ -76,7 +76,7 @@ export class CompanyBranchComponent implements OnInit {
       }
 
       if (this.companyBranchList.length == 0){
-        this.toastr.ShowInfo('Please Add new Branch', ' No records Found');
+        this.toastr.ShowInfo('Please select a company or Add new Branch', ' No records Found');
       }
       this.MapDataSource();
     });
@@ -120,9 +120,11 @@ export class CompanyBranchComponent implements OnInit {
     }
   }
 
-  Edit(code: string) {
+  Edit(code: string, branchName: string) {
     if (this.permission.haveedit) {
       this.router.navigateByUrl('/branch/Edit/' + code);
+      localStorage.setItem('EditBranchName', branchName);
+
     } else {
       alert('You don not have permission to edit');
     }
@@ -167,7 +169,6 @@ export class CompanyBranchComponent implements OnInit {
         (x) => x.id == this.selectedCompanyId
       )[0].name;
 
-      localStorage.setItem('CompanyToAddBranch', companyName);
     } else {
       this.toastr.ShowError('You don not have permission to edit');
     }

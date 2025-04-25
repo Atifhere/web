@@ -281,3 +281,65 @@ button {
   color: #666;
 }
 
+
+.page-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: linear-gradient(90deg, #f3f6fc, #b8c5f6);
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+
+  .form-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0454a4;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-subtitle {
+    font-size: 1rem;
+    color: #546e7a;
+  }
+
+  .add-button {
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.form-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: linear-gradient(to right, #f3f6fc, #b8c5f6); 
+  border-radius: 8px 8px 0 0;
+}
+
+
+.company-form {  
+  .form-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #283593;
+  }
+
+  .form-subtitle {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 4px;
+  }
+
+  mat-card {
+    background-color: #fff;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  mat-card-actions {
+    border-top: 1px solid #e0e0e0;
+  }
+}
+  

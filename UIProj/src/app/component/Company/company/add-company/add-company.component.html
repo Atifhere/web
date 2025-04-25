@@ -1,79 +1,90 @@
-<form [formGroup]="companyForm" (ngSubmit)="SaveCompany()">
-    <mat-card>
-      <mat-card-header>
-        <h1>{{Title}}</h1>
-      </mat-card-header>
-      <div class="MatCard">
-        
-  
-      <mat-card-content>
-        <mat-form-field>
-          <mat-label>Company Name</mat-label>
-          <input formControlName="name" matInput />
-        </mat-form-field>
-  
-        <mat-form-field class="">
-          <mat-label>Company Address</mat-label>
-          <input formControlName="address" matInput />
-        </mat-form-field>
+<form [formGroup]="companyForm" (ngSubmit)="SaveCompany()" class="company-form">
+  <mat-card class="shadow-sm rounded-4 border-0">
+    <!-- Header -->
+    <div class="form-header mb-3 d-flex flex-column align-items-center">
+      <h1 class="form-title">🏢 {{ Title }}</h1>
+      <p class="form-subtitle">
+        Please provide accurate and up-to-date details about your company. Fields marked with * are required.
+      </p>
+    </div>
 
-        <mat-form-field class="mat-50">
-          <mat-label>Email</mat-label>
-          <input formControlName="email" matInput />
-        </mat-form-field>
+    <mat-card-content>
+      <div class="row">
+        <!-- Company Name -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Company Name *</mat-label>
+            <input matInput formControlName="name" maxlength="100" required />
+          </mat-form-field>
+        </div>
 
-        <mat-form-field class="mat-50">
-          <mat-label>Mobile Number</mat-label>
-          <input formControlName="mobileNumber" matInput />
-        </mat-form-field>
-  
-        <mat-form-field class="mat-50">
-          <mat-label>Nature Of Business</mat-label>
-          <input formControlName="natureOfBusiness" matInput />
-        </mat-form-field>
-  
-        <mat-form-field class="mat-50">
-          <mat-label>Trade License No</mat-label>
-          <input formControlName="tradeLicenseNo" matInput />
-        </mat-form-field>
+        <!-- Address -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Company Address *</mat-label>
+            <input matInput formControlName="address" maxlength="100" required />
+          </mat-form-field>
+        </div>
 
-        <mat-form-field class="mat-50">
-          <mat-label>Arabic Name</mat-label>
-          <input formControlName="arabicName" matInput />
-        </mat-form-field>
+        <!-- Email -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email *</mat-label>
+            <input matInput type="email" formControlName="email" maxlength="50" required />
+          </mat-form-field>
+        </div>
 
-  
-        <mat-form-field class="mat-50">
-          <mat-label>Land line Number</mat-label>
-          <input formControlName="phoneNumber" matInput />
-        </mat-form-field>
-  
-       
-        <div class="div-50">
+        <!-- Mobile -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Mobile Number *</mat-label>
+            <input matInput formControlName="mobileNumber" maxlength="20" required />
+          </mat-form-field>
+        </div>
+
+        <!-- Nature of Business -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nature Of Business</mat-label>
+            <input matInput formControlName="natureOfBusiness" maxlength="200"  />
+          </mat-form-field>
+        </div>
+
+        <!-- Trade License -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Trade License No</mat-label>
+            <input matInput formControlName="tradeLicenseNo" maxlength="20" />
+          </mat-form-field>
+        </div>
+
+        <!-- Arabic Name -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Arabic Name</mat-label>
+            <input matInput formControlName="arabicName" maxlength="100" />
+          </mat-form-field>
+        </div>
+
+        <!-- Land Line -->
+        <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Land Line Number</mat-label>
+            <input matInput formControlName="phoneNumber" maxlength="20"  />
+          </mat-form-field>
+        </div>
+
+        <!-- Is Active -->
+        <div class="col-12 mb-3">
           <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
         </div>
-      </mat-card-content>
-  
-      <mat-card-actions>
-        <div class="div-50">
-          <button type="submit" mat-raised-button color="primary">
-            Save
-          </button>
-        </div>
-  
-        <div class="div-50">
-          <a
-            class="mat-button"
-            routerLink="/company"
-            mat-raised-button
-            color="accent"
-          >
-            Cancel</a
-          >
-        </div>
-      </mat-card-actions>
-      
-    </div>
-    </mat-card>
-  </form>
-  
+      </div>
+    </mat-card-content>
+
+    <!-- Actions -->
+    <mat-card-actions class="d-flex justify-content-end gap-2 px-3 py-2">
+      <button type="submit" mat-raised-button color="primary" [disabled]="!companyForm.valid">💾 Save</button>
+      <a routerLink="/company" mat-stroked-button color="accent">Cancel</a>
+    </mat-card-actions>
+  </mat-card>
+</form>

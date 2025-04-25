@@ -266,7 +266,7 @@
           Revenue trend over the last 6 months
         </p>
         } @else {
-        <b class="text-muted small mb-0">No Data found</b>
+        <b class="small mb-0">No Data found</b>
         }
       </div>
     </div>
@@ -313,11 +313,16 @@
               {{ transaction.time | date : "short" }}
             </td>
           </ng-container>
-
+          
           <!-- Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+        @if(transactions && transactions.length === 0){
+          <div class="no-transactions">
+            <p class="no-data-text">🔍  No transactions found</p>
+          </div>
+          }
       </div>
     </div>
   </div>

@@ -1,0 +1,128 @@
+.company-list-card {
+  background-color: #f4f6fa;
+  padding: 1.5rem;
+  border-radius: 16px;
+
+  .company-list-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dcdde1;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      > div {
+        flex: 1 1 60%;
+      }
+
+      .add-button {
+        align-self: center;
+      }
+    }
+
+    .header-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #0454a4;
+      margin: 0;
+    }
+
+    .header-description {
+      font-size: 0.95rem;
+      color: #7f8c8d;
+      margin-top: 0.25rem;
+    }
+
+    .add-button {
+      padding: 0.5rem 1.25rem;
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .table-container {
+    padding-top: 1rem;
+  }
+
+  .styled-table {
+    td,
+    th {
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  th:hover {
+    background-color: #d8e1f5;
+    cursor: pointer;
+  }
+  tr:hover {
+    background-color: #d9eaff;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  th,
+  td {
+    padding: 12px 16px;
+  }
+
+  th {
+    background-color: #e3e9f7;
+    font-weight: 600;
+    color: #333;
+  }
+
+  td {
+    color: #444;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+
+  mat-icon {
+    cursor: pointer;
+    color: #1976d2;
+    transition: color 0.2s;
+  }
+
+  .delete-icon {
+    color: #e53935;
+  }
+
+  mat-icon:hover {
+    color: #0d47a1;
+  }
+}
+
+.empty-state {
+  background-color: #f9fbff;
+  border: 1px dashed #b0bec5;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+
+  .empty-state__message {
+    font-size: 1.4rem;
+    color: #2c3e50;
+  }
+
+  .empty-state__help {
+    color: #607d8b;
+  }
+}
+
+mat-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dcdde1;
+}
+
+  

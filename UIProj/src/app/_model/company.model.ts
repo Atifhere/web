@@ -27,4 +27,5 @@ export interface CompanyBranch {
   //email: string;
   CreatedBy: string,
   CompanyName : string
+  stateId : string
 }
