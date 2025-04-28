@@ -94,7 +94,7 @@
 
   .total-info-card {
     background-color: #f8f9fa; /* Light background for contrast */
-    border: 1px solid #eef0f3; /* Border around the card */
+    border: 1px solid #c9ccd0; /* Border around the card */
     border-radius: 8px; /* Slightly rounded corners */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
