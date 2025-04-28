@@ -1,118 +1,167 @@
-<mat-card class="matColor">
-    <mat-card-header>
-      <div style="font-size: larger; width: 50%">
-        <mat-form-field>
-          <mat-label>Branch Name</mat-label>
-          <mat-select
-            [(ngModel)]="selectedBranchId"
-            (selectionChange)="CompanyChange($event)"
-          >
-            @for(item of branchList; track item) {
-            <mat-option value="{{ item.id }}">{{ item.branchName }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
+<mat-card class="company-list-card mb-3">
+  <mat-card-header
+    class="page-header mb-3 d-flex flex-column align-items-center"
+  >
+    <h1 class="form-title">Employee List</h1>
+    <p class="form-subtitle">
+      Manage all the Employees in your system. Add new ones, update their
+      details, or deactivate if no longer needed.
+    </p>
+    <div class="header-content">
+      <h4>Company:</h4>
+      <br />
+      <mat-form-field appearance="fill" class="company-select">
+        <mat-label>Branch</mat-label>
+        <mat-select
+          [(ngModel)]="selectedBranchId"
+          (selectionChange)="CompanyChange($event)"
+        >
+          @for(item of branchList; track item) {
+          <mat-option [value]="item.id">{{ item.branchName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
       @if(permission.haveadd) {
       <button
-        class="Addrecord"
         mat-raised-button
         color="primary"
+        class="add-button mb-3"
         (click)="AddEmployee()"
-       
       >
-        Add Empoyee
+        <mat-icon class="mr-2">add</mat-icon>
+        Add Employee
       </button>
       }
-    </mat-card-header>
-     <!-- <h2 style="color: rgb(227, 150, 25);"><u> EMPLOYEE LIST</u></h2> -->
-    <mat-card-content class="mat-display-2">
-      
+    </div>
+  </mat-card-header>
+  <!-- <h2 style="color: rgb(227, 150, 25);"><u> EMPLOYEE LIST</u></h2> -->
+  <mat-card-content class="table-container mat-elevation-z2 mb-3">
     <!-- @if(staffList.length == 0) {
       <div class="empty-state__message">No records has been added yet.</div>
       <div class="empty-state__help">
         Add a new record by clicking the Add Company button on top right side.
       </div>
       } -->
-      <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.firstName }} {{ element.lastName }} </td>
-        </ng-container>
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="phone">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</th>
-          <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="companyBranchName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.companyBranchName }}</td>
-        </ng-container>
-  
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-          <td mat-cell *matCellDef="let element">{{ element.isActive ? 'Active' : 'Not Active' }}</td>
-        </ng-container>
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
-          <td mat-cell *matCellDef="let element">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="styled-table mb-3"
+    >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.firstName }} {{ element.lastName }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</th>
+        <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="companyBranchName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.companyBranchName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.isActive ? "Active" : "Not Active" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="action-buttons">
             @if(permission.haveedit) {
             <mat-icon
-              (click)="Edit(element.id)"
-              matTooltip="Edit Employee"
+              matTooltip="Edit Employee Details"
               matTooltipPosition="above"
-              matTooltipHideDelay="100"
+              (click)="Edit(element.id)"
+              >edit</mat-icon
             >
-              <span
-                style="color: blue; 
-                padding-top: 2px; 
-                cursor: pointer !important"
-                class="material-symbols-sharp"
-              >
-                edit
-              </span>
-            </mat-icon>
             } @if(permission.havedelete) {
             <mat-icon
-              (click)="Delete(element.id)"
-              matTooltip="tool"
               matTooltip="Delete Employee"
-              matTooltipPosition="above"
-              matTooltipHideDelay="100"
+              class="delete-icon"
+              (click)="Delete(element.id)"
+              >delete</mat-icon
             >
-              <span
-                style="color: red; padding-top: 2px; cursor: pointer !important"
-                class="material-symbols-sharp"
-              >
-                delete
-              </span>
-            </mat-icon>
             }
-          </td>
-        </ng-container>
-        <tr
-          class="table-header"
-          mat-header-row
-          *matHeaderRowDef="displayedColumns"
-        ></tr>
-        <tr>
-          <h2>no record found</h2>
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </mat-card-content>
-    <br />
-  
-    <mat-card-footer>
-      <mat-paginator
-        [pageSizeOptions]="pageSize"
-        showFirstLastButtons
-      ></mat-paginator>
-    </mat-card-footer>
-  </mat-card>
-  
+          </div>
+        </td>
+      </ng-container>
+
+      <!--     <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          @if(permission.haveedit) {
+
+            <mat-icon matTooltip="Add Employee" 
+            mattooltipPosition="above"
+            (click)="Edit(element.id)"
+            >person_add</mat-icon
+          >
+
+         <mat-icon
+            (click)="Edit(element.id)"
+            matTooltip="Edit Employee"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+          >
+            <span
+              style="color: blue; padding-top: 2px; cursor: pointer !important"
+              class="material-symbols-sharp"
+            >
+              edit
+            </span>
+          </mat-icon>
+          } @if(permission.havedelete) {
+
+            <mat-icon
+            matTooltip="Delete Employee"
+            matTooltipPosition="above"
+            class="delete-icon"
+            (click)="Delete(element.id)"
+            >delete</mat-icon
+          > -->
+      <!--           
+          <mat-icon
+            (click)="Delete(element.id)"
+            matTooltip="tool"
+            matTooltip="Delete Employee"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+          >
+            <span
+              style="color: red; padding-top: 2px; cursor: pointer !important"
+              class="material-symbols-sharp"
+            >
+              delete
+            </span>
+          </mat-icon> 
+          }
+        </td>
+      </ng-container>-->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card-content>
+  <br />
+
+  <mat-card-footer>
+    <mat-paginator
+      [pageSizeOptions]="pageSize"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-card-footer>
+</mat-card>

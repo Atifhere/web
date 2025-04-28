@@ -44,6 +44,7 @@ export class AddBranchComponent implements OnInit {
   ngOnInit(): void {
     this.loadStates();
     this.editCode = this.activateRoute.snapshot.paramMap.get('code') as string;
+    debugger;
     this.companyCode = this.activateRoute.snapshot.paramMap.get(
       'companyCode'
     ) as string;
@@ -135,10 +136,10 @@ export class AddBranchComponent implements OnInit {
         this.companyService.UpdateBranch(companyObj).subscribe((item) => {
           if (item) {
             this.response = item;
-
+            let companyId = this.response.data as string;
             if (this.response.success) {
               this.toastr.ShowSuccess(this.response.message);
-              this.router.navigateByUrl('/branch/' + this.response.data);
+              this.router.navigateByUrl('/branch/' + companyId);
             } else {
               this.toastr.ShowError(this.response.errorMessage);
             }
