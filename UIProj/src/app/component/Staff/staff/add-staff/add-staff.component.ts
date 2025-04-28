@@ -8,11 +8,12 @@ import { StaffService } from '../../../../_Service/Staff/staff.service';
 import { Staff } from '../../../../_model/staff.model';
 import { CompanyBranchService } from '../../../../_Service/Company/company-branch.service';
 import { ToastrSrvc } from '../../../../_Service/Toastr/toastr-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-staff',
   standalone: true,
-  imports: [MaterialModule, RouterLink, ReactiveFormsModule],
+  imports: [MaterialModule, RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './add-staff.component.html',
   styleUrl: './add-staff.component.css',
 })
