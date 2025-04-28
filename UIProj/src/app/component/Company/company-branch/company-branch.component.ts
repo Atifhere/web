@@ -21,7 +21,6 @@ import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
   standalone: true,
   imports: [
     MaterialModule,
-    RouterLink,
     MatIconModule,
     MatTooltipModule,
     FormsModule,

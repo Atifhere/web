@@ -22,6 +22,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { LoaderService } from '../../_Service/loader.service';
 
 Chart.register(...registerables);
 
@@ -54,12 +55,15 @@ export class HomeComponent implements OnInit {
   constructor(
     private companyService: CompanyService,
     private staffService: StaffService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loaderService: LoaderService
   ) {}
   private destroy$ = new Subject<void>();
   monthlyRevenueData: MonthlyRevenueChartDto[] = [];
 
   ngOnInit(): void {
+    this.loaderService.show(); // Show the loader when the component initializes
+    this.loaderService.hide(); // Hide the loader when the data is loaded
     this.MonthlyYearData();
     this.getMonthlyRevenue();
     this.fetchLatestTransactions();

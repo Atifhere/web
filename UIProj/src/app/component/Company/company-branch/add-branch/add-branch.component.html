@@ -78,7 +78,7 @@ class="company-form">
               required
             >
               <!-- <mat-option value="" disabled>Select State</mat-option> -->
-              <mat-option *ngFor="let state of states" [value]="state.code">
+              <mat-option *ngFor="let state of states" [value]="state.id">
                 {{ state.name }}
               </mat-option>
             </mat-select>

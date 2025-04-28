@@ -4,11 +4,13 @@ import { UserService } from '../../_Service/user.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { menu } from '../../_model/user.model';
 import { TokenService } from '../../_Service/token.service';
+import { LoaderComponent } from '../../component/loader/loader.component'
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-appmenu',
   standalone: true,
-  imports: [MaterialModule, RouterOutlet, RouterLink],
+  imports: [MaterialModule, RouterOutlet, RouterLink, CommonModule, LoaderComponent],
   templateUrl: './appmenu.component.html',
   styleUrl: './appmenu.component.css',
 })

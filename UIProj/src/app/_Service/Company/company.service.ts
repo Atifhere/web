@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Company } from '../../_model/company.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LatestTransactionDto, MonthlyRevenueChartDto } from '../../_model/Chart.modal';
 import { Observable } from 'rxjs';
 import { DashboardInsightsDto } from '../../_model/Dashboard.modal';
@@ -84,4 +84,10 @@ export class CompanyService {
   createAppointment(data: any) {
     return this.http.post<any>(`${this.baseUrl}CreateAppointment`, data);
   }
+
+  getServiceReport(reportData: Report): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.baseUrl}GetServiceReport`, reportData, { headers });
+  }
+
 }
