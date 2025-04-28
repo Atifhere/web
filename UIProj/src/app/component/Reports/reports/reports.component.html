@@ -48,13 +48,16 @@
             </mat-form-field>
           </div>
   
-          <div class="col-12 d-flex justify-content-end mt-2">
+        <div class="col-12 d-flex justify-content-end mt-2">
             <button mat-raised-button color="primary" type="submit" class="mr-2">
               <mat-icon>search</mat-icon> Search
             </button>
             <button mat-stroked-button color="warn" type="button" (click)="resetFilters()">
               <mat-icon>refresh</mat-icon> Reset
             </button>
+            <button mat-flat-button color="accent" type="button" (click)="downloadExcel()" class="mr-2">
+                <mat-icon>download</mat-icon> Download Excel
+              </button>
           </div>
         </div>
       </form>

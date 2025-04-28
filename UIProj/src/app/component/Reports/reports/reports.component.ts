@@ -15,6 +15,10 @@ import { CompanyService } from '../../../_Service/Company/company.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { Constants } from '../../../_model/Constants';
 import { MatSort } from '@angular/material/sort';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+import { ToastrModule } from 'ngx-toastr';
+import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
 
 @Component({
   selector: 'app-reports',
@@ -38,7 +42,8 @@ export class ReportsComponent {
     'createdDate',
   ];
 
-  constructor(private fb: FormBuilder, private reportService: CompanyService) {}
+  constructor(private fb: FormBuilder, private reportService: CompanyService,
+      private toastr: ToastrSrvc) {}
 
   ngOnInit(): void {
     this.LoadReport();
@@ -67,4 +72,31 @@ export class ReportsComponent {
   resetFilters() {
     this.LoadReport();
   }
+
+
+  downloadExcel() {
+    const fileName = 'Report.xlsx';
+  
+    // Prepare your data
+    const worksheet = XLSX.utils.json_to_sheet(this.dataSource.data.map(item => ({
+      'Employee Name': item.employeeName,
+      'Service Name': item.serviceName,
+      'Service Fee': item.serviceFee,
+      'Branch Name': item.branchName,
+      'Created Date': new Date(item.createdDate).toLocaleDateString()
+    })));
+  
+    const workbook = {
+      Sheets: { 'Service Report': worksheet },
+      SheetNames: ['Service Report']
+    };
+  
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  
+    // Save the file
+    const blobData: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    FileSaver.saveAs(blobData, fileName);
+    this.toastr.ShowSuccess('Excel file downloaded successfully!');
+  }
+  
 }
