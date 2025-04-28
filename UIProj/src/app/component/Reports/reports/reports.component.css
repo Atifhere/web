@@ -91,3 +91,23 @@
   }
   
     
+
+  .total-info-card {
+    background-color: #f8f9fa; /* Light background for contrast */
+    border: 1px solid #eef0f3; /* Border around the card */
+    border-radius: 8px; /* Slightly rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+.total-amount, .net-profit {
+    margin: 0;
+    font-size: 1.2em; /* Larger text size for better readability */
+    color: #333; /* Darker text for better contrast */
+}
+button {
+    min-width: 150px; /* Uniform button width */
+}
+@media (max-width: 768px) {
+    .total-info-card {
+        margin-bottom: 15px; /* Space between card and buttons on small screens */
+    }
+}

@@ -30,9 +30,9 @@ import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
 export class ReportsComponent {
   title = 'Reports';
   filterForm!: FormGroup;
-    pageSize = Constants.PAGE_SIZE;
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
+  pageSize = Constants.PAGE_SIZE;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = [
     'employeeName',
@@ -42,8 +42,11 @@ export class ReportsComponent {
     'createdDate',
   ];
 
-  constructor(private fb: FormBuilder, private reportService: CompanyService,
-      private toastr: ToastrSrvc) {}
+  constructor(
+    private fb: FormBuilder,
+    private reportService: CompanyService,
+    private toastr: ToastrSrvc
+  ) {}
 
   ngOnInit(): void {
     this.LoadReport();
@@ -59,13 +62,24 @@ export class ReportsComponent {
     });
     this.loadReport();
   }
-
+  totalAmount: number = 0;
   loadReport() {
     const filters = this.filterForm.value;
-    this.reportService.getServiceReport(filters).subscribe(res => {
+    this.reportService.getServiceReport(filters).subscribe((res) => {
       this.dataSource.data = res.data;
       this.dataSource.paginator = this.paginator; // Set paginator
       this.dataSource.sort = this.sort;
+      // Calculate total amount
+      if (res.data && res.data.length > 0) {
+        this.totalAmount = res.data.reduce(
+          (total: any, item: { serviceFee: any }) => total + item.serviceFee,
+          0
+        );
+        console.log('Total Amount:', this.totalAmount);
+      } else {
+        this.totalAmount = 0; // Reset total amount if no data
+        this.toastr.ShowInfo('No records found', '');
+      }
     });
   }
 
@@ -73,30 +87,35 @@ export class ReportsComponent {
     this.LoadReport();
   }
 
-
   downloadExcel() {
     const fileName = 'Report.xlsx';
-  
+
     // Prepare your data
-    const worksheet = XLSX.utils.json_to_sheet(this.dataSource.data.map(item => ({
-      'Employee Name': item.employeeName,
-      'Service Name': item.serviceName,
-      'Service Fee': item.serviceFee,
-      'Branch Name': item.branchName,
-      'Created Date': new Date(item.createdDate).toLocaleDateString()
-    })));
-  
+    const worksheet = XLSX.utils.json_to_sheet(
+      this.dataSource.data.map((item) => ({
+        'Employee Name': item.employeeName,
+        'Service Name': item.serviceName,
+        'Service Fee': item.serviceFee,
+        'Branch Name': item.branchName,
+        'Created Date': new Date(item.createdDate).toLocaleDateString(),
+      }))
+    );
+
     const workbook = {
       Sheets: { 'Service Report': worksheet },
-      SheetNames: ['Service Report']
+      SheetNames: ['Service Report'],
     };
-  
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
     // Save the file
-    const blobData: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    const blobData: Blob = new Blob([excelBuffer], {
+      type: 'application/octet-stream',
+    });
     FileSaver.saveAs(blobData, fileName);
     this.toastr.ShowSuccess('Excel file downloaded successfully!');
   }
-  
 }
