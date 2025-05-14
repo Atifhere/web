@@ -138,9 +138,12 @@ export class AppointmentsComponent {
   ) {}
 
   onAddAppointmentClick() {
-    this.dialog.open(AddAppointmentDialogComponent, {
+    const dialogRef = this.dialog.open(AddAppointmentDialogComponent, {
       width: '600px',
       maxHeight: '90vh',
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadAppointments();
     });
   }
 }
