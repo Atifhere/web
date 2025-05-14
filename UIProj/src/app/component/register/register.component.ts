@@ -6,6 +6,7 @@ import { Login, registerConfirm, UserRegister } from '../../_model/user.model';
 import { UserService } from '../../_Service/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from '../../_Service/token.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,9 @@ export class RegisterComponent {
     private Service: UserService,
     private router: Router,
     private toastr: ToastrService,
-    private tokenService: TokenService
+    private tokenService: TokenService,    
+    private dialogRef: MatDialogRef<RegisterComponent>
+
   ) {}
   regForm = this.fb.group({
     firstName: this.fb.control(
@@ -66,9 +69,9 @@ export class RegisterComponent {
           // this.router.navigateByUrl('/otp');
           this.toastr.success(this.response.Message, 'Success');
           this.Login(obj.email, obj.password);
+          this.dialogRef.close();
         } else {
-          this.toastr.error('Something went wrong Please try again.','Registration Failed');
-          alert('Something went wrong!');
+          this.toastr.error(this.response.errorMessage,'Registration Failed');
         }
       });
     }
@@ -101,5 +104,10 @@ export class RegisterComponent {
         console.log('Login Failed');
       }
     );
+  }
+
+  close()
+  {
+    this.dialogRef.close();
   }
 }

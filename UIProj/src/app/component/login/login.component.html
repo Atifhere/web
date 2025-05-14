@@ -153,6 +153,7 @@
             mat-raised-button
             color="primary"
             style="width: 100%"
+            [disabled]="isDialogOpen"
           >
             Sign In to Your Account
           </button>
@@ -160,8 +161,11 @@
       </form>
 
       <div class="text-center mt-4">
-        <span>Don’t have an account? </span>
-        <a routerLink="/register">Create one here</a>
+        <span>Don’t have an account? </span> &nbsp;&nbsp;
+        <button mat-raised-button color=""  (click)="openRegisterDialog()"
+        [disabled]="isDialogOpen">
+        Register here
+        </button>
       </div>
     </div>
   </div>

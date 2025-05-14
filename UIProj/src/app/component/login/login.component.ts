@@ -8,6 +8,7 @@ import { TokenService } from '../../_Service/token.service';
 import { AddAppointmentDialogComponent } from '../login/Appointments/add-appointment-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
 import { Overlay } from '@angular/cdk/overlay';
+import { RegisterComponent } from '../register/register.component';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     this.tokenService.Logout();
     this.Service.menuList.set([]);
   }
+  isDialogOpen = false;
 
   email:string = "atif@salonmanger.com";
   contactPerson:string = "Atif";
@@ -98,4 +100,26 @@ export class LoginComponent implements OnInit {
       position: { top: '10vh' }     // Optional: positions it below the top so it's always visible
     });
   }
+
+
+  openRegisterDialog(): void {
+    if (this.isDialogOpen) return; // Prevent double opening
+
+    this.isDialogOpen = true;
+
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '950px',
+      maxHeight: '90vh',
+      disableClose: true,
+      autoFocus: false,
+      restoreFocus: true,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      position: { top: '1vh' },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.isDialogOpen = false;
+    });
+  }
+  
 }
