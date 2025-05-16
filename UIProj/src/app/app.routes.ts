@@ -14,7 +14,7 @@ import { AddCustomerComponent } from './component/customer/add-customer/add-cust
 import { CompanyComponent } from './component/Company/company/company.component';
 import { CompanyBranchComponent } from './component/Company/company-branch/company-branch.component';
 import { StaffComponent } from './component/Staff/staff/staff.component';
-import { AppointmentsComponent } from './component/ServiceCategory/category/appointment-calendar.component';
+import { AppointmentsComponent } from './component/Appointments/appointment-calendar.component';
 import { ReportsComponent } from './component/Reports/reports/reports.component';
 import { AddCompanyComponent } from './component/Company/company/add-company/add-company.component';
 import { AddBranchComponent } from './component/Company/company-branch/add-branch/add-branch.component';
@@ -43,7 +43,7 @@ export const routes: Routes = [
     { path: 'branch/:companyId', component:CompanyBranchComponent,  canActivate:[authGuard] }, // TODO
     { path: 'branch/Add/:companyCode', component:AddBranchComponent,  canActivate:[authGuard] }, // TODO
     { path: 'branch/Edit/:code', component:AddBranchComponent,  canActivate:[authGuard] }, // TODO
-    { path: 'category', component:AppointmentsComponent,  canActivate:[authGuard] }, // TODO
+    { path: 'Appointments', component:AppointmentsComponent,  canActivate:[authGuard] }, // TODO
     { path: 'staff', component:StaffComponent,  canActivate:[authGuard] }, // TODO
     { path: 'staff/:companyId', component:StaffComponent,  canActivate:[authGuard] }, // TODO
     { path: 'staff/Add/:branchId', component:AddStaffComponent,  canActivate:[authGuard] }, // TODO

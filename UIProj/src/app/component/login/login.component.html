@@ -1,9 +1,7 @@
 <header>
   <h2 class="logo-text">Manage <span class="highlight">Salons</span></h2>
   <nav>
-    <a style="cursor: pointer" (click)="scrollToSection('features')"
-      >Features</a
-    >
+    <a style="cursor: pointer" (click)="scrollToSection('features')">Features</a>
     <a style="cursor: pointer" (click)="scrollToSection('pricing')">Pricing</a>
     <a style="cursor: pointer" (click)="scrollToSection('contact')">Contact</a>
     <!-- <a style="cursor: pointer" href="privacy">Privacy</a> -->
@@ -15,19 +13,13 @@
     <div class="row align-items-center gx-5">
       <!-- Logo / Illustration -->
       <div class="col-md-5 text-center mb-5 mb-md-0">
-        <img
-          src="assets/images/AppLogo.png"
-          alt="Manage Salons Logo"
-          style="border-radius: 50%"
-          class="img-fluid hero-img animate-float"
-        />
+        <img src="assets/images/AppLogo.png" alt="Manage Salons Logo" style="border-radius: 50%"
+          class="img-fluid hero-img animate-float" />
       </div>
 
       <!-- Content -->
       <div class="col-md-7 text-md-start text-center">
-        <span class="slogan d-inline-block mb-3 text-uppercase"
-          >Track. Manage. Grow.</span
-        >
+        <span class="slogan d-inline-block mb-3 text-uppercase">Track. Manage. Grow.</span>
         <h3 class="display-3 fw-bold text-flash mb-4">
           Welcome to <span class="gradient-text">Manage Salons</span>
         </h3>
@@ -52,17 +44,13 @@
                 <h2>Welcome to Your Premier Salon Experience </h2>
               </div>
               <div class="col-md-3 align-items-end d-flex justify-content-end mb-3">
-                <button
-                mat-raised-button
-                color="primary"
-                (click)="openAddAppointmentDialog()"
-              >
-                Book Appointment
-              </button>
+                <button mat-raised-button color="primary" (click)="openAddAppointmentDialog()">
+                  Book Appointment
+                </button>
               </div>
             </div>
-           
-           
+
+
             <p>
               Effortless booking starts here. Select your preferred salon branch,
               choose a convenient time slot, and leave the rest to us. Our expert
@@ -85,18 +73,13 @@
               <strong>exactly when it works best for you</strong>. Your time is
               valuable — let us help you make the most of it.
             </p>
-         
+
           </div>
         </div>
       </div>
     </div>
     <div class="image-section">
-      <img
-        src="assets/images/appointment.png"
-        width="50%"
-        height="50%"
-        alt="Appointment Booking"
-      />
+      <img src="assets/images/appointment.png" width="50%" height="50%" alt="Appointment Booking" />
     </div>
   </div>
 </div>
@@ -139,32 +122,24 @@
 
         <mat-form-field appearance="fill" class="w-100 mb-3">
           <mat-label>Password</mat-label>
-          <input
-            formControlName="password"
-            class="form-control"
-            matInput
-            type="password"
-          />
+          <input formControlName="password" class="form-control" matInput type="password" />
         </mat-form-field>
 
         <mat-card-actions class="d-flex justify-content-center">
-          <button
-            type="submit"
-            mat-raised-button
-            color="primary"
-            style="width: 100%"
-            [disabled]="isDialogOpen"
-          >
+          <button type="submit" mat-raised-button color="primary" style="width: 100%" [disabled]="isDialogOpen">
             Sign In to Your Account
           </button>
         </mat-card-actions>
+        @if(showError)
+        {
+        <p class="error mt-2">Invalid User Id or password.</p>
+        }
       </form>
 
       <div class="text-center mt-4">
         <span>Don’t have an account? </span> &nbsp;&nbsp;
-        <button mat-raised-button color=""  (click)="openRegisterDialog()"
-        [disabled]="isDialogOpen">
-        Register here
+        <button mat-raised-button color="" (click)="openRegisterDialog()" [disabled]="isDialogOpen">
+          Register here
         </button>
       </div>
     </div>
@@ -250,8 +225,7 @@
           We have monthly payment plan, Enjoy bunch of benefits with Monthly
           plan. Click
           <a routerLink="/register" style="color: blue; font-style: italic">
-            here</a
-          >
+            here</a>
           to get started
         </p>
       </div>
@@ -261,8 +235,7 @@
           We have monthly payment plans, Enjoy all benefits with yearly plan
           with extra <strong> 25% discount</strong>. Click
           <a routerLink="/register" style="color: blue; font-style: italic">
-            here</a
-          >
+            here</a>
           to get started
         </p>
       </div>
@@ -272,11 +245,7 @@
 <!-- Include in index.html if not already -->
 <br />
 <br />
-<section
-  id="contact"
-  class="contact-section py-5"
-  style="background: linear-gradient(to right, #eef2ff, #e0e7ff)"
->
+<section id="contact" class="contact-section py-5" style="background: linear-gradient(to right, #eef2ff, #e0e7ff)">
   <div class="container px-4 px-md-5">
     <div class="text-center mb-5">
       <h2 class="section-title">Contact Us</h2>
@@ -293,9 +262,7 @@
             <div class="col-md-6 d-flex align-items-start mb-4">
               <div class="col-md-4 d-flex align-items-start">
                 <h6 class="fw-semibold mb-1">
-                  <i
-                    class="bi bi-envelope-fill text-primary fs-4 me-3 mr-2"
-                  ></i>
+                  <i class="bi bi-envelope-fill text-primary fs-4 me-3 mr-2"></i>
                   Email:
                 </h6>
               </div>
@@ -308,8 +275,7 @@
             <div class="col-md-6 d-flex align-items-start mb-4">
               <div class="col-md-4 d-flex align-items-start">
                 <h6 class="fw-semibold mb-1">
-                  <i class="bi bi-person-fill text-primary fs-4 me-3 mr-2"> </i
-                  >Contact Person:
+                  <i class="bi bi-person-fill text-primary fs-4 me-3 mr-2"> </i>Contact Person:
                 </h6>
               </div>
               <div class="col-md-8 d-flex align-items-start">
@@ -322,8 +288,7 @@
               <div class="col-md-4 d-flex align-items-start">
                 <h6 class="fw-semibold mb-1">
                   <i class="bi bi-telephone-fill text-primary fs-4 me-3 mr-2">
-                  </i
-                  >Phone:
+                  </i>Phone:
                 </h6>
               </div>
               <div class="col-md-8 d-flex align-items-start">
@@ -335,8 +300,7 @@
             <div class="col-md-6 d-flex align-items-start mb-3">
               <div class="col-md-4 d-flex align-items-start">
                 <h6 class="fw-semibold mb-1">
-                  <i class="bi bi-geo-alt-fill text-primary fs-4 me-3 mr-2"> </i
-                  >Address:
+                  <i class="bi bi-geo-alt-fill text-primary fs-4 me-3 mr-2"> </i>Address:
                 </h6>
               </div>
               <div class="col-md-8 d-flex align-items-start">

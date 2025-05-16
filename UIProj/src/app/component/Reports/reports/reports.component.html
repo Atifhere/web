@@ -54,7 +54,9 @@
             <button mat-stroked-button color="warn" type="button" (click)="resetFilters()">
               <mat-icon>refresh</mat-icon> Reset
             </button>
-            <button mat-flat-button color="accent" type="button" (click)="downloadExcel()" >
+            <button mat-flat-button color="accent" type="button" (click)="downloadExcel()"
+            [disabled]="this.dataSource.data.length === 0"
+            >
                 <mat-icon>download</mat-icon> Download Excel
               </button>
             </div>

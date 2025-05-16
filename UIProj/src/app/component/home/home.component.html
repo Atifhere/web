@@ -158,7 +158,7 @@
             </div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
               @if(bestPerformerValue) {
-              {{ bestPerformer }}: {{ bestPerformerValue }} AED } @else { }
+              {{ bestPerformer }}: {{ bestPerformerValue }} AED } @else { No Data Found }
             </div>
             <div class="mt-1 text-xs text-muted">
               <mat-icon
@@ -242,7 +242,7 @@
       </div>
     </div>
   </div>
-  @if(insights?.topPerformersTimeline?.length === 0){
+  @if(insights && insights.topPerformersTimeline && insights.topPerformersTimeline.length === 0){
     <div class="no-transactions">
       <p class="no-data-text">🔍  No performers found</p>
     </div>
@@ -271,7 +271,7 @@
           Revenue trend over the last 6 months
         </p>
         } @else {
-        <b class="small mb-0">No Data found</b>
+        <b class="small mb-0 error">No Data found</b>
         }
       </div>
     </div>

@@ -44,12 +44,10 @@ export class AddBranchComponent implements OnInit {
   ngOnInit(): void {
     this.loadStates();
     this.editCode = this.activateRoute.snapshot.paramMap.get('code') as string;
-    debugger;
     this.companyCode = this.activateRoute.snapshot.paramMap.get(
       'companyCode'
     ) as string;
     this.companyName = localStorage.getItem('CompanyToAddBranch') as string;
-    debugger;
     if (this.editCode != '' && this.editCode != null) {
       this.isEdit = true;
       this.Title = 'Edit Branch';

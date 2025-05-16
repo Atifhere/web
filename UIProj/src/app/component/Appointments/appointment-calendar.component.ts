@@ -5,12 +5,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import { EventInput } from '@fullcalendar/core';
-import { CompanyService } from '../../../_Service/Company/company.service';
-import { AddAppointmentDialogComponent } from '../../login/Appointments/add-appointment-dialog-component';
+import { CompanyService } from '../../_Service/Company/company.service';
+import { AddAppointmentDialogComponent } from '../login/Appointments/add-appointment-dialog-component';
 import { MatDialog } from '@angular/material/dialog';
-import { MaterialModule } from '../../../material.module';
-import { ConfirmArrivalDialogComponent } from '../../login/confirm-arrival-dialog/confirm-arrival-dialog.component';
-import { AppointmentsDto } from '../../../_model/Appointments.modal';
+import { MaterialModule } from '../../material.module';
+import { ConfirmArrivalDialogComponent } from '../login/confirm-arrival-dialog/confirm-arrival-dialog.component';
+import { AppointmentsDto } from '../../_model/Appointments.modal';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 
 const calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];

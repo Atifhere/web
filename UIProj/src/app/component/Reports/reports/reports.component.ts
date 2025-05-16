@@ -90,6 +90,8 @@ export class ReportsComponent {
   downloadExcel() {
     const fileName = 'Report.xlsx';
 
+    console.log(this.dataSource.data.length);
+    return;
     // Prepare your data
     const worksheet = XLSX.utils.json_to_sheet(
       this.dataSource.data.map((item) => ({

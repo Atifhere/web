@@ -1,7 +1,7 @@
 <h2 mat-dialog-title class="dialog-title">Register yourself</h2>
 
 
-<form [formGroup]="regForm"  class="container mb-5">
+<form [formGroup]="regForm" class="container mb-5">
   <div class="appointment-description">
     <strong class="mb-3 align-items-center ">After Registration You will get access to below features:</strong>
 
@@ -14,15 +14,20 @@
         <li><strong>Add branches</strong> to manage multiple locations effortlessly.</li>
         <li><strong>Onboard employees</strong> and assign them to specific branches.</li>
         <li>
-          Employees can access their schedules and manage appointments through our mobile app, available on both <strong>Android</strong> and <strong>iOS</strong> platforms.
+          Employees can access their schedules and manage appointments through our mobile app, available on both
+          <strong>Android</strong> and <strong>iOS</strong> platforms.
         </li>
       </ul>
     </div>
   </div>
   <mat-card-content>
-    <div *ngIf="showError" class="text-center mb-3">
+    @if(showError)
+    {
+    <div class="text-center mb-3">
       <span class="text-danger">Registration Failed</span>
     </div>
+    }
+
 
     <div class="row">
       <div class="col-md-6 mb-3">
@@ -73,16 +78,12 @@
       <button mat-stroked-button color="warn" type="button" (click)="close()">
         Cancel
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="Register()"
-      >
-      Register
+      <button mat-raised-button color="primary" (click)="Register()">
+        Register
       </button>
     </div>
   </div>
-  
+
   <!-- <mat-card-actions class="d-flex justify-content-between px-3 pb-3">
     <button type="submit" mat-raised-button color="primary" (click)="Register()">
       Register

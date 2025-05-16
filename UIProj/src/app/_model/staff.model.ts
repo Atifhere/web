@@ -6,6 +6,8 @@ export interface Staff{
     phone: string,
     email: string,
     address: string,
+    percentageShare: number,
+    monthlyTarget: number,
     createdBy: string,
     isActive: boolean,
     status: string

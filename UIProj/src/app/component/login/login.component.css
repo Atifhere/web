@@ -109,7 +109,7 @@ header {
     padding: 12px 18px;
     border-left: 5px solid #224abe;
     margin-bottom: 10px;
-    border-radius: 6px;
+    border-radius: 16px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
   }

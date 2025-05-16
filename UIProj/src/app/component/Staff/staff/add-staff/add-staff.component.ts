@@ -33,7 +33,7 @@ export class AddStaffComponent {
     private companyBranchService: CompanyBranchService,
     private activateRoute: ActivatedRoute,
     private toastr: ToastrSrvc
-  ) {}
+  ) { }
 
   staffForm = this.fb.group({
     id: this.fb.control(''),
@@ -42,6 +42,8 @@ export class AddStaffComponent {
     emiratesId: this.fb.control('', Validators.required),
     email: this.fb.control('', Validators.required),
     phone: this.fb.control('', Validators.required),
+    monthlyTarget: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(100000)]),
+    percentageShare: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(100)]),
     address: this.fb.control('', Validators.required),
     companyBranchId: this.fb.control('', Validators.required),
     isActive: this.fb.control(true),
@@ -73,6 +75,8 @@ export class AddStaffComponent {
           companyBranchId: this.editData.companyBranchId,
           emiratesId: this.editData.emiratesId,
           CompanyBranchName: '',
+          monthlyTarget: this.editData.monthlyTarget,
+          percentageShare: this.editData.percentageShare
         });
       });
     }
@@ -100,6 +104,8 @@ export class AddStaffComponent {
         isActive: this.staffForm.value.isActive as boolean,
         status: '',
         companyBranchName: '',
+        monthlyTarget: this.staffForm.value.monthlyTarget as number,
+        percentageShare: this.staffForm.value.percentageShare as number
       };
       if (!this.isEdit) {
         this.staffService.CreateStaff(staffObj).subscribe((item) => {
