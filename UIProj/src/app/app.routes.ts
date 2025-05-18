@@ -21,6 +21,7 @@ import { AddBranchComponent } from './component/Company/company-branch/add-branc
 import { AddStaffComponent } from './component/Staff/staff/add-staff/add-staff.component';
 import { PrivacyComponent } from './component/privacy/privacy.component';
 import { AddAppointmentDialogComponent } from './component/login/Appointments/add-appointment-dialog-component';
+import { CompanyProfileComponent } from './component/Company/company-profile/company-profile.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, canActivate:[authGuard] },
@@ -49,5 +50,6 @@ export const routes: Routes = [
     { path: 'staff/Add/:branchId', component:AddStaffComponent,  canActivate:[authGuard] }, // TODO
     { path: 'staff/Edit/:code', component:AddStaffComponent,  canActivate:[authGuard] }, // TODO
     { path: 'reports', component:ReportsComponent,  canActivate:[authGuard] }, // TODO
-    { path: 'privacy', component:PrivacyComponent}, // TODO
+    { path: 'privacy', component:PrivacyComponent}, 
+    { path: 'companyProfile', component:CompanyProfileComponent},
 ];
