@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserService } from '../../_Service/user.service';
 import { Router, RouterLink } from '@angular/router';
-import { registerConfirm, ResetPassword, UserRegister } from '../../_model/user.model';
+import { ResetPassword } from '../../_model/user.model';
 import { MaterialModule } from '../../material.module';
 
 @Component({
@@ -13,39 +13,64 @@ import { MaterialModule } from '../../material.module';
   styleUrl: './reset-password.component.css'
 })
 export class ResetPasswordComponent implements OnInit {
-  constructor(private fb: FormBuilder, private Service: UserService, private router: Router) {}
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private service: UserService, private router: Router) { }
 
-  }
+  ngOnInit(): void { }
+
   resetForm = this.fb.group({
-    // userName: this.fb.control('', Validators.required),
-    oldPassword: this.fb.control('', Validators.required),
-    newPassword: this.fb.control('', Validators.required),
-  });
+    oldPassword: ['', Validators.required],
+    newPassword: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required]
+  }, { validators: this.passwordsMatchValidator });
+
   response: any;
+
+  passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const newPasswordControl = group.get('newPassword');
+    const confirmPasswordControl = group.get('confirmPassword');
+
+    if (!newPasswordControl || !confirmPasswordControl) return null;
+
+    const newPassword = newPasswordControl.value;
+    const confirmPassword = confirmPasswordControl.value;
+
+    if (newPassword !== confirmPassword) {
+      confirmPasswordControl.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      // clear only passwordMismatch error if it exists
+      if (confirmPasswordControl.hasError('passwordMismatch')) {
+        confirmPasswordControl.setErrors(null);
+      }
+      return null;
+    }
+  }
 
 
   ProceedChange() {
-    console.log('Register hit');
-
-    if (this.resetForm.valid) {
-      let obj: ResetPassword = {
-        userName: localStorage.getItem('userName') as string,
-        oldPassword: this.resetForm.value.oldPassword as string,
-        newPassword : this.resetForm.value.newPassword as string
-      };
-      // console.log('Register hit', obj);
-      this.Service.ResetPassword(obj).subscribe((item) => {
-        this.response = item;
-        if (this.response.success == true) {
-
-        
-          alert('Please login with new password.');
-          this.router.navigateByUrl('/login');
-        } else {
-          alert(this.response.errorMessage);
-        }
-      });
+    if (this.resetForm.invalid) {
+      this.resetForm.markAllAsTouched();
+      return;
     }
+
+    const obj: ResetPassword = {
+      userName: localStorage.getItem('userName') || '',
+      oldPassword: this.resetForm.value.oldPassword!,
+      newPassword: this.resetForm.value.newPassword!
+    };
+
+    this.service.ResetPassword(obj).subscribe((item) => {
+      this.response = item;
+      if (this.response.success) {
+        alert('Please login with new password.');
+        this.router.navigateByUrl('/login');
+      } else {
+        alert(this.response.errorMessage);
+      }
+    });
+  }
+
+  get f() {
+    return this.resetForm.controls;
   }
 }

@@ -16,7 +16,6 @@ export const authInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
       let url = e.url;
       if (e.status === 401 && !url?.includes('GenerateToken')) {
         // tokenService.removeToken();
-        alert('Your session has been expired.');
         router.navigateByUrl('/login');
         return EMPTY;
       }

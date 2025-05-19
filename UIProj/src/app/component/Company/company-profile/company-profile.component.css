@@ -1,0 +1,202 @@
+/* Shared Tab Section Styles */
+.tab-section {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Header Styling */
+.tab-header {
+  text-align: center;
+  background: linear-gradient(to right, #3f51b5, #5c6bc0);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+
+.tab-header h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+/* Card Container */
+.tab-card {
+  padding: 2rem;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+/* Footer */
+.tab-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  max-width: 1000px;
+}
+
+/* Form Field Layout */
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.half-width {
+  width: 48%;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Partner Layout */
+.partner-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-left: 4px solid #3f51b5;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Button Areas */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-partner-btn {
+  margin-top: 1rem;
+}
+
+.submit-btn {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Reset Password Specific */
+.reset-card {
+  width: 100%;
+  margin: 40px auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.card-header h1 {
+  font-size: 1.8rem;
+  margin: 0 auto 1rem auto;
+  text-align: center;
+  color: #3f51b5;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  .half-width {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+
+
+.partners-section {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-header h2 {
+  margin-bottom: 4px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+.partner-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 26px;
+}
+
+.partner-card {
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+}
+
+.partner-info h4 {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  color: #2b2b2b;
+}
+
+.partner-info p {
+  margin: 14px 0;
+  font-size: 16px;
+  color: #444;
+}
+
+.toggle-form {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-partner-form {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.partner-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.form-field {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

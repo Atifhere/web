@@ -6,6 +6,7 @@ import { LatestTransactionDto, MonthlyRevenueChartDto } from '../../_model/Chart
 import { Observable } from 'rxjs';
 import { DashboardInsightsDto } from '../../_model/Dashboard.modal';
 import { AppointmentsDto } from '../../_model/Appointments.modal';
+import { Partner } from '../../_model/Partner.modal';
 
 @Injectable({
   providedIn: 'root'
@@ -90,4 +91,7 @@ export class CompanyService {
     return this.http.post<any>(`${this.baseUrl}GetServiceReport`, reportData, { headers });
   }
 
+  addPartner(companyId: number, partner: Partner): Observable<any> {
+    return this.http.post(`${this.baseUrl}Partners`, partner);
+  }
 }

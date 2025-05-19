@@ -1,1 +1,91 @@
-<p>company-profile works!</p>
+<mat-tab-group>
+    <!-- Company Profile Tab -->
+    <mat-tab label="Company Profile">
+        <section class="partners-section">
+
+            <div class="tab-header">
+                <h2>🧑‍🤝‍🧑 Partners</h2>
+                <p>Here's a list of current partners in the company.</p>
+            </div>
+            <!-- Static Partner List -->
+            <div class="partner-list">
+                <mat-card class="partner-card" *ngFor="let partner of staticPartners">
+                    <div class="partner-info">
+                        <h4 class="partner-name">
+                            <mat-icon color="primary">person</mat-icon>
+                            {{ partner.name }}
+                        </h4>
+                        <p><strong>Share:</strong> {{ partner.share }}%</p>
+                        <p><strong>Mobile:</strong> {{ partner.mobile }}</p>
+                        <p><strong>Address:</strong> {{ partner.address }}</p>
+                    </div>
+                </mat-card>
+            </div>
+
+            <!-- Toggle Add Partner Form -->
+            <div class="toggle-form">
+                <button mat-stroked-button color="primary" (click)="showAddForm = !showAddForm">
+                    <mat-icon>{{ showAddForm ? 'close' : 'add' }}</mat-icon>
+                    {{ showAddForm ? 'Cancel' : 'Add New Partner' }}
+                </button>
+            </div>
+
+            <!-- Add Partner Form -->
+            <div *ngIf="showAddForm" class="add-partner-form">
+                <mat-card>
+                    <form [formGroup]="newPartnerForm" (ngSubmit)="saveNewPartner()" class="partner-form">
+                        <div class="form-row">
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Partner Name</mat-label>
+                                <input matInput formControlName="name" placeholder="Khan" required>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Company Share (%)</mat-label>
+                                <input matInput formControlName="share" type="number" placeholder="e.g. 25" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Mobile No</mat-label>
+                                <input matInput formControlName="mobile" type="tel" placeholder="9876543210" required>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Address</mat-label>
+                                <input matInput formControlName="address" placeholder="123 Main St" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-actions mr-2 mb-2">
+                            <button mat-flat-button color="primary" type="submit">Add Partner</button>
+                        </div>
+                    </form>
+                </mat-card>
+            </div>
+        </section>
+    </mat-tab>
+
+
+
+
+    <!-- Reset Password Tab -->
+    <mat-tab label="Reset Password">
+        <section class="tab-section">
+            <div class="tab-header">
+                <h2>🔒 Reset Your Password</h2>
+                <p>Keep your account secure by regularly updating your password.</p>
+            </div>
+
+            <mat-card class="tab-card">
+                <app-reset-password></app-reset-password>
+            </mat-card>
+
+            <div class="tab-footer">
+                <p>Need help? Contact support at <a href="#">supportcompany.com</a></p>
+            </div>
+        </section>
+    </mat-tab>
+
+</mat-tab-group>
