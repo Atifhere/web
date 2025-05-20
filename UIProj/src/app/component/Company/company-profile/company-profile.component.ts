@@ -178,6 +178,6 @@ export class CompanyProfileComponent implements OnInit {
       error: (err) => console.error('Failed to fetch partner earnings', err)
     });
   }
-
+ email : string = 'atif@managesalons.com';
 
 }

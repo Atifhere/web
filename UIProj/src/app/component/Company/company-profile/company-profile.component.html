@@ -158,29 +158,29 @@
                     </div>
 
                     <!-- Results Table -->
-                    <table mat-table [dataSource]="earnings" class="mat-elevation-z2 w-full">
+                    <table *ngIf="earnings.length > 0" mat-table [dataSource]="earnings" class="mat-elevation-z2 w-full">
 
                         <!-- Partner Name -->
                         <ng-container matColumnDef="partnerName">
-                            <th mat-header-cell *matHeaderCellDef>Partner</th>
+                            <th mat-header-cell *matHeaderCellDef>Partner Name</th>
                             <td mat-cell *matCellDef="let e">{{ e.partnerName }}</td>
                         </ng-container>
 
                         <!-- Total Revenue -->
                         <ng-container matColumnDef="totalRevenue">
-                            <th mat-header-cell *matHeaderCellDef>Company Revenue</th>
+                            <th mat-header-cell *matHeaderCellDef>Company Revenue (AED)</th>
                             <td mat-cell *matCellDef="let e">{{ e.totalCompanyRevenue }}</td>
                         </ng-container>
 
                         <!-- Share -->
                         <ng-container matColumnDef="share">
-                            <th mat-header-cell *matHeaderCellDef>Share (%)</th>
+                            <th mat-header-cell *matHeaderCellDef>Company Share (%)</th>
                             <td mat-cell *matCellDef="let e">{{ e.companyPercentageShare }}</td>
                         </ng-container>
 
                         <!-- Earnings -->
                         <ng-container matColumnDef="earnings">
-                            <th mat-header-cell *matHeaderCellDef>Earnings</th>
+                            <th mat-header-cell *matHeaderCellDef>Partner Earnings (AED)</th>
                             <td mat-cell *matCellDef="let e">{{ e.partnerEarnings | number:'1.2-2' }}</td>
                         </ng-container>
 
@@ -192,7 +192,7 @@
             </mat-card>
 
             <div class="tab-footer">
-                <p>Need help? Contact support at <a href="#">supportcompany.com</a></p>
+                <p>Need help? Contact support at <a href="#">{{email}}</a></p>
             </div>
         </section>
     </mat-tab>
