@@ -91,7 +91,7 @@ export class CompanyService {
     return this.http.post<any>(`${this.baseUrl}GetServiceReport`, reportData, { headers });
   }
 
-  addPartner(companyId: number, partner: Partner): Observable<any> {
+  addPartner(companyId: string, partner: Partner): Observable<any> {
     return this.http.post(`${this.baseUrl}Partners`, partner);
   }
 }

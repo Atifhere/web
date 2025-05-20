@@ -7,49 +7,83 @@
                 <h2>🧑‍🤝‍🧑 Partners</h2>
                 <p>Here's a list of current partners in the company.</p>
             </div>
-            <!-- Static Partner List -->
+
+            <!-- Dynamic Partner List -->
             <div class="partner-list">
-                <mat-card class="partner-card" *ngFor="let partner of staticPartners">
+                <mat-card class="partner-card" *ngFor="let partner of partners">
                     <div class="partner-info">
-                        <h4 class="partner-name">
-                            <mat-icon color="primary">person</mat-icon>
-                            {{ partner.name }}
+                        <h4 class="partner-name d-flex align-center justify-between">
+                            <span>
+                                <mat-icon color="primary">person</mat-icon>
+                                {{ partner.fullName }}
+                            </span>
+
+                            <span class="edit-actions">
+                                <button mat-icon-button color="accent" (click)="editPartner(partner)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" (click)="deletePartner(partner)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </span>
                         </h4>
-                        <p><strong>Share:</strong> {{ partner.share }}%</p>
-                        <p><strong>Mobile:</strong> {{ partner.mobile }}</p>
+
+                        <p><strong>Email:</strong> {{ partner.email }}</p>
+                        <p><strong>Phone:</strong> {{ partner.phone }}</p>
+                        <p><strong>Position:</strong> {{ partner.position }}</p>
+                        <p><strong>Share:</strong> {{ partner.companyPercentageShare }}%</p>
                         <p><strong>Address:</strong> {{ partner.address }}</p>
                     </div>
-                </mat-card>
-            </div>
 
-            <!-- Toggle Add Partner Form -->
-            <div class="toggle-form">
-                <button mat-stroked-button color="primary" (click)="showAddForm = !showAddForm">
-                    <mat-icon>{{ showAddForm ? 'close' : 'add' }}</mat-icon>
-                    {{ showAddForm ? 'Cancel' : 'Add New Partner' }}
+
+                </mat-card>
+                <!-- Toggle Add Partner Form -->
+
+            </div>
+            <div class="toggle-form" *ngIf="!showAddForm">
+                <button mat-stroked-button color="primary" (click)="toggleAddForm()">
+                    <mat-icon>{{ showAddForm && !editingPartner ? 'close' : 'add' }}</mat-icon>
+                    {{ showAddForm && !editingPartner ? 'Cancel' : 'Add New Partner' }}
                 </button>
             </div>
 
             <!-- Add Partner Form -->
+            <!-- Add/Edit Partner Form -->
             <div *ngIf="showAddForm" class="add-partner-form">
                 <mat-card>
-                    <form [formGroup]="newPartnerForm" (ngSubmit)="saveNewPartner()" class="partner-form">
+                    <form [formGroup]="newPartnerForm" (ngSubmit)="editingPartner ? updatePartner() : saveNewPartner()"
+                        class="partner-form">
+                        <h3>{{ editingPartner ? 'Edit Partner' : 'Add New Partner' }}</h3>
+
                         <div class="form-row">
                             <mat-form-field appearance="outline" class="form-field">
-                                <mat-label>Partner Name</mat-label>
-                                <input matInput formControlName="name" placeholder="Khan" required>
+                                <mat-label>Full Name</mat-label>
+                                <input matInput formControlName="fullName" placeholder="Khan" required>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="form-field">
-                                <mat-label>Company Share (%)</mat-label>
-                                <input matInput formControlName="share" type="number" placeholder="e.g. 25" required>
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="email" type="email" placeholder="khan@example.com">
                             </mat-form-field>
                         </div>
 
                         <div class="form-row">
                             <mat-form-field appearance="outline" class="form-field">
-                                <mat-label>Mobile No</mat-label>
-                                <input matInput formControlName="mobile" type="tel" placeholder="9876543210" required>
+                                <mat-label>Phone</mat-label>
+                                <input matInput formControlName="phone" type="tel" placeholder="9876543210" required>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Position</mat-label>
+                                <input matInput formControlName="position" placeholder="Director" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Company Share (%)</mat-label>
+                                <input matInput formControlName="companyPercentageShare" type="number"
+                                    placeholder="e.g. 25" required>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="form-field">
@@ -59,13 +93,17 @@
                         </div>
 
                         <div class="form-actions mr-2 mb-2">
-                            <button mat-flat-button color="primary" type="submit">Add Partner</button>
+                            <button mat-flat-button color="primary" type="submit">
+                                {{ editingPartner ? 'Update Partner' : 'Add Partner' }}
+                            </button>
+                            <button mat-stroked-button type="button" (click)="cancelEdit()" color="warn">Cancel</button>
                         </div>
                     </form>
                 </mat-card>
             </div>
         </section>
     </mat-tab>
+
 
 
 
@@ -80,6 +118,77 @@
 
             <mat-card class="tab-card">
                 <app-reset-password></app-reset-password>
+            </mat-card>
+
+            <div class="tab-footer">
+                <p>Need help? Contact support at <a href="#">supportcompany.com</a></p>
+            </div>
+        </section>
+    </mat-tab>
+
+    <!-- Reset Password Tab -->
+    <mat-tab label="Earnings">
+        <section class="tab-section">
+            <div class="tab-header">
+                <h2>💼 Partner Earnings Overview</h2>
+                <p>Track your monthly earnings and revenue share performance.</p>
+            </div>
+
+            <mat-card class="tab-card">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-4">Earnings Summary</h2>
+
+                    <!-- Filters -->
+                    <div class="flex gap-4 mb-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Year</mat-label>
+                            <input matInput type="number" [(ngModel)]="selectedYear" min="2000" max="2100" />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Month</mat-label>
+                            <mat-select [(ngModel)]="selectedMonth">
+                                <mat-option *ngFor="let m of months" [value]="m.value">
+                                    {{ m.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button mat-flat-button color="primary" (click)="fetchEarnings()">Get Report</button>
+                    </div>
+
+                    <!-- Results Table -->
+                    <table mat-table [dataSource]="earnings" class="mat-elevation-z2 w-full">
+
+                        <!-- Partner Name -->
+                        <ng-container matColumnDef="partnerName">
+                            <th mat-header-cell *matHeaderCellDef>Partner</th>
+                            <td mat-cell *matCellDef="let e">{{ e.partnerName }}</td>
+                        </ng-container>
+
+                        <!-- Total Revenue -->
+                        <ng-container matColumnDef="totalRevenue">
+                            <th mat-header-cell *matHeaderCellDef>Company Revenue</th>
+                            <td mat-cell *matCellDef="let e">{{ e.totalCompanyRevenue }}</td>
+                        </ng-container>
+
+                        <!-- Share -->
+                        <ng-container matColumnDef="share">
+                            <th mat-header-cell *matHeaderCellDef>Share (%)</th>
+                            <td mat-cell *matCellDef="let e">{{ e.companyPercentageShare }}</td>
+                        </ng-container>
+
+                        <!-- Earnings -->
+                        <ng-container matColumnDef="earnings">
+                            <th mat-header-cell *matHeaderCellDef>Earnings</th>
+                            <td mat-cell *matCellDef="let e">{{ e.partnerEarnings | number:'1.2-2' }}</td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+
             </mat-card>
 
             <div class="tab-footer">

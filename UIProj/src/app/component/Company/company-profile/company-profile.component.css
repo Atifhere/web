@@ -200,3 +200,15 @@
     transform: translateY(0);
   }
 }
+
+
+.partner-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.edit-actions button {
+  margin-left: 4px;
+}
