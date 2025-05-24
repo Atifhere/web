@@ -20,7 +20,7 @@ export class BillingComponent implements OnInit {
   billingForm!: FormGroup;
   showAddBilling = false;
   NewBillingRecord = "New Billing Record";
-  displayedColumns: string[] = ['receiptNumber', 'amount', 'month', 'year', 'createdDate'];
+  displayedColumns: string[] = ['companyBranchId', 'receiptNumber', 'amount', 'month', 'year', 'createdDate'];
   dataSource = new MatTableDataSource<any>();
   branches: any[] = [];
   pageSize = Constants.PAGE_SIZE;
@@ -49,8 +49,8 @@ export class BillingComponent implements OnInit {
       companyBranchId: ['', Validators.required],
       year: [new Date().getFullYear(), Validators.required],
       month: [new Date().getMonth() + 1, Validators.required],
-      amount: [null],
-      receiptNumber: ['']
+      amount: [null, Validators.required],
+      receiptNumber: ['', Validators.required]
     });
 
     this.dataSource.paginator = this.paginator;
@@ -82,7 +82,9 @@ export class BillingComponent implements OnInit {
         .addBillingRecord({ companyBranchId, year, month, amount, receiptNumber })
         .subscribe(() => {
           this.fetchBillingRecords();
-          this.billingForm.patchValue({ amount: null, receiptNumber: '' });
+          this.billingForm.get('amount')?.reset();
+          this.billingForm.get('receiptNumber')?.reset();
+          this.showAddBilling = false;
         });
     }
   }
@@ -98,7 +100,7 @@ export class BillingComponent implements OnInit {
 
   getBranchName(branchId: string): string {
     const branch = this.branches.find(b => b.id === branchId);
-    return branch ? branch.name : 'Unknown';
+    return branch ? branch.branchName : 'Unknown';
   }
 
   loadBranches(): void {

@@ -22,8 +22,6 @@ export class BillingService {
     const params = new HttpParams()
       .set('year', year.toString())
       .set('month', month.toString());
-
-      debugger
     return this.http.get<BillingRecord[]>(`${this.baseUrl}`, { params });
   }
 }

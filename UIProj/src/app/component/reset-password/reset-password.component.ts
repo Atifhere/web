@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserService } from '../../_Service/user.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ResetPassword } from '../../_model/user.model';
 import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, MaterialModule, RouterLink],
+  imports: [ReactiveFormsModule, MaterialModule],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css'
 })
@@ -73,4 +73,14 @@ export class ResetPasswordComponent implements OnInit {
   get f() {
     return this.resetForm.controls;
   }
+
+  onCancel(): void {
+    this.resetForm.reset({
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    });
+  }
+
+
 }

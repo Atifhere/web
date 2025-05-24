@@ -137,7 +137,8 @@
                     </div>
 
                     <!-- Results Table -->
-                    <table *ngIf="earnings.length > 0" mat-table [dataSource]="earnings" class="mat-elevation-z2 w-full">
+                    <table *ngIf="earnings.length > 0" mat-table [dataSource]="earnings"
+                        class="mat-elevation-z2 w-full">
 
                         <!-- Partner Name -->
                         <ng-container matColumnDef="partnerName">
@@ -181,9 +182,8 @@
         <section class="tab-section">
             <div class="tab-header">
                 <h2>💼 Billing Management</h2>
-                <p>Update your billing data and keep updated on the yearly payments</p>
+                <p>Manage and track billing records to stay informed on annual payments and financial updates.</p>
             </div>
-
             <mat-card class="tab-card">
                 <app-billing></app-billing>
             </mat-card>

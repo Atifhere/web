@@ -15,3 +15,9 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
