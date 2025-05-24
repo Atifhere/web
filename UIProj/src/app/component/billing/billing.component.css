@@ -1,0 +1,17 @@
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.toggle-form {
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+}

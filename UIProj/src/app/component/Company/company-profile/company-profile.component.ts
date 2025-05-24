@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
 import { ResetPasswordComponent } from '../../reset-password/reset-password.component';
+import { BillingComponent } from '../../billing/billing.component';
 import { CompanyService } from '../../../_Service/Company/company.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Partner } from '../../../_model/Partner.modal';
@@ -13,7 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-company-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule, ResetPasswordComponent, 
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule, ResetPasswordComponent, BillingComponent, 
     FormsModule
   ],
   templateUrl: './company-profile.component.html',
