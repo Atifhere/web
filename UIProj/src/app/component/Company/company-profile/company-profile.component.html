@@ -1,13 +1,139 @@
 <mat-tab-group>
+
+    <!-- Earnings Tab -->
+    <mat-tab label="💰 Earnings">
+        <section class="tab-section">
+            <div class="tab-header">
+                <h2>Partner Earnings Overview</h2>
+                <p>Track your monthly earnings and revenue share performance.</p>
+            </div>
+
+            <mat-card class="tab-card">
+                <div class="">
+                    <h2 class="text-xl font-bold mb-4 ml-2">Earnings Summary</h2>
+
+                    <!-- Filters -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Year</mat-label>
+                                <input matInput type="number" [(ngModel)]="selectedYear" min="2000" max="2100" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Month</mat-label>
+                                <mat-select [(ngModel)]="selectedMonth">
+                                    <mat-option *ngFor="let m of months" [value]="m.value">
+                                        {{ m.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <button mat-flat-button color="primary" class="ml-3" (click)="fetchEarnings()">Get
+                            Report</button>
+                    </div>
+
+                    <!-- Results Table -->
+                    <!-- Summary Section -->
+                    @if(earnings != null && earnings[0]?.monthlyExpense != null)
+                    {
+
+                    <mat-card class="mb-4 p-4 bg-light">
+                        <h3>📊 Monthly Summary</h3>
+                        <div class="summary-grid">
+                            <div>
+                                <strong>Employee Worked For: </strong>
+                                <span class="ml-2"> {{ earnings[0]?.totalRevenue }} AED</span>
+                            </div>
+                            <div>
+                                <strong>Monthly Expenses:</strong>
+                                <span class="ml-2"> {{ earnings[0]?.monthlyExpense}} AED</span>
+                            </div>
+                            <div>
+                                <strong>Total Company Revenue:</strong>
+                                <span class="ml-2">
+                                    {{ earnings[0]?.totalRevenue }} - {{ earnings[0]?.monthlyExpense }} =
+
+                                    {{ earnings[0]?.totalCompanyRevenue }} AED</span>
+                            </div>
+                        </div>
+                    </mat-card>
+
+                    <!-- Partner Earnings Table -->
+                    <mat-card class="p-4">
+                        <h3>👥 Partner Earnings</h3>
+                        <table *ngIf="earnings.length > 0" mat-table [dataSource]="earnings"
+                            class="mat-elevation-z2 w-full">
+
+                            <!-- Partner Name -->
+                            <ng-container matColumnDef="partnerName">
+                                <th mat-header-cell *matHeaderCellDef>Partner Name</th>
+                                <td mat-cell *matCellDef="let e">{{ e.partnerName }}</td>
+                            </ng-container>
+
+                            <!-- Company Share -->
+                            <ng-container matColumnDef="companyPercentageShare">
+                                <th mat-header-cell *matHeaderCellDef>Company Share (%)</th>
+                                <td mat-cell *matCellDef="let e">{{ e.companyPercentageShare }}</td>
+                            </ng-container>
+
+                            <!-- Partner Earnings -->
+                            <ng-container matColumnDef="partnerEarnings">
+                                <th mat-header-cell *matHeaderCellDef>Partner Earnings (AED)</th>
+                                <td mat-cell *matCellDef="let e">{{ e.partnerEarnings | number:'1.2-2' }}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </mat-card>
+                    }
+
+                </div>
+
+            </mat-card>
+
+            <div class="tab-footer">
+                <p>Need help? Contact support at <a href="#">{{email}}</a></p>
+            </div>
+        </section>
+    </mat-tab>
+
+    <!-- Expenses Tab -->
+    <mat-tab label="💼 Expenses">
+        <section class="tab-section">
+            <div class="tab-header">
+                <h2>Expense Records </h2>
+                <p>Track and manage your company’s expenses efficiently.</p>
+            </div>
+
+            <mat-card class="tab-card">
+                <app-expenses></app-expenses>
+            </mat-card>
+
+            <div class="tab-footer">
+                <p>Need help? Contact support at <a href="#">supportcompany.com</a></p>
+            </div>
+        </section>
+    </mat-tab>
+
+
     <!-- Company Profile Tab -->
-    <mat-tab label="Company Profile">
+    <mat-tab label="🧑‍🤝‍🧑 Partners">
         <section class="partners-section">
 
             <div class="tab-header">
-                <h2>🧑‍🤝‍🧑 Partners</h2>
+                <h2>Partners</h2>
                 <p>Here's a list of current partners in the company.</p>
             </div>
-
+            <div class="toggle-form" *ngIf="!showAddForm" class="d-flex justify-between items-center mb-4">
+                <button mat-stroked-button color="primary" (click)="toggleAddForm()"
+                    class="text-lg font-semibold mt-2 ml-3" style="cursor: pointer;">
+                    <mat-icon>{{ showAddForm && !editingPartner ? 'close' : 'add' }}</mat-icon>
+                    {{ showAddForm && !editingPartner ? 'Cancel' : 'Add New Partner' }}
+                </button>
+            </div>
             <!-- Dynamic Partner List -->
             <div class="partner-list">
                 <mat-card class="partner-card" *ngFor="let partner of partners">
@@ -39,12 +165,6 @@
                 </mat-card>
                 <!-- Toggle Add Partner Form -->
 
-            </div>
-            <div class="toggle-form" *ngIf="!showAddForm">
-                <button mat-stroked-button color="primary" (click)="toggleAddForm()">
-                    <mat-icon>{{ showAddForm && !editingPartner ? 'close' : 'add' }}</mat-icon>
-                    {{ showAddForm && !editingPartner ? 'Cancel' : 'Add New Partner' }}
-                </button>
             </div>
 
             <!-- Add Partner Form -->
@@ -105,83 +225,11 @@
     </mat-tab>
 
 
-    <!-- Earnings Tab -->
-    <mat-tab label="Earnings">
-        <section class="tab-section">
-            <div class="tab-header">
-                <h2>💼 Partner Earnings Overview</h2>
-                <p>Track your monthly earnings and revenue share performance.</p>
-            </div>
-
-            <mat-card class="tab-card">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold mb-4">Earnings Summary</h2>
-
-                    <!-- Filters -->
-                    <div class="flex gap-4 mb-4">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Select Year</mat-label>
-                            <input matInput type="number" [(ngModel)]="selectedYear" min="2000" max="2100" />
-                        </mat-form-field>
-
-                        <mat-form-field appearance="outline">
-                            <mat-label>Select Month</mat-label>
-                            <mat-select [(ngModel)]="selectedMonth">
-                                <mat-option *ngFor="let m of months" [value]="m.value">
-                                    {{ m.name }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-                        <button mat-flat-button color="primary" (click)="fetchEarnings()">Get Report</button>
-                    </div>
-
-                    <!-- Results Table -->
-                    <table *ngIf="earnings.length > 0" mat-table [dataSource]="earnings"
-                        class="mat-elevation-z2 w-full">
-
-                        <!-- Partner Name -->
-                        <ng-container matColumnDef="partnerName">
-                            <th mat-header-cell *matHeaderCellDef>Partner Name</th>
-                            <td mat-cell *matCellDef="let e">{{ e.partnerName }}</td>
-                        </ng-container>
-
-                        <!-- Total Revenue -->
-                        <ng-container matColumnDef="totalRevenue">
-                            <th mat-header-cell *matHeaderCellDef>Company Revenue (AED)</th>
-                            <td mat-cell *matCellDef="let e">{{ e.totalCompanyRevenue }}</td>
-                        </ng-container>
-
-                        <!-- Share -->
-                        <ng-container matColumnDef="share">
-                            <th mat-header-cell *matHeaderCellDef>Company Share (%)</th>
-                            <td mat-cell *matCellDef="let e">{{ e.companyPercentageShare }}</td>
-                        </ng-container>
-
-                        <!-- Earnings -->
-                        <ng-container matColumnDef="earnings">
-                            <th mat-header-cell *matHeaderCellDef>Partner Earnings (AED)</th>
-                            <td mat-cell *matCellDef="let e">{{ e.partnerEarnings | number:'1.2-2' }}</td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </div>
-
-            </mat-card>
-
-            <div class="tab-footer">
-                <p>Need help? Contact support at <a href="#">{{email}}</a></p>
-            </div>
-        </section>
-    </mat-tab>
-
     <!-- Billings Tab -->
-    <mat-tab label="Blling">
+    <mat-tab label="🧾  Payments">
         <section class="tab-section">
             <div class="tab-header">
-                <h2>💼 Billing Management</h2>
+                <h2>Payment Management</h2>
                 <p>Manage and track billing records to stay informed on annual payments and financial updates.</p>
             </div>
             <mat-card class="tab-card">
@@ -194,11 +242,12 @@
         </section>
     </mat-tab>
 
+
     <!-- Reset Password Tab -->
-    <mat-tab label="Reset Password">
+    <mat-tab label="🔒 Reset Password">
         <section class="tab-section">
             <div class="tab-header">
-                <h2>🔒 Reset Your Password</h2>
+                <h2>Reset Your Password</h2>
                 <p>Keep your account secure by regularly updating your password.</p>
             </div>
 

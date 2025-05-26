@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="dialog-title">➕ Add New Expense</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form #form="ngForm" class="form-container">
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Company Branch</mat-label>
+      <mat-select [(ngModel)]="expense.companyBranchId" name="companyBranchId" required>
+        <mat-option *ngFor="let branch of branches" [value]="branch.id">
+          {{ branch.branchName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="e.g., Electricity bill" [(ngModel)]="expense.description" name="description" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" placeholder="e.g., 250" [(ngModel)]="expense.amount" name="amount" required>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="warn" (click)="dialogRef.close()">Cancel</button>
+  <button mat-flat-button color="primary" [disabled]="!expense.description || !expense.amount || !expense.companyBranchId" (click)="submit()">Add</button>
+</mat-dialog-actions>

@@ -41,6 +41,7 @@ export class BillingComponent implements OnInit {
     { name: 'November', value: 11 },
     { name: 'December', value: 12 }
   ];
+  years: number[] = [];
 
   constructor(private fb: FormBuilder, private billingService: BillingService, private companyBranch: CompanyBranchService) { }
 
@@ -58,6 +59,8 @@ export class BillingComponent implements OnInit {
     // load branches from API or service
     this.loadBranches();
     this.fetchBillingRecords();
+    const currentYear = new Date().getFullYear();
+    this.years = [currentYear - 2, currentYear - 1, currentYear];
 
   }
 

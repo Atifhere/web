@@ -29,3 +29,10 @@ export interface CompanyBranch {
   CompanyName : string
   stateId : string
 }
+
+
+
+export interface CompanyBranchDTO {
+  id: string;
+  name: string;
+}

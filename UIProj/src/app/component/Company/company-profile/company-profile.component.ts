@@ -10,11 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Partner } from '../../../_model/Partner.modal';
 import { PartnerService } from '../../../_Service/Partner/Partner.Service';
 import { BrowserModule } from '@angular/platform-browser';
+import { ExpensesComponent } from '../../expenses/expenses.component';
 
 @Component({
   selector: 'app-company-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule, ResetPasswordComponent, BillingComponent, 
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule, ResetPasswordComponent, BillingComponent, ExpensesComponent,
     FormsModule
   ],
   templateUrl: './company-profile.component.html',
@@ -170,7 +171,12 @@ export class CompanyProfileComponent implements OnInit {
   ];
 
   earnings: any[] = [];
-  displayedColumns = ['partnerName', 'totalRevenue', 'share', 'earnings'];
+displayedColumns: string[] = [
+  'partnerName',
+  'companyPercentageShare',
+  'partnerEarnings'
+];
+
 
 
   fetchEarnings() {

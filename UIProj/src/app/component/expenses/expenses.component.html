@@ -1,0 +1,71 @@
+<!-- expenses.component.html -->
+
+<div class="expenses-container">
+    <div class="d-flex justify-between items-center mb-4">
+        <!-- <h2 class="text-2xl font-bold">💼 Expenses</h2> -->
+        <h2 class="text-lg font-semibold mt-2 ml-3" style="cursor: pointer;" (click)="openAddExpenseDialog()">
+            ➕ New Expense
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Month</mat-label>
+                <mat-select [(ngModel)]="selectedMonth" (selectionChange)="loadExpenses()">
+                    <mat-option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">
+                        {{ getMonthName(m) }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Year</mat-label>
+                <mat-select [(ngModel)]="selectedYear" (selectionChange)="loadExpenses()">
+                    <mat-option *ngFor="let y of years" [value]="y">{{ y }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    @if(pagedExpenses && pagedExpenses.length > 0)
+    {
+    <table mat-table [dataSource]="pagedExpenses" class="mat-elevation-z8 w-100 mb-3">
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let expense">{{ expense.description }}</td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let expense">{{ expense.amount }} AED</td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="createdDate">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let expense">{{ expense.createdDate | date: 'short' }}</td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let expense">
+                <button mat-icon-button color="warn" (click)="deleteExpense(expense.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <!-- Header and Row Declarations -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="pageSize" showFirstLastButtons>
+    </mat-paginator>
+    }
+
+</div>
