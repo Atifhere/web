@@ -8,13 +8,14 @@ import { MaterialModule } from '../../material.module';
 import { CompanyBranchService } from '../../_Service/Company/company-branch.service';
 import { CommonModule } from '@angular/common';
 import { Constants } from '../../_model/Constants';
+import { GSTDatePipe } from '../../Pipes/GSTDatePipe.pipe';
 
 @Component({
   standalone: true,
   selector: 'app-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss'],
-  imports: [MaterialModule, ReactiveFormsModule, CommonModule],
+  imports: [MaterialModule, ReactiveFormsModule, CommonModule,  GSTDatePipe],
 })
 export class BillingComponent implements OnInit {
   billingForm!: FormGroup;

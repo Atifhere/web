@@ -8,12 +8,13 @@ import { AddExpenseDialogComponent } from './add-expense-dialog/add-expense-dial
 import { Constants } from '../../_model/Constants';
 import { MaterialModule } from '../../material.module';
 import { ToastrSrvc } from '../../_Service/Toastr/toastr-service.service';
+import { GSTDatePipe } from '../../Pipes/GSTDatePipe.pipe';
 
 
 @Component({
   selector: 'app-expenses',
   standalone: true,
-  imports: [CommonModule, FormsModule, MaterialModule],
+  imports: [CommonModule, FormsModule, MaterialModule, GSTDatePipe],
   templateUrl: './expenses.component.html',
   styleUrl: './expenses.component.css'
 })
