@@ -42,7 +42,6 @@ export class RegisterComponent {
   });
   response: any;
   Register() {
-    console.log('Register hit');
     if (this.regForm.value.password != this.regForm.value.confirmPassword) {
       this.toastr.error('Password and confirm password should match!')
       return;
@@ -55,7 +54,6 @@ export class RegisterComponent {
         phone: this.regForm.value.phone as string,
         password: this.regForm.value.password as string,
       };
-      // console.log('Register hit', obj);
       this.Service.UserRegisteration(obj).subscribe((item) => {
         this.response = item;
         if (this.response.success == true) {
@@ -101,7 +99,7 @@ export class RegisterComponent {
         this.router.navigateByUrl('/');
       },
       (error) => {
-        console.log('Login Failed');
+        console.error('Login Failed');
       }
     );
   }

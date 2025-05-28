@@ -150,7 +150,6 @@ export class AddStaffComponent {
   }
 
   BranchChange(event: any) {
-    console.log(event.value);
     localStorage.setItem('branchId', event.value);
   }
 }

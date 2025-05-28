@@ -47,7 +47,6 @@ export class AppmenuComponent implements OnInit, DoCheck {
 
     this.Service.LoadMenuByRole(userRole).subscribe((item) => {
       this.menuList = item;
-      console.log(this.menuList);
     });
   }
 

@@ -75,7 +75,6 @@ export class ReportsComponent {
           (total: any, item: { serviceFee: any }) => total + item.serviceFee,
           0
         );
-        console.log('Total Amount:', this.totalAmount);
       } else {
         this.totalAmount = 0; // Reset total amount if no data
         this.toastr.ShowInfo('No records found', '');
@@ -90,8 +89,6 @@ export class ReportsComponent {
   downloadExcel() {
     const fileName = 'Report.xlsx';
 
-    console.log(this.dataSource.data.length);
-    return;
     // Prepare your data
     const worksheet = XLSX.utils.json_to_sheet(
       this.dataSource.data.map((item) => ({

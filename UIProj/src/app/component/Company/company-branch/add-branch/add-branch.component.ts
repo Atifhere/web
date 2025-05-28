@@ -87,7 +87,6 @@ export class AddBranchComponent implements OnInit {
     this.CompanyService.getStates().subscribe(
       (data) => {
         this.states = data; // Set the states to be used in dropdown
-        console.log(this.states);
       },
       (error) => {
         console.error('Error loading states:', error);

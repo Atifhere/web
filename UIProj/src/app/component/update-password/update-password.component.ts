@@ -31,15 +31,12 @@ export class UpdatePasswordComponent implements OnInit {
   response: any;
 
   ProceedChange() {
-    console.log('Register hit');
-
     if (this.resetForm.valid) {
       let obj: UpdatePassword = {
         userName: this.currentUserName,
         password: this.resetForm.value.password as string,
         OtpText: this.resetForm.value.otpText as string,
       };
-      // console.log('Register hit', obj);
       this.Service.UpdatePassword(obj).subscribe((item) => {
         this.response = item;
         if (this.response.success == true) {

@@ -93,7 +93,6 @@ export class HomeComponent implements OnInit {
       this.amountEarnedToday = this.response.amountEarnedToday;
       this.bestPerformer = this.response.bestPerformer.name;
       this.bestPerformerValue = this.response.bestPerformer.workedFor;
-      console.log(item);
     });
   }
 
@@ -197,7 +196,6 @@ export class HomeComponent implements OnInit {
     this.companyService.getDashboardInsights().subscribe(
       (data) => {
         this.data = data;
-        console.log('getDashboardInsights', this.data);
       },
       (error) => {
         console.error('Error fetching transactions', error);
@@ -209,7 +207,6 @@ export class HomeComponent implements OnInit {
     this.companyService.getDashboardStatistics().subscribe(
       (data1) => {
         this.insights = data1;
-        console.log('getDashboardStatistics', this.insights);
         this.topPerformerMax = Math.max(
           ...this.insights.topPerformersTimeline.map((p) => p.workedFor)
         );

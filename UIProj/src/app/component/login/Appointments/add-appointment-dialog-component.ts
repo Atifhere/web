@@ -17,6 +17,7 @@ import { CompanyBranchService } from '../../../_Service/Company/company-branch.s
 import { CompanyBranch } from '../../../_model/company.model';
 import { FormsModule } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
 
 @Component({
   selector: 'app-add-appointment-dialog-component',
@@ -37,12 +38,13 @@ export class AddAppointmentDialogComponent implements OnInit {
     private fb: FormBuilder,
     private companyService: CompanyService,
     private CompanyBranchService: CompanyBranchService,
-    private dialogRef: MatDialogRef<AddAppointmentDialogComponent>
+    private dialogRef: MatDialogRef<AddAppointmentDialogComponent>,
+    private toastr: ToastrSrvc
   ) {
     this.appointmentForm = this.fb.group({
       customerPhone: ['', Validators.required],
       customerName: ['', Validators.required],
-      customerEmail: ['', [Validators.required, Validators.email]],
+      customerEmail: ['', [Validators.email]],
       companyBranchId: this.companyBranchControl,
       appointmentDate: ['', Validators.required],
       appointmentTimeSlot: ['', Validators.required],
@@ -81,7 +83,6 @@ export class AddAppointmentDialogComponent implements OnInit {
     this.companyService.getStates().subscribe(
       (data) => {
         this.states = data; // Set the states to be used in dropdown
-        console.log(this.states);
       },
       (error) => {
         console.error('Error loading states:', error);
@@ -138,24 +139,24 @@ export class AddAppointmentDialogComponent implements OnInit {
         this.appointmentForm.get('companyBranchId')?.value?.id; // Get the ID of the selected branch
 
       const formValue = { ...this.appointmentForm.value };
-      const date = new Date(this.appointmentForm.get('appointmentDate')?.value);
-      formValue.appointmentDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
-      );
+      const date = this.appointmentForm.get('appointmentDate')?.value as Date;
+      const timeSlot = this.appointmentForm.get('appointmentTimeSlot')?.value;
 
-      appointmentData.appointmentDate = formValue.appointmentDate;
+      // Combine date and time slot
+      const [hours, minutes, seconds] = timeSlot.split(':');
+      const localDateTime = new Date(date);
+      localDateTime.setHours(+hours, +minutes, +seconds || 0);
+      appointmentData.appointmentDate = localDateTime.toISOString();
 
       this.companyService.createAppointment(appointmentData).subscribe({
         next: (res) => {
-          console.log(res.message);
-          alert('Appointment booked successfully!');
+          this.toastr.ShowSuccess('Appointment booked successfully!');
           this.dialogRef.close(true);
         },
         error: (err) => {
           console.error(err);
-          alert(err.error?.message || 'Failed to book appointment.');
+          
+          this.toastr.ShowError('Failed to book appointment!');
         },
       });
     }

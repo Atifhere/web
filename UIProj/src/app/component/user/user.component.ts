@@ -45,8 +45,6 @@ export class UserComponent implements OnInit {
   LoadUsers() {
     this.userService.GetAllUsers().subscribe((item) => {
       this.userList = item;
-      console.log(this.userList);
-      
       this.dataSource = new MatTableDataSource<users>(this.userList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -18,7 +18,6 @@ export class ConfirmArrivalDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private companyService: CompanyService
   ) {
-    console.log('Dialog data:', this.data);
 
   }
 

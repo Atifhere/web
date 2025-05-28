@@ -26,7 +26,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       service.GetMenuPermission(userRole, menuName).subscribe((item) => {
         if (item.haveview) return true;
         else {
-          console.log('Unauthorized Access');
+          console.error('Unauthorized Access');
           router.navigateByUrl('/');
           return false;
         }
@@ -36,7 +36,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       return true;
     }
   } else {
-    console.log('Unauthorized Access');
+    console.error('Unauthorized Access');
     router.navigateByUrl('/login');
     return false;
   }
