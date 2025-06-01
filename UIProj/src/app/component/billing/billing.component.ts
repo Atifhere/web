@@ -21,7 +21,7 @@ export class BillingComponent implements OnInit {
   billingForm!: FormGroup;
   showAddBilling = false;
   NewBillingRecord = "New Billing Record";
-  displayedColumns: string[] = ['companyBranchId', 'receiptNumber', 'amount', 'month', 'year', 'createdDate'];
+  displayedColumns: string[] = ['companyBranchId', 'amount', 'receiptNumber', 'month', 'year', 'createdDate'];
   dataSource = new MatTableDataSource<any>();
   branches: any[] = [];
   pageSize = Constants.PAGE_SIZE;
@@ -51,7 +51,7 @@ export class BillingComponent implements OnInit {
       companyBranchId: ['', Validators.required],
       year: [new Date().getFullYear(), Validators.required],
       month: [new Date().getMonth() + 1, Validators.required],
-      amount: [null, Validators.required],
+      amount: [null, [Validators.required ,Validators.maxLength(10)]],
       receiptNumber: ['', Validators.required]
     });
 
