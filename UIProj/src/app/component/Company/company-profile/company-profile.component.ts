@@ -11,6 +11,7 @@ import { Partner } from '../../../_model/Partner.modal';
 import { PartnerService } from '../../../_Service/Partner/Partner.Service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ExpensesComponent } from '../../expenses/expenses.component';
+import { APIResponse } from '../../../_model/Expenses.modal';
 
 @Component({
   selector: 'app-company-profile',
@@ -67,26 +68,49 @@ export class CompanyProfileComponent implements OnInit {
       return;
     }
 
-    const companyId = 'your-company-id'; // Replace or fetch this dynamically
+    const companyId = 'your-company-id'; // Replace or fetch dynamically
     const newPartner: Partner = {
       ...this.newPartnerForm.value,
       id: '',
       CompanyName: '',
       companyId
     };
+
     this.partnerService.addPartner(companyId, newPartner).subscribe({
-      next: (createdPartner: Partner) => {
-        this.loadPartners();
-        this.newPartnerForm.reset();
-        this.showAddForm = false;
-        this.snackBar.open('Partner added successfully!', 'Close', { duration: 5000 });
+      next: (apiResponse: APIResponse) => {
+        this.snackBar.dismiss();
+
+        if (apiResponse.success) {
+          this.loadPartners();
+          this.newPartnerForm.reset();
+          this.showAddForm = false;
+          this.snackBar.open(apiResponse.message || 'Partner added successfully!', 'Close', {
+            duration: 5000
+          });
+        } else {
+          // Should rarely reach here if status codes are handled correctly
+          this.snackBar.open(apiResponse.message || 'Failed to add partner.', 'Close', {
+            duration: 5000
+          });
+        }
       },
       error: (err) => {
-        console.error('Failed to add partner', err);
-        this.snackBar.open('Failed to add partner. Please try again.', 'Close', { duration: 5000 });
+        console.error('Error:', err);
+
+        const message =
+          err?.error?.message ??
+          (typeof err?.error === 'string' ? err.error : 'Unexpected error occurred.');
+
+        this.snackBar.open(message, 'Close', { duration: 5000 });
       }
+
+
     });
   }
+
+
+
+
 
   // Start editing
   editPartner(partner: Partner): void {
@@ -171,11 +195,11 @@ export class CompanyProfileComponent implements OnInit {
   ];
 
   earnings: any[] = [];
-displayedColumns: string[] = [
-  'partnerName',
-  'companyPercentageShare',
-  'partnerEarnings'
-];
+  displayedColumns: string[] = [
+    'partnerName',
+    'companyPercentageShare',
+    'partnerEarnings'
+  ];
 
 
 
@@ -185,6 +209,6 @@ displayedColumns: string[] = [
       error: (err) => console.error('Failed to fetch partner earnings', err)
     });
   }
- email : string = 'atif@managesalons.com';
+  email: string = 'atif@managesalons.com';
 
 }
