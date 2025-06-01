@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
   companyLogo:string = "assets/images/logo.png";
   response: any;
   loginForm = this.fb.group({
-    userName: this.fb.control('', Validators.required),
-    password: this.fb.control('', Validators.required),
+    userName: this.fb.control('', [Validators.required, Validators.maxLength(50)]),
+    password: this.fb.control('',  [Validators.required, Validators.maxLength(50)]),
   });
 
   Login() {
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
             }
           );
 
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/home');
         },
         (error) => {
           this.showError = true;

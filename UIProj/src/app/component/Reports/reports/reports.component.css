@@ -111,3 +111,8 @@ button {
         margin-bottom: 15px; /* Space between card and buttons on small screens */
     }
 }
+
+.deleted-status {
+  color: red;
+  font-weight: bold;
+}

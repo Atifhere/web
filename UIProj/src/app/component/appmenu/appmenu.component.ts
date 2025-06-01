@@ -6,6 +6,7 @@ import { menu } from '../../_model/user.model';
 import { TokenService } from '../../_Service/token.service';
 import { LoaderComponent } from '../../component/loader/loader.component'
 import { CommonModule } from '@angular/common';
+import { LoaderService } from '../../_Service/loader.service';
 
 @Component({
   selector: 'app-appmenu',
@@ -19,12 +20,17 @@ export class AppmenuComponent implements OnInit, DoCheck {
   loggedInUser: string = 'Atif';
   showMenu: boolean = false;
   formattedDate !: string;
-  
+  isLoading = false;
+
   constructor(
     private Service: UserService,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private loaderService: LoaderService
   ) {
+    this.loaderService.loading$.subscribe((loading) => {
+      this.isLoading = loading;
+    });
     setInterval(() => {
       let date = new Date();
       const formatter = new Intl.DateTimeFormat('en-US', {

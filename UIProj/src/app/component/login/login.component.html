@@ -117,12 +117,12 @@
       <form class="user" [formGroup]="loginForm" (ngSubmit)="Login()">
         <mat-form-field appearance="fill" class="w-100 mb-3">
           <mat-label>Username</mat-label>
-          <input formControlName="userName" class="form-control" matInput />
+          <input formControlName="userName" class="form-control" maxlength="50" matInput />
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-100 mb-3">
           <mat-label>Password</mat-label>
-          <input formControlName="password" class="form-control" matInput type="password" />
+          <input formControlName="password" class="form-control" maxlength="50" matInput type="password" />
         </mat-form-field>
 
         <mat-card-actions class="d-flex justify-content-center">

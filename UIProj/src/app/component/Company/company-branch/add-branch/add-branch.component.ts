@@ -72,13 +72,13 @@ export class AddBranchComponent implements OnInit {
 
   companyForm = this.fb.group({
     Id: this.fb.control(''),
-    branchName: this.fb.control('', Validators.required),
+    branchName: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
     //email: this.fb.control('', Validators.required),
-    phoneNumber: this.fb.control('', Validators.required),
-    address: this.fb.control('', Validators.required),
-    mobileNumber: this.fb.control('', Validators.required),
+    phoneNumber: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
+    address: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
+    mobileNumber: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
     isActive: this.fb.control(true),
-    arabicName: this.fb.control('', Validators.required),
+    arabicName: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
     companyId: this.fb.control(''),
     stateId: this.fb.control('', Validators.required),
   });

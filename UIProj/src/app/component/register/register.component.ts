@@ -96,7 +96,7 @@ export class RegisterComponent {
           }
         );
 
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/home');
       },
       (error) => {
         console.error('Login Failed');

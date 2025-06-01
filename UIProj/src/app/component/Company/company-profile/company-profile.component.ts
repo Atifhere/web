@@ -36,12 +36,12 @@ export class CompanyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.newPartnerForm = this.fb.group({
-      fullName: ['', Validators.required],
-      email: [''],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      position: ['', Validators.required],
+      fullName: ['', [Validators.required, Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.maxLength(50), Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$'), Validators.maxLength(15)]],
+      position: ['', [Validators.required, Validators.maxLength(50)]],
       companyPercentageShare: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      address: ['', Validators.required]
+      address: ['', [Validators.required, Validators.maxLength(50)]]
     });
 
     this.loadPartners(); // Initial partner list

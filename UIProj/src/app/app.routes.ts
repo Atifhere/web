@@ -22,9 +22,9 @@ import { AddStaffComponent } from './component/Staff/staff/add-staff/add-staff.c
 import { PrivacyComponent } from './component/privacy/privacy.component';
 import { AddAppointmentDialogComponent } from './component/login/Appointments/add-appointment-dialog-component';
 import { CompanyProfileComponent } from './component/Company/company-profile/company-profile.component';
-
+// test
 export const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate:[authGuard] },
+    { path: 'home', component: HomeComponent, canActivate:[authGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'appointment', component: AddAppointmentDialogComponent },
     { path: 'login', component: LoginComponent },

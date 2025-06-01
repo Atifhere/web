@@ -14,7 +14,7 @@
 
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Description</mat-label>
-      <input matInput placeholder="e.g., Electricity bill" [(ngModel)]="expense.description" name="description" required>
+      <input matInput placeholder="e.g., Electricity bill/ Official dinner" [(ngModel)]="expense.description" name="description" maxlength="150" required>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="form-field">

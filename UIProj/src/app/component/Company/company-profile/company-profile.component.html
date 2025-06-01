@@ -178,43 +178,43 @@
                         <div class="form-row">
                             <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>Full Name</mat-label>
-                                <input matInput formControlName="fullName" placeholder="Khan" required>
+                                <input matInput formControlName="fullName" placeholder="Khan" maxlength="50" required>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>Email</mat-label>
-                                <input matInput formControlName="email" type="email" placeholder="khan@example.com">
+                                <input matInput formControlName="email" type="email" maxlength="50" placeholder="khan@example.com">
                             </mat-form-field>
                         </div>
 
                         <div class="form-row">
                             <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>Phone</mat-label>
-                                <input matInput formControlName="phone" type="tel" placeholder="9876543210" required>
+                                <input matInput formControlName="phone" type="tel" placeholder="05xxxxxxxx" maxlength="15" required>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>Position</mat-label>
-                                <input matInput formControlName="position" placeholder="Director" required>
+                                <input matInput formControlName="position" placeholder="Director" maxlength="50" required>
                             </mat-form-field>
                         </div>
 
                         <div class="form-row">
                             <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>Company Share (%)</mat-label>
-                                <input matInput formControlName="companyPercentageShare" type="number"
+                                <input matInput formControlName="companyPercentageShare" type="number" 
                                     placeholder="e.g. 25" required>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" class="form-field">
                                 <mat-label>Address</mat-label>
-                                <input matInput formControlName="address" placeholder="123 Main St" required>
+                                <input matInput formControlName="address" placeholder="123 Main St"  maxlength="50" required>
                             </mat-form-field>
                         </div>
 
                         <div class="form-actions mr-2 mb-2">
                             <button mat-flat-button color="primary" type="submit">
-                                {{ editingPartner ? 'Update Partner' : 'Add Partner' }}
+                                {{ editingPartner ? 'Update' : 'Save' }}
                             </button>
                             <button mat-stroked-button type="button" (click)="cancelEdit()" color="warn">Cancel</button>
                         </div>

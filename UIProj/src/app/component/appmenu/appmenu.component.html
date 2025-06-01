@@ -14,12 +14,10 @@
     <!-- <button mat-button [matMenuTriggerFor]="profile"><mat-icon>arrow_drop_down</mat-icon> -->
     <button mat-button [matMenuTriggerFor]="profile" style="cursor: pointer">
       <!-- <p style="font-size: 10px;margin-bottom: 1%;">{{formattedDate}}</p> -->
-      <span style="font-size: 15px; margin-bottom: 1%"
-        >Hello {{ loggedInUser }}</span
-      >
+      <span style="font-size: 15px; margin-bottom: 1%">Hello {{ loggedInUser }}</span>
     </button>
     <mat-menu #profile style="margin-top: 1%">
-      <button mat-menu-item routerLink="/companyProfile">Company Profile    </button>
+      <button mat-menu-item routerLink="/companyProfile">Company Profile </button>
       <button mat-menu-item routerLink="/login" (click)="Logout()">
         Logout
       </button>
@@ -27,25 +25,15 @@
   </mat-toolbar>
 
   <mat-drawer-container autosize>
-    <mat-drawer
-      #drawer
-      opened="true"
-      mode="side"
-      position="start"
-      class="bg-gradient-primary"
-    >
+    <mat-drawer #drawer opened="true" mode="side" position="start" class="bg-gradient-primary">
       <!-- <img
         class="avatar mat-elevation-z8"
         style="border-radius: 50%"
         src="https://images.unsplash.com/photo-1721332154161-847851ea188b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8"
       /> -->
 
-      <img
-        class="avatar mat-elevation-z8 mt-4"
-        style="border-radius: 50%;"
-        src="assets/images/AppLogo.png"
-        alt="Manage Salons Logo"
-      />
+      <img class="avatar mat-elevation-z8 mt-4" style="border-radius: 50%;" src="assets/images/AppLogo.png"
+        alt="Manage Salons Logo" />
       <mat-divider></mat-divider>
       <h3 class="name">
         <p class="mb-1 small" style="font-weight: 300; font-size: 12px">
@@ -55,35 +43,27 @@
       </h3>
       <mat-nav-list>
         <mat-list-item>
-          <button
-            mat-button
-            routerLink="/"
-            style="
+          <button mat-button routerLink="/home" style="
               color: white;
               text-transform: uppercase;
               display: flex;
               align-items: center;
               justify-content: flex-start;
               font-size: 12px;
-            "
-          >
-            <mat-icon style="margin-right: 8px">home</mat-icon>Home
+            ">
+            <mat-icon style="margin-right: 8px">home</mat-icon>Dashboard
           </button>
         </mat-list-item>
         @for (item of menuList; track item) {
         <mat-list-item>
-          <button
-            mat-button
-            routerLink="{{ item.code }}"
-            style="
+          <button mat-button routerLink="{{ item.code }}" style="
               color: white;
               text-transform: uppercase;
               display: flex;
               align-items: center;
               justify-content: flex-start;
               font-size: 12px;
-            "
-          >
+            ">
             <mat-icon>groups</mat-icon>{{ item.name }}
           </button>
         </mat-list-item>
@@ -92,8 +72,7 @@
     </mat-drawer>
     <mat-drawer-content>
       <div class="content-wrap">
-        <!-- <app-loader></app-loader> -->
-        
+        <app-loader *ngIf="isLoading"></app-loader>
         <router-outlet> </router-outlet>
       </div>
       <footer class="dashboard-footer">

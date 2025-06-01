@@ -27,7 +27,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         if (item.haveview) return true;
         else {
           console.error('Unauthorized Access');
-          router.navigateByUrl('/');
+          router.navigateByUrl('/home');
           return false;
         }
       });

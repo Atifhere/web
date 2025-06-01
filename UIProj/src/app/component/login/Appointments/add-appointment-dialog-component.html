@@ -17,19 +17,19 @@
     <div class="col-md-4 mb-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Customer Name</mat-label>
-        <input matInput formControlName="customerName" required />
+        <input matInput formControlName="customerName" maxlength="50" required />
       </mat-form-field>
     </div>
     <div class="col-md-4 mb-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="customerEmail" type="email" />
+        <input matInput formControlName="customerEmail" maxlength="50"  type="email" />
       </mat-form-field>
     </div>
     <div class="col-md-4 mb-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Phone</mat-label>
-        <input matInput formControlName="customerPhone" required />
+        <input matInput formControlName="customerPhone" maxlength="20"  required />
       </mat-form-field>
     </div>
   </div>
@@ -72,6 +72,7 @@
         <mat-label>Branch</mat-label>
         <input
           type="text"
+          maxlength="50" 
           matInput
           [formControl]="companyBranchControl"
           [matAutocomplete]="auto"
@@ -127,7 +128,7 @@
     <div class="col-12 mb-3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Notes</mat-label>
-        <textarea matInput formControlName="notes" rows="3"></textarea>
+        <textarea matInput formControlName="notes"  maxlength="100"  rows="3"></textarea>
       </mat-form-field>
     </div>
   </div>

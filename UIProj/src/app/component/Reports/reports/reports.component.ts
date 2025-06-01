@@ -39,6 +39,7 @@ export class ReportsComponent {
     'serviceName',
     'serviceFee',
     'branchName',
+    'isActive',
     'createdDate',
   ];
 
@@ -63,22 +64,27 @@ export class ReportsComponent {
     this.loadReport();
   }
   totalAmount: number = 0;
+  totalDeleted: number = 0;
   loadReport() {
     const filters = this.filterForm.value;
     this.reportService.getServiceReport(filters).subscribe((res) => {
-      this.dataSource.data = res.data;
+      this.dataSource.data = res?.data?.report;
       this.dataSource.paginator = this.paginator; // Set paginator
       this.dataSource.sort = this.sort;
+
+      this.totalAmount = res.data.totalActive;
+      this.totalDeleted = res.data.totalDeleted;
+
       // Calculate total amount
-      if (res.data && res.data.length > 0) {
-        this.totalAmount = res.data.reduce(
-          (total: any, item: { serviceFee: any }) => total + item.serviceFee,
-          0
-        );
-      } else {
-        this.totalAmount = 0; // Reset total amount if no data
-        this.toastr.ShowInfo('No records found', '');
-      }
+      // if (res.data && res.data.length > 0) {
+      //   this.totalAmount = res.data.reduce(
+      //     (total: any, item: { serviceFee: any }) => total + item.serviceFee,
+      //     0
+      //   );
+      // } else {
+      //   this.totalAmount = 0; // Reset total amount if no data
+      //   this.toastr.ShowInfo('No records found', '');
+      // }
     });
   }
 
@@ -97,6 +103,7 @@ export class ReportsComponent {
         'Service Fee': item.serviceFee,
         'Branch Name': item.branchName,
         'Created Date': new Date(item.createdDate).toLocaleDateString(),
+        'Is Deleted' : item.isACtive
       }))
     );
 

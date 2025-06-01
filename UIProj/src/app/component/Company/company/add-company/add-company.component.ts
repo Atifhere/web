@@ -57,13 +57,13 @@ export class AddCompanyComponent implements OnInit {
 
   companyForm = this.fb.group({
     Id: this.fb.control(''),
-    name: this.fb.control('', Validators.required),
-    email: this.fb.control('', [Validators.required, Validators.email]),
-    phoneNumber: this.fb.control('', Validators.required),
-    address: this.fb.control('', Validators.required),
-    mobileNumber: this.fb.control('', Validators.required),
-    natureOfBusiness: this.fb.control('', Validators.required),
-    tradeLicenseNo: this.fb.control('', Validators.required),
+    name: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
+    email: this.fb.control('', [Validators.required, Validators.email, Validators.maxLength(100)]),
+    phoneNumber: this.fb.control('', [Validators.required, Validators.maxLength(15)]),
+    address: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
+    mobileNumber: this.fb.control('', [Validators.required, Validators.maxLength(15)]),
+    natureOfBusiness: this.fb.control('', [Validators.required, Validators.maxLength(100)]),
+    tradeLicenseNo: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
     isActive: this.fb.control(true),
     arabicName : this.fb.control('', Validators.required),
   });
