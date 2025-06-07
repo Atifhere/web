@@ -1,6 +1,6 @@
 export const environment = {
-  apiUrl: 'https://salonmanger.com/',
-   //apiUrl: 'https://localhost:44390/',
+   apiUrl: 'https://salonmanger.com/',
+  //apiUrl: 'https://localhost:44390/',
 
   GET_ALL: 'GetAll',
   GET_BY_CODE: 'GetByCode?code=',

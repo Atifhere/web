@@ -58,6 +58,14 @@
             [disabled]="this.dataSource.data.length === 0">
             <mat-icon>download</mat-icon> Download Excel
           </button>
+          <button mat-flat-button color="primary" type="button" (click)="printSelectedReceipts()"
+            [disabled]="selection.isEmpty()">
+            <mat-icon>print</mat-icon> Print Receipt(s)
+          </button>
+          <!-- <button mat-flat-button color="accent" type="button" (click)="exportSelectedReceiptsAsPDF()"
+            [disabled]="selection.isEmpty()">
+            <mat-icon>picture_as_pdf</mat-icon> Export as PDF
+          </button> -->
         </div>
 
         <div class="col-12 d-flex flex-column">
@@ -71,6 +79,19 @@
 
     <div class="mt-4">
       <table mat-table [dataSource]="dataSource" class="styled-table mb-3" matSort>
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="toggleAllRows($event)" [checked]="isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="selection.toggle(row)"
+              [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
         <!-- Employee Name -->
         <ng-container matColumnDef="employeeName">

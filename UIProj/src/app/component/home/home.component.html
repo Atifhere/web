@@ -281,7 +281,7 @@
   <div class="col-md-6 mb-2">
     <div class="card shadow-sm border-0 rounded-4">
       <div class="table-container dark-theme">
-        <h3 class="table-title">Latest Transactions</h3>
+        <h3 class="table-title">Live Transactions</h3>
         <table
           mat-table
           [dataSource]="transactions"
@@ -315,7 +315,7 @@
           <ng-container matColumnDef="time">
             <th mat-header-cell *matHeaderCellDef>Time</th>
             <td mat-cell *matCellDef="let transaction">
-              {{ transaction.time | date : "short" }}
+              {{ transaction.time}}
             </td>
           </ng-container>
           
