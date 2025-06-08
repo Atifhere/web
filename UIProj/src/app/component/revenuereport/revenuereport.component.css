@@ -1,0 +1,20 @@
+.table-header {
+  background-color: #f5f7fa;
+  color: #1a237e;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.table-header-row {
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.mat-row:hover {
+  background-color: #f0f4ff;
+}
+
+table.styled-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
