@@ -13,29 +13,23 @@
 
 <!-- Content Row -->
 <div class="row">
-  <!-- Earnings (Today) Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <!-- Earnings (Today) Card -->
+  <div class="col-12 col-sm-6 col-md-6 col-xl-3 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-success text-uppercase mb-1"
-            >
+          <div class="col">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
               Today's Earnings
             </div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
               @if(amountEarnedToday) {
-              {{ amountEarnedToday | currency : "AED  " : "symbol" : "1.2-2" }}
+              {{ amountEarnedToday | currency : 'AED ' : 'symbol' : '1.2-2' }}
               } @else { 0.00 AED }
             </div>
-            <div class="mt-1 text-xs text-muted">
-              <mat-icon
-                class="text-success"
-                style="font-size: 14px; vertical-align: middle"
-                >trending_up</mat-icon
-              >
-              <span class="align-middle">Live updates</span>
+            <div class="mt-1 text-xs text-muted d-flex align-items-center">
+              <mat-icon class="text-success" style="font-size: 14px;">trending_up</mat-icon>
+              <span class="ml-1">Live updates</span>
             </div>
           </div>
           <div class="col-auto">
@@ -48,152 +42,90 @@
     </div>
   </div>
 
-  <!-- Earnings (Monthly) Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <!-- Repeat the same responsive grid structure for the other 3 cards -->
+
+  <!-- Earnings (This Month) Card -->
+  <div class="col-12 col-sm-6 col-md-6 col-xl-3 mb-4">
     <div class="card border-left-info shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-success text-uppercase mb-1"
-            >
+          <div class="col">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
               Earnings (This Month)
             </div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
               @if(amountEarnedMonth) {
-              {{ amountEarnedMonth | currency : "AED  " : "symbol" : "1.2-2" }}
+              {{ amountEarnedMonth | currency : 'AED ' : 'symbol' : '1.2-2' }}
               } @else { 0.00 AED }
             </div>
-            <div class="mt-1 text-xs text-muted">
-              <mat-icon
-                class="text-success"
-                style="font-size: 14px; vertical-align: middle"
-                >trending_up</mat-icon
-              >
-              <span class="align-middle">Live updates</span>
+            <div class="mt-1 text-xs text-muted d-flex align-items-center">
+              <mat-icon class="text-success" style="font-size: 14px;">trending_up</mat-icon>
+              <span class="ml-1">Live updates</span>
             </div>
           </div>
-          <!-- 
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-              Earnings (This Month)
-            </div>
-            <div class="mb-0 font-weight-bold text-gray-800">
-              @if(amountEarnedMonth) { {{ amountEarnedMonth }} } @else { 0} AED
-            </div>
-          </div> -->
           <div class="col-auto">
-            <mat-icon class="icon-circle bg-success-light"
-              >attach_money</mat-icon
-            >
+            <mat-icon class="icon-circle bg-success-light">attach_money</mat-icon>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Earnings (Year) Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <!-- Earnings (This Year) Card -->
+  <div class="col-12 col-sm-6 col-md-6 col-xl-3 mb-4">
     <div class="card border-left-warning shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-muted text-uppercase mb-1"
-            >
+          <div class="col">
+            <div class="text-xs font-weight-bold text-muted text-uppercase mb-1">
               Earnings (This Year)
             </div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
               @if(amountEarnedCurrentYear) {
-              {{
-                amountEarnedCurrentYear
-                  | currency : "AED  " : "symbol" : "1.2-2"
-              }}
+              {{ amountEarnedCurrentYear | currency : 'AED ' : 'symbol' : '1.2-2' }}
               } @else { 0.00 AED }
             </div>
-            <div class="mt-1 text-xs text-muted">
-              <mat-icon
-                class="text-success"
-                style="font-size: 14px; vertical-align: middle"
-                >trending_up</mat-icon
-              >
-              <span class="align-middle">Live updates</span>
+            <div class="mt-1 text-xs text-muted d-flex align-items-center">
+              <mat-icon class="text-success" style="font-size: 14px;">trending_up</mat-icon>
+              <span class="ml-1">Live updates</span>
             </div>
           </div>
-
-          <!-- <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-            >
-              Earnings (This Year)
-            </div>
-
-            <div class="mb-0 font-weight-bold text-gray-800">
-              @if(amountEarnedCurrentYear) { {{ amountEarnedCurrentYear }} } @else { 0} AED
-            </div>
-          </div> -->
           <div class="col-auto">
-            <b>
-              <mat-icon class="icon-circle bg-success-light"
-                >attach_money</mat-icon
-              ></b
-            >
+            <mat-icon class="icon-circle bg-success-light">attach_money</mat-icon>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
-  <!-- Pending Requests Card Example -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <!-- Best Performer Card -->
+  <div class="col-12 col-sm-6 col-md-6 col-xl-3 mb-4">
     <div class="card border-left-primary shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-muted text-uppercase mb-1"
-            >
+          <div class="col">
+            <div class="text-xs font-weight-bold text-muted text-uppercase mb-1">
               Best Performer (This Month)
             </div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
               @if(bestPerformerValue) {
-              {{ bestPerformer }}: {{ bestPerformerValue }} AED } @else { No Data Found }
+              {{ bestPerformer }}: {{ bestPerformerValue }} AED
+              } @else { No Data Found }
             </div>
-            <div class="mt-1 text-xs text-muted">
-              <mat-icon
-                class="text-success"
-                style="font-size: 14px; vertical-align: middle"
-                >trending_up</mat-icon
-              >
-              <span class="align-middle">Live updates</span>
+            <div class="mt-1 text-xs text-muted d-flex align-items-center">
+              <mat-icon class="text-success" style="font-size: 14px;">trending_up</mat-icon>
+              <span class="ml-1">Live updates</span>
             </div>
           </div>
-
-          <!-- <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-            >
-              Best Performer (This Month)
-            </div>
-            @if(bestPerformerValue) {
-            <div class="mb-0 font-weight-bold text-gray-800">
-              {{ bestPerformer }}: {{ bestPerformerValue }} AED
-            </div>
-            }
-          </div> -->
           <div class="col-auto">
-            <mat-icon
-              style="color: blue; padding-top: 2px; cursor: pointer !important"
-              class="material-symbols-sharp"
-              >star</mat-icon
-            >
+            <mat-icon style="color: blue; padding-top: 2px; cursor: pointer;" class="material-symbols-sharp">star</mat-icon>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- Bar Chart -->
 
 <!-- Insights Marquee Section -->
