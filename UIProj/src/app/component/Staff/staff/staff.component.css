@@ -125,4 +125,51 @@ mat-card-footer {
   border-top: 1px solid #dcdde1;
 }
 
-  
+  .payment-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: #2c3e50; /* dark blue-gray */
+  max-width: 220px;
+}
+
+.payment-item {
+  border: 1px solid #b0bec5; /* light blue-gray border */
+  background: #e3f2fd; /* very light blue background */
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 4px rgb(33 150 243 / 0.15); /* subtle blue shadow */
+  line-height: 1.4;
+  display: inline-block;
+  min-width: 140px;
+  transition: background-color 0.3s ease;
+}
+
+.payment-item:hover {
+  background: #bbdefb; /* lighten on hover */
+}
+
+.payment-item .label {
+  font-weight: 600;
+  color: #1565c0; /* medium blue */
+  margin-right: 6px;
+  min-width: 90px;
+  display: inline-block;
+}
+
+.payment-item .value {
+  font-weight: 700;
+  color: #0d47a1; /* dark blue */
+}
+
+.payment-item.not-defined {
+  font-style: italic;
+  color: #78909c; /* muted gray-blue */
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  display: block;
+  min-width: auto;
+  box-shadow: none;
+}

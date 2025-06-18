@@ -25,6 +25,7 @@ export class AddStaffComponent {
   isEdit: boolean = false;
   Title: string = 'Add Employee';
   editData!: Staff;
+  selectedSalaryType: string = 'salary';
   branchList: CompanyBranch[] = [];
   constructor(
     private fb: FormBuilder,
@@ -38,49 +39,96 @@ export class AddStaffComponent {
   staffForm = this.fb.group({
     id: this.fb.control(''),
     firstName: this.fb.control('', [Validators.required, Validators.maxLength(30)]),
-    lastName: this.fb.control('',  [Validators.required, Validators.maxLength(30)]),
+    lastName: this.fb.control('', [Validators.required, Validators.maxLength(30)]),
     emiratesId: this.fb.control('', Validators.required),
-    email: this.fb.control('',  [Validators.required, Validators.maxLength(50), Validators.email]),
-    phone: this.fb.control('',  [Validators.required, Validators.maxLength(15)]),
+    email: this.fb.control('', [Validators.required, Validators.maxLength(50), Validators.email]),
+    phone: this.fb.control('', [Validators.required, Validators.maxLength(15)]),
     monthlyTarget: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(100000)]),
     percentageShare: this.fb.control(0, [Validators.required, Validators.min(0), Validators.max(100)]),
-    address: this.fb.control('',  [Validators.required, Validators.maxLength(50)]),
+    address: this.fb.control('', [Validators.required, Validators.maxLength(50)]),
     companyBranchId: this.fb.control('', Validators.required),
     isActive: this.fb.control(true),
     CompanyBranchName: this.fb.control(''),
+
+    monthlySalary: this.fb.control(0),
+    salaryType: this.fb.control('salary', Validators.required)  // Default value
+
   });
 
   ngOnInit(): void {
     this.editCode = this.activateRoute.snapshot.paramMap.get('code') as string;
     this.companyId = localStorage.getItem('selectedCompanyId') as string;
     this.branchId = localStorage.getItem('branchId') as string;
+    this.staffForm.get('salaryType')?.valueChanges.subscribe((value) => {
+      if (value !== null) {
+        this.updateSalaryFieldsVisibility(value);
+      }
+    });
 
-    if (this.branchId != null && this.branchId != '') {
+    if (this.branchId) {
       this.staffForm.controls['companyBranchId'].setValue(this.branchId);
     }
+
     this.GetCompanyBranchList();
-    if (this.editCode != '' && this.editCode != null) {
+
+    if (this.editCode) {
       this.isEdit = true;
       this.Title = 'Edit Company';
+
       this.staffService.GetStaffBycode(this.editCode).subscribe((item) => {
         this.editData = item;
-        this.staffForm.setValue({
-          id: this.editData.id,
-          email: this.editData.email,
-          firstName: this.editData.firstName,
-          lastName: this.editData.lastName,
-          phone: this.editData.phone,
-          address: this.editData.address,
+
+        let salaryType = '';
+        const hasSalary = item.monthlySalary && item.monthlySalary > 0;
+        const hasCommission = item.percentageShare && item.percentageShare > 0;
+
+        if (hasSalary && hasCommission) salaryType = 'both';
+        else if (hasSalary) salaryType = 'salary';
+        else if (hasCommission) salaryType = 'commission';
+
+        this.staffForm.patchValue({
+          id: item.id,
+          email: item.email,
+          firstName: item.firstName,
+          lastName: item.lastName,
+          phone: item.phone,
+          address: item.address,
           isActive: item.isActive,
-          companyBranchId: this.editData.companyBranchId,
-          emiratesId: this.editData.emiratesId,
-          CompanyBranchName: '',
-          monthlyTarget: this.editData.monthlyTarget,
-          percentageShare: this.editData.percentageShare
+          companyBranchId: item.companyBranchId,
+          emiratesId: item.emiratesId,
+          monthlyTarget: item.monthlyTarget,
+          percentageShare: item.percentageShare,
+          monthlySalary: item.monthlySalary,
+          salaryType: salaryType
         });
+        // ✅ Ensure template reacts properly
+        this.selectedSalaryType = salaryType;
+        this.updateSalaryFieldsVisibility(salaryType); // ✅ Force visibility update on load
       });
     }
+
   }
+
+  updateSalaryFieldsVisibility(type: string | null) {
+    if (type === 'salary') {
+      this.staffForm.get('monthlySalary')?.setValidators([Validators.required]);
+      this.staffForm.get('percentageShare')?.clearValidators();
+    } else if (type === 'commission') {
+      this.staffForm.get('percentageShare')?.setValidators([Validators.required]);
+      this.staffForm.get('monthlySalary')?.clearValidators();
+    } else if (type === 'both') {
+      this.staffForm.get('monthlySalary')?.setValidators([Validators.required]);
+      this.staffForm.get('percentageShare')?.setValidators([Validators.required]);
+    } else {
+      // fallback case: clear all
+      this.staffForm.get('monthlySalary')?.clearValidators();
+      this.staffForm.get('percentageShare')?.clearValidators();
+    }
+
+    this.staffForm.get('monthlySalary')?.updateValueAndValidity();
+    this.staffForm.get('percentageShare')?.updateValueAndValidity();
+  }
+
 
   GetCompanyBranchList() {
     this.companyBranchService.GetAll(this.companyId).subscribe((item) => {
@@ -89,67 +137,95 @@ export class AddStaffComponent {
   }
 
   Save() {
-    if (this.staffForm.valid) {
-      let staffObj: Staff = {
-        id: '',
-        // code: this.staffForm.value.code as string,
-        firstName: this.staffForm.value.firstName as string,
-        lastName: this.staffForm.value.lastName as string,
-        email: this.staffForm.value.email as string,
-        phone: this.staffForm.value.phone as string,
-        address: this.staffForm.value.address as string,
-        companyBranchId: this.staffForm.value.companyBranchId as string,
-        emiratesId: this.staffForm.value.emiratesId as string,
-        createdBy: '',
-        isActive: this.staffForm.value.isActive as boolean,
-        status: '',
-        companyBranchName: '',
-        monthlyTarget: this.staffForm.value.monthlyTarget as number,
-        percentageShare: this.staffForm.value.percentageShare as number
-      };
-      if (!this.isEdit) {
-        this.staffService.CreateStaff(staffObj).subscribe((item) => {
-          if (item) {
-            this.response = item;
+    if (!this.staffForm.valid) return;
 
-            if (this.response.success) {
-              this.toastr.ShowSuccess(this.response.message);
-              //alert(this.response.message);
-              this.router.navigateByUrl('/staff');
-            } else {
-              this.toastr.ShowError(this.response.errorMessage);
+    const type = this.staffForm.value.salaryType!;
+    let staffObj: Staff = {
+      id: this.isEdit ? this.editCode : '',  // ✅ Set ID correctly for edit
+      firstName: this.staffForm.value.firstName!,
+      lastName: this.staffForm.value.lastName!,
+      email: this.staffForm.value.email!,
+      phone: this.staffForm.value.phone!,
+      address: this.staffForm.value.address!,
+      companyBranchId: this.staffForm.value.companyBranchId!,
+      emiratesId: this.staffForm.value.emiratesId!,
+      createdBy: '',
+      isActive: this.staffForm.value.isActive!,
+      status: '',
+      companyBranchName: '',
+      monthlyTarget: this.staffForm.value.monthlyTarget!,
+      percentageShare: 0,
+      monthlySalary: 0,
+      paymentType: this.getPaymentTypeFromSelection(type) // ✅ Set payment type properly
+    };
 
-              //alert(this.response.errorMessage);
-            }
-          } else {
-            alert('Something Went Wrong. Please try again.');
-          }
-        });
-      } else if (this.isEdit == true) {
-        staffObj.id = this.editCode;
-        this.staffService.UpdateStaff(staffObj).subscribe((item) => {
-          if (item) {
-            this.response = item;
+    if (type === 'salary' || type === 'both') {
+      staffObj.monthlySalary = this.staffForm.value.monthlySalary!;
+    }
+    if (type === 'commission' || type === 'both') {
+      staffObj.percentageShare = this.staffForm.value.percentageShare!;
+    }
 
-            if (this.response.success) {
-              this.toastr.ShowSuccess(this.response.message);
+    const saveOperation = this.isEdit
+      ? this.staffService.UpdateStaff(staffObj)
+      : this.staffService.CreateStaff(staffObj);
 
-              // alert(this.response.message);
-              this.router.navigateByUrl('/staff');
-            } else {
-              this.toastr.ShowError(this.response.errorMessage);
-
-              // alert('Something Went   Wrong. Please try again.');
-            }
-          } else {
-            alert('Something Went Wrong. Please try again.');
-          }
-        });
+    saveOperation.subscribe((item) => {
+      if (item) {
+        this.response = item;
+        if (this.response.success) {
+          this.toastr.ShowSuccess(this.response.message);
+          this.router.navigateByUrl('/staff');
+        } else {
+          this.toastr.ShowError(this.response.errorMessage);
+        }
+      } else {
+        alert('Something Went Wrong. Please try again.');
       }
+    });
+  }
+
+  getPaymentTypeFromSelection(type: string): number {
+    switch (type) {
+      case 'salary': return 1;
+      case 'commission': return 2;
+      case 'both': return 3;
+      default: return 0;
     }
   }
 
   BranchChange(event: any) {
     localStorage.setItem('branchId', event.value);
   }
+
+
+  onSalaryTypeChange(value: string) {
+    this.selectedSalaryType = value;
+
+    // Reset validators dynamically
+    const salaryCtrl = this.staffForm.get('monthlySalary');
+    const percentCtrl = this.staffForm.get('percentageShare');
+
+    salaryCtrl?.clearValidators();
+    percentCtrl?.clearValidators();
+
+    if (value === 'salary') {
+      salaryCtrl?.setValidators([Validators.required, Validators.min(0)]);
+    } else if (value === 'commission') {
+      percentCtrl?.setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+    } else if (value === 'both') {
+      salaryCtrl?.setValidators([Validators.required, Validators.min(0)]);
+      percentCtrl?.setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+    }
+
+    salaryCtrl?.updateValueAndValidity();
+    percentCtrl?.updateValueAndValidity();
+  }
+  getSalaryType(salary: number, percent: number): string {
+    if (salary && percent) return 'both';
+    if (salary) return 'salary';
+    if (percent) return 'commission';
+    return 'salary'; // Default fallback
+  }
+
 }

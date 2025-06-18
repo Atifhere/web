@@ -37,8 +37,18 @@
             <input matInput formControlName="email" maxlength="50" required />
           </mat-form-field>
         </div>
-
         <div class="col-md-6 mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Salary Type *</mat-label>
+            <mat-select formControlName="salaryType" (selectionChange)="onSalaryTypeChange($event.value)">
+              <mat-option value="salary">Monthly Salary</mat-option>
+              <mat-option value="commission">Commission Based</mat-option>
+              <mat-option value="both">Salary + Commission</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-6 mb-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Percentage Share *</mat-label>
             <input matInput formControlName="percentageShare" min="0" type="number" max="100" required />
@@ -49,7 +59,40 @@
           <mat-error *ngIf="staffForm.get('percentageShare')?.hasError('max')">
             Value cannot exceed 100.
           </mat-error>
+        </div> -->
+
+
+        <!-- Monthly Salary -->
+        <div class="col-md-6 mb-3" *ngIf="selectedSalaryType === 'salary' || selectedSalaryType === 'both'">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Monthly Salary *</mat-label>
+            <input matInput formControlName="monthlySalary" type="number" min="0" />
+            <mat-error *ngIf="staffForm.get('monthlySalary')?.hasError('required')">
+              Monthly Salary is required.
+            </mat-error>
+            <mat-error *ngIf="staffForm.get('monthlySalary')?.hasError('min')">
+              Salary cannot be negative.
+            </mat-error>
+          </mat-form-field>
         </div>
+
+        <!-- Commission Percentage -->
+        <div class="col-md-6 mb-3" *ngIf="selectedSalaryType === 'commission' || selectedSalaryType === 'both'">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Percentage Share *</mat-label>
+            <input matInput formControlName="percentageShare" type="number" min="0" max="100" />
+            <mat-error *ngIf="staffForm.get('percentageShare')?.hasError('required')">
+              Percentage Share is required.
+            </mat-error>
+            <mat-error *ngIf="staffForm.get('percentageShare')?.hasError('min')">
+              Must be at least 0%.
+            </mat-error>
+            <mat-error *ngIf="staffForm.get('percentageShare')?.hasError('max')">
+              Cannot exceed 100%.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
 
         <div class="col-md-6 mb-3">
           <mat-form-field appearance="outline" class="w-100">

@@ -1,7 +1,5 @@
 <mat-card class="company-list-card mb-3">
-  <mat-card-header
-    class="page-header mb-3 d-flex flex-column align-items-center"
-  >
+  <mat-card-header class="page-header mb-3 d-flex flex-column align-items-center">
     <h1 class="form-title">Employee List</h1>
     <p class="form-subtitle">
       Manage all the Employees in your system. Add new ones, update their
@@ -12,10 +10,7 @@
       <br />
       <mat-form-field appearance="fill" class="company-select">
         <mat-label>Branch</mat-label>
-        <mat-select
-          [(ngModel)]="selectedBranchId"
-          (selectionChange)="CompanyChange($event)"
-        >
+        <mat-select [(ngModel)]="selectedBranchId" (selectionChange)="CompanyChange($event)">
           @for(item of branchList; track item) {
           <mat-option [value]="item.id">{{ item.branchName }}</mat-option>
           }
@@ -23,12 +18,7 @@
       </mat-form-field>
 
       @if(permission.haveadd) {
-      <button
-        mat-raised-button
-        color="primary"
-        class="add-button mb-3"
-        (click)="AddEmployee()"
-      >
+      <button mat-raised-button color="primary" class="add-button mb-3" (click)="AddEmployee()">
         <mat-icon class="mr-2">add</mat-icon>
         Add Employee
       </button>
@@ -43,21 +33,17 @@
         Add a new record by clicking the Add Company button on top right side.
       </div>
       } -->
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      class="styled-table mb-3"
-    >
+    <table mat-table [dataSource]="dataSource" matSort class="styled-table mb-3">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
         <td mat-cell *matCellDef="let element">
           {{ element.firstName }} {{ element.lastName }}
         </td>
       </ng-container>
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+
+      <ng-container matColumnDef="monthlyTarget">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Monthly Target</th>
+        <td mat-cell *matCellDef="let element">{{ element.monthlyTarget }}</td>
       </ng-container>
 
       <ng-container matColumnDef="phone">
@@ -72,6 +58,42 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="paymentDetails">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary Details</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="payment-container">
+            <ng-container [ngSwitch]="element.paymentType">
+              <div *ngSwitchCase="0" class="payment-item">
+                <span class="label">Salary:</span>
+                <span class="value">{{ element.monthlySalary || 0 | currency:'AED':'symbol' }}</span>
+              </div>
+              <div *ngSwitchCase="1" class="payment-item">
+                <span class="label">Commission:</span>
+                <span class="value">{{ element.percentageShare || 0 }}%</span>
+              </div>
+              <div *ngSwitchCase="2" class="payment-item">
+                <span class="label">Commission:</span>
+                <span class="value">{{ element.percentageShare || 0 }}%</span>
+                <br />
+                <span class="label">Target:</span>
+                <span class="value">{{ element.monthlyTarget || 0 | currency:'AED':'symbol' }}</span>
+              </div>
+              <div *ngSwitchCase="3" class="payment-item">
+                <span class="label">Fixed Salary:</span>
+                <span class="value">{{ element.monthlySalary || 0 | currency:'AED':'symbol' }}</span>
+                <br />
+                <span class="label">Commission:</span>
+                <span class="value">{{ element.percentageShare || 0 }}%</span>
+              </div>
+              <div *ngSwitchDefault class="payment-item not-defined">
+                Not Defined
+              </div>
+            </ng-container>
+          </div>
+        </td>
+      </ng-container>
+
+
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell *matCellDef="let element">
@@ -83,19 +105,10 @@
         <td mat-cell *matCellDef="let element">
           <div class="action-buttons">
             @if(permission.haveedit) {
-            <mat-icon
-              matTooltip="Edit Employee Details"
-              matTooltipPosition="above"
-              (click)="Edit(element.id)"
-              >edit</mat-icon
-            >
+            <mat-icon matTooltip="Edit Employee Details" matTooltipPosition="above"
+              (click)="Edit(element.id)">edit</mat-icon>
             } @if(permission.havedelete) {
-            <mat-icon
-              matTooltip="Delete Employee"
-              class="delete-icon"
-              (click)="Delete(element.id)"
-              >delete</mat-icon
-            >
+            <mat-icon matTooltip="Delete Employee" class="delete-icon" (click)="Delete(element.id)">delete</mat-icon>
             }
           </div>
         </td>
@@ -159,9 +172,6 @@
   <br />
 
   <mat-card-footer>
-    <mat-paginator
-      [pageSizeOptions]="pageSize"
-      showFirstLastButtons
-    ></mat-paginator>
+    <mat-paginator [pageSizeOptions]="pageSize" showFirstLastButtons></mat-paginator>
   </mat-card-footer>
 </mat-card>

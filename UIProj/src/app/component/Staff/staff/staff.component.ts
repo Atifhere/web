@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-staff',
@@ -27,6 +29,8 @@ import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
     MatIconModule,
     MatTooltipModule,
     FormsModule,
+    CommonModule,
+    MatChipsModule
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -45,8 +49,10 @@ export class StaffComponent {
   permission = Constants.MENUPERMISSION;
   displayedColumns: string[] = [
     'name',
-    'email',
+    // 'email',
     'phone',
+    'paymentDetails',
+    'monthlyTarget',
     'companyBranchName',
     'status',
     'action',
@@ -60,7 +66,7 @@ export class StaffComponent {
     private router: Router,
     private activateRoute: ActivatedRoute,
     private toastrService: ToastrSrvc
-  ) {}
+  ) { }
   ngOnInit() {
     this.companyId = localStorage.getItem('selectedCompanyId') as string;
     this.branchIdFromRoute = localStorage.getItem('branchId') as string;
@@ -147,4 +153,30 @@ export class StaffComponent {
       alert('You don not have permission to edit');
     }
   }
+
+  getPaymentTypeDescription(type: number): string {
+    switch (type) {
+      case 0:
+        return 'Salary Based';
+      case 1:
+        return 'Commission Based';
+      case 2:
+        return 'Commission + Target';
+      case 3:
+        return 'Fixed Salary + Commission';
+      default:
+        return 'Unknown';
+    }
+  }
+  getPaymentTypeLabel(type: number): string {
+    switch (type) {
+      case 0: return 'Salary';
+      case 1: return 'Commission';
+      case 2: return 'Commission + Target';
+      case 3: return 'Fixed + Commission';
+      default: return 'Not Defined';
+    }
+  }
+
+
 }
