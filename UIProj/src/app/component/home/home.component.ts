@@ -216,4 +216,11 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+  get serviceRevenueMax(): number {
+  return Math.max(
+    ...(this.insights?.allServiceStats?.map((s) => s.totalRevenue) || [1])
+  );
+}
+
 }

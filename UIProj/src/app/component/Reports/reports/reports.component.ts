@@ -42,6 +42,8 @@ export class ReportsComponent implements OnInit {
     'serviceName',
     'serviceFee',
     'branchName',
+    'customerName',
+    'customerPhone',
     'isActive',
     'createdDate',
   ];

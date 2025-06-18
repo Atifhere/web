@@ -4,6 +4,11 @@ export interface TopPerformer {
   servicesProvided: number;
   workedFor: number; // Revenue or earnings
 }
+export interface ServiceUsageStats {
+  serviceName: string;
+  usageCount: number;
+  totalRevenue: number;
+}
 
 export interface DashboardInsightsDto {
   mostUsedService: string;
@@ -12,4 +17,5 @@ export interface DashboardInsightsDto {
   leastUsedServiceCount: number;
   bestPerformingBranch: string;
   topPerformersTimeline: TopPerformer[];
+  allServiceStats: ServiceUsageStats[]; 
 }

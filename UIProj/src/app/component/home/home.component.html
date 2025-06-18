@@ -118,7 +118,8 @@
             </div>
           </div>
           <div class="col-auto">
-            <mat-icon style="color: blue; padding-top: 2px; cursor: pointer;" class="material-symbols-sharp">star</mat-icon>
+            <mat-icon style="color: blue; padding-top: 2px; cursor: pointer;"
+              class="material-symbols-sharp">star</mat-icon>
           </div>
         </div>
       </div>
@@ -133,53 +134,84 @@
   <div class="marquee">
     <div class="marquee-content">
       @if(insights) {
-        <span>
-          🌟 <strong>Most Used Service:</strong> {{ insights.mostUsedService }} ({{ insights.mostUsedServiceCount }} times)
-        </span>
-        <span>
-          🔻 <strong>Least Used Service:</strong> {{ insights.leastUsedService }} ({{ insights.leastUsedServiceCount }} times)
-        </span>
-        <span>
-          🏆 <strong>Top Branch:</strong> {{ insights.bestPerformingBranch }}
-        </span>
-      } 
-     
+      <span>
+        🌟 <strong>Most Used Service:</strong> {{ insights.mostUsedService }} ({{ insights.mostUsedServiceCount }}
+        times)
+      </span>
+      <span>
+        🔻 <strong>Least Used Service:</strong> {{ insights.leastUsedService }} ({{ insights.leastUsedServiceCount }}
+        times)
+      </span>
+      <span>
+        🏆 <strong>Top Branch:</strong> {{ insights.bestPerformingBranch }}
+      </span>
+      }
+
     </div>
   </div>
 </div>
 
 
-<div class="top-performers-section">
-  <h3>Top Performers</h3>   
-  <div *ngIf="insights?.topPerformersTimeline?.length">
-    <div
-      class="performer"
-      *ngFor="let performer of insights.topPerformersTimeline; index as i"
-    >
-      <div class="info">
-        <div class="name">{{ performer.staffName }}</div>
-        <div class="meta">
-          <span>{{ performer.servicesProvided }} services</span> •
-          <span>{{ performer.workedFor }} AED</span>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="top-performers-section">
+      <h3>Top Performers</h3>
+      <div *ngIf="insights?.topPerformersTimeline?.length">
+        <div class="performer" *ngFor="let performer of insights.topPerformersTimeline; index as i">
+          <div class="info">
+            <div class="name">{{ performer.staffName }}</div>
+            <div class="meta">
+              <span>{{ performer.servicesProvided }} services</span> •
+              <span>{{ performer.workedFor }} AED</span>
+            </div>
+          </div>
+
+          <div class="bar-container">
+            <div class="bar" [ngClass]="'color-' + i" matTooltip="AED {{ performer.workedFor }}"
+              [style.width.%]="(performer.workedFor / topPerformerMax) * 100"></div>
+          </div>
         </div>
       </div>
-
-      <div class="bar-container">
-        <div
-          class="bar"
-          [ngClass]="'color-' + i"
-          matTooltip="AED {{ performer.workedFor }}"
-          [style.width.%]="(performer.workedFor / topPerformerMax) * 100"
-        ></div>
+      @if(insights && insights.topPerformersTimeline && insights.topPerformersTimeline.length === 0){
+      <div class="no-transactions">
+        <p class="no-data-text">🔍 No performers found</p>
       </div>
+      }
     </div>
   </div>
-  @if(insights && insights.topPerformersTimeline && insights.topPerformersTimeline.length === 0){
-    <div class="no-transactions">
-      <p class="no-data-text">🔍  No performers found</p>
+
+
+  <div class="col-md-6" >
+    <div class="top-performers-section">
+      <h3>Top Services</h3>
+      <div *ngIf="insights?.allServiceStats?.length">
+        <div class="service-bar" *ngFor="let service of insights.allServiceStats; let i = index">
+          <div class="info">
+            <div class="name">{{ service.serviceName }}</div>
+            <div class="meta">
+              <span><b>{{ service.usageCount }}</b> times</span>  •
+              <span>{{ service.totalRevenue }} AED</span>
+            </div>
+          </div>
+
+          <div class="bar-container">
+            <div class="bar" [ngClass]="'color-' + i" matTooltip="AED {{ service.totalRevenue }}"
+              [style.width.%]="(service.totalRevenue / serviceRevenueMax) * 100"></div>
+          </div>
+        </div>
+      </div>
+      @if (insights && insights.allServiceStats && insights.allServiceStats.length === 0) {
+      <div class="no-transactions">
+        <p class="no-data-text">🔍 No service data found</p>
+      </div>
+      }
     </div>
-    }
+  </div>
+
 </div>
+
+
 
 
 
@@ -187,10 +219,8 @@
   <!-- Content Column -->
   <div class="col-md-6 mb-4">
     <div class="card shadow-sm border-0 rounded-4">
-      <div
-        class="card-header py-3 rounded-top-4 text-white"
-        style="background: linear-gradient(to right, #4e73df, #224abe)"
-      >
+      <div class="card-header py-3 rounded-top-4 text-white"
+        style="background: linear-gradient(to right, #4e73df, #224abe)">
         <h6 class="m-0 fw-semibold">📊 Revenue Growth (Last 6 Months)</h6>
       </div>
       <div class="card-body bg-light rounded-bottom-4">
@@ -214,11 +244,7 @@
     <div class="card shadow-sm border-0 rounded-4">
       <div class="table-container dark-theme">
         <h3 class="table-title">Live Transactions</h3>
-        <table
-          mat-table
-          [dataSource]="transactions"
-          class="mat-elevation-z8 custom-dark-table"
-        >
+        <table mat-table [dataSource]="transactions" class="mat-elevation-z8 custom-dark-table">
           <!-- Staff Name -->
           <ng-container matColumnDef="staffName">
             <th mat-header-cell *matHeaderCellDef>Employee</th>
@@ -250,16 +276,16 @@
               {{ transaction.time}}
             </td>
           </ng-container>
-          
+
           <!-- Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
         @if(transactions && transactions.length === 0){
-          <div class="no-transactions">
-            <p class="no-data-text">🔍  No transactions found</p>
-          </div>
-          }
+        <div class="no-transactions">
+          <p class="no-data-text">🔍 No transactions found</p>
+        </div>
+        }
       </div>
     </div>
   </div>
@@ -267,4 +293,4 @@
 
 <div class="mb-5">
 
-  </div>
+</div>

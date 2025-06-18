@@ -243,7 +243,7 @@
   color: #ffffff;
   padding: 12px 0;
   border-radius: 8px;
-  margin-bottom: 24px;
+  /* margin-bottom: 14px; */
   overflow: hidden;
   position: relative;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
@@ -282,7 +282,7 @@
 
 .top-performers-section {
   background: #fff;
-  padding: 24px;
+  padding: 14px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
@@ -412,3 +412,37 @@
   font-weight: 500;
   color: #b90404;
 }
+
+
+
+.service-bar {
+  margin-bottom: 21px;
+}
+
+.service-bar .info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.bar-container {
+  height: 12px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.4s ease-in-out;
+}
+
+/* Optional colorful bars */
+.color-0 { background-color: #4e73df; }
+.color-1 { background-color: #1cc88a; }
+.color-2 { background-color: #36b9cc; }
+.color-3 { background-color: #f6c23e; }
+.color-4 { background-color: #e74a3b; }
+.color-5 { background-color: #858796; }
