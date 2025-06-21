@@ -13,11 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToastrService } from 'ngx-toastr';
 import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-company',
   standalone: true,
-  imports: [MaterialModule, RouterLink, MatIconModule, MatTooltipModule],
+  imports: [MaterialModule, RouterLink, MatIconModule, MatTooltipModule, CommonModule],
   templateUrl: './company.component.html',
   styleUrl: './company.component.css',
 })

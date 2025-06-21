@@ -23,6 +23,7 @@ import { PrivacyComponent } from './component/privacy/privacy.component';
 import { AddAppointmentDialogComponent } from './component/login/Appointments/add-appointment-dialog-component';
 import { CompanyProfileComponent } from './component/Company/company-profile/company-profile.component';
 import { RevenueReportComponent } from './component/revenuereport/revenuereport.component';
+import { CategoryComponent } from './component/ServiceCategory/category/category.component';
 // test
 export const routes: Routes = [
     { path: 'home', component: HomeComponent, canActivate:[authGuard] },
@@ -54,4 +55,5 @@ export const routes: Routes = [
     { path: 'vat', component:RevenueReportComponent,  canActivate:[authGuard] }, // TODO
     { path: 'privacy', component:PrivacyComponent}, 
     { path: 'companyProfile', component:CompanyProfileComponent},
+    { path: 'category', component:CategoryComponent},
 ];
