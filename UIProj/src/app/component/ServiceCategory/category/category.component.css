@@ -128,3 +128,9 @@
     background-color: #1976d2;
   }
 }
+
+::ng-deep .responsive-dialog .mat-dialog-container {
+  width: 100%;
+  max-width: 480px;
+}
+

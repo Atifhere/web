@@ -23,15 +23,16 @@ export class CategoryService {
   }
 
   CreateSubCategory(data: CreateCategoryDTO): Observable<Category> {
-    return this.http.post<Category>(this.baseUrl + 'SubCategory/Create' + this.constant.CREATE, data);
+    return this.http.post<Category>(this.baseUrl + 'SubCategory/' + this.constant.CREATE, data);
   }
 
 
   UpdateCategory(data: Category): Observable<Category> {
-    return this.http.put<Category>(this.baseUrl + this.constant.UPDATE + data.id, data);
+    return this.http.put<Category>(this.baseUrl + 'SubCategory/' +this.constant.UPDATE + data.id, data);
   }
 
-  DeleteCategory(id: string): Observable<void> {
-    return this.http.delete<void>(this.baseUrl + this.constant.REMOVE + id);
+  DeleteSubCategory(id: string): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + 'SubCategory/' + this.constant.REMOVE + id);
   }
+
 }

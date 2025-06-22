@@ -45,7 +45,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatIconModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatChipsModule
+    MatChipsModule,
   ],
 })
 export class MaterialModule {}

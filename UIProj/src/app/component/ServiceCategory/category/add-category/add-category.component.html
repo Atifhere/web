@@ -1,1 +1,26 @@
-<p>add-category works!</p>
+<h2 mat-dialog-title class="dialog-header">
+  {{ isEditMode ? '✏️ Edit Category' : '➕ Add New Category' }}
+</h2>
+<div class="dialog-divider"></div>
+
+<mat-dialog-content [formGroup]="categoryForm" class="dialog-content">
+  <mat-form-field appearance="outline" class="form-field mt-2 mr-1">
+    <mat-label>Category Name</mat-label>
+    <input matInput formControlName="name" />
+    <mat-error *ngIf="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="form-field  mr-1">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description" rows="3"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSave()" [disabled]="categoryForm.invalid">
+    {{ isEditMode ? 'Update' : 'Save' }}
+  </button>
+</mat-dialog-actions>

@@ -4,50 +4,17 @@
         <p class="form-subtitle mb-3">
             View and manage all service categories and their subcategories.
         </p>
-        <button mat-raised-button color="primary" class="add-button mb-4" (click)="toggleAddCategory()"
+        <button mat-raised-button color="primary" class="add-button mb-4" (click)="openAddCategoryDialog()"
             style="min-width: 180px;">
-            <mat-icon class="me-2">add</mat-icon>
-            {{ showAddCategory ? 'Hide Add Category' : 'Add New Category' }}
+            <mat-icon class="me-2">add</mat-icon>New Sub Category
         </button>
     </mat-card-header>
 
     <mat-card-content class="table-container mat-elevation-z2 px-3 py-4">
-        <div class="mb-4" *ngIf="showAddCategory">
-            <form (ngSubmit)="addSubcategory()">
-                <div class="row g-3 align-items-center">
-                    <mat-form-field appearance="outline" class="col-md-4">
-                        <mat-label>Category</mat-label>
-                        <mat-select [(ngModel)]="newSubcategory.categoryId" name="categoryId" required>
-                            <mat-option *ngFor="let cat of categoryList" [value]="cat.id">
-                                {{ cat.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="col-md-4">
-                        <mat-label>Subcategory Name</mat-label>
-                        <input matInput [(ngModel)]="newSubcategory.name" name="name" required />
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="col-md-4">
-                        <mat-label>Description</mat-label>
-                        <input matInput [(ngModel)]="newSubcategory.description" name="description" />
-                    </mat-form-field>
-                </div>
-
-                <div class="mt-3 d-flex justify-content-end">
-                    <button mat-raised-button color="accent" type="submit"
-                        [disabled]="!newSubcategory.name || !newSubcategory.categoryId" style="min-width: 130px;">
-                        Save Subcategory
-                    </button>
-                </div>
-            </form>
-
-        </div>
 
         <!-- Tabs Group -->
-        <mat-tab-group [animationDuration]="'150ms'" class="custom-tab-group" mat-stretch-tabs="false">
-            <mat-tab *ngFor="let category of categoryList" [label]="category.name">
+        <mat-tab-group [animationDuration]="'150ms'" class="custom-tab-group" mat-stretch-tabs="false" (selectedIndexChange)="onTabChange($event)">
+            <mat-tab *ngFor="let category of categoryList" [label]="category.description">
 
                 <div class="subcategory-container">
                     <h3 class="section-title">Sub Categories</h3>
@@ -79,6 +46,19 @@
                                 <td mat-cell *matCellDef="let sub"> {{ sub.description }} </td>
                             </ng-container>
 
+                            <!-- Min 
+                            <ng-container matColumnDef="minValue">
+                                <th mat-header-cell *matHeaderCellDef> Min Value </th>
+                                <td mat-cell *matCellDef="let sub"> {{ sub.minValue }} </td>
+                            </ng-container>-->
+
+
+                            <!-- Max 
+                            <ng-container matColumnDef="maxValue">
+                                <th mat-header-cell *matHeaderCellDef> Miax Value </th>
+                                <td mat-cell *matCellDef="let sub"> {{ sub.maxValue }} </td>
+                            </ng-container>-->
+
                             <!-- Status -->
                             <ng-container matColumnDef="status">
                                 <th mat-header-cell *matHeaderCellDef> Status </th>
@@ -93,7 +73,7 @@
                                 <td mat-cell *matCellDef="let sub">
                                     <div class="action-buttons">
                                         <button *ngIf="!sub.isDefaultCategory" mat-icon-button color="primary"
-                                            matTooltip="Edit" (click)="editSubcategory(sub.id)">
+                                            matTooltip="Edit" (click)="openEditCategoryDialog(sub)">
                                             <mat-icon>edit</mat-icon>
                                         </button>
 
