@@ -41,9 +41,10 @@
         </p>
         Manage Salons
       </h3>
-      <mat-nav-list>
-        <mat-list-item>
-          <button mat-button routerLink="/home" style="
+      <div class="menu-container">
+        <mat-nav-list>
+          <mat-list-item>
+            <button mat-button routerLink="/home" style="
               color: white;
               text-transform: uppercase;
               display: flex;
@@ -51,24 +52,27 @@
               justify-content: flex-start;
               font-size: 12px;
             ">
-            <mat-icon style="margin-right: 8px">home</mat-icon>Dashboard
-          </button>
-        </mat-list-item>
-        @for (item of menuList; track item) {
-        <mat-list-item>
-          <button mat-button routerLink="{{ item.code }}" style="
-              color: white;
-              text-transform: uppercase;
-              display: flex;
-              align-items: center;
-              justify-content: flex-start;
-              font-size: 12px;
-            ">
-            <mat-icon>groups</mat-icon>{{ item.name }}
-          </button>
-        </mat-list-item>
-        }
-      </mat-nav-list>
+              <mat-icon style="margin-right: 8px">home</mat-icon>Dashboard Insights
+            </button>
+          </mat-list-item>
+          @for (item of menuList; track item) {
+          <mat-list-item>
+            <button mat-button [routerLink]="item.code" style="
+        color: white;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 12px;
+      ">
+              <mat-icon>{{ iconMap[item.code] || 'menu' }}</mat-icon>
+              {{ item.name }}
+            </button>
+          </mat-list-item>
+          }
+
+        </mat-nav-list>
+      </div>
     </mat-drawer>
     <mat-drawer-content>
       <div class="content-wrap">

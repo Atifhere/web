@@ -1,153 +1,113 @@
-.spacer
-{
-    flex: 1 1 auto;
+.spacer {
+  flex: 1 1 auto;
 }
 
-mat-toolbar{
-    background: #004a9f;
-    color: white;
+mat-toolbar {
+  background: #004a9f;
+  color: white;
 }
 
-mat-drawer{
-    margin: 0px;
-    width: 250px;
-    border-right: none;
-    /* background: #004a9f;;
-   background: #002b5c;
-     background: rgb(89, 86, 242);; */
-    color: white !important;
-    border-radius: 0px;
-    padding: 15px;
-    text-align: center;
-    text-transform:capitalize;
+mat-drawer {
+  width: 250px;
+  padding: 15px;
+  color: white !important;
+  text-align: center;
+  text-transform: capitalize;
+  border-right: none;
+  border-radius: 0;
+  background: #004a9f;
+  /* or your preferred sidebar color */
 }
 
-mat-drawer-container{
-    height: calc(100vh - 65px);
+mat-drawer-container {
+  height: calc(100vh - 65px);
+  /* Adjust if toolbar height changes */
 }
 
-mat-drawer-content
-{
-    margin-left: 2%;
+mat-drawer-content {
+  margin-left: 2%;
 }
 
-
-/* Full-page container */
 .page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* This wraps the main content and pushes footer down */
-  .content-wrap {
-    flex: 1;
-    margin: 1%;
-  }
-  
-  /* Footer styles */
-  .dashboard-footer {
-    background-color: #f8f9fc;
-    padding: 24px;
-    border-top: 1px solid #e3e6f0;
-    font-size: 14px;
-    color: #555;
-  }
-
-.content
-{
-       /* height: calc(100vh - 98px);
-    margin: 15px;
-  margin-left: 30px;
-    display: flex; 
-    justify-content: center; 
-     align-items: center; 
-    font-size: 1rem;
-    color: grey;
-     border-radius: 10px;  */
-}
-img{
-    width: 150px;
-    height: 150px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-mat-divider{
-    margin-top: 15px;
-    margin-bottom: 15px;
-    background-color: rgba(255, 255, 255, 0.5);
+.content-wrap {
+  flex: 1;
+  margin: 1%;
 }
 
-.name
-{
-    margin-top: 8px;
-    font-weight: normal;
-    ;
-}
-
-.description{
-    margin-top: 2px;
-    font-size: 0.7rem;
-    color: lightgrey;
-}
-
-.content{
-    margin-top: 3%;
-    text-align: left;
-    width: 98%;
-    margin-left: 1%;
-    border: 1px #ccc;
-    min-height: 600px;
-}
-
-cdk-overlay-0{
-    margin-top: 1%;
-}
-
-
-
-/* Footer Design */
 .dashboard-footer {
-    background-color: #f8f9fc;
-    padding: 24px;
-    border-top: 1px solid #e3e6f0;
-    margin-top: 40px;
-    font-size: 14px;
-    color: #555;
-  
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-  
-    .company-info {
-      .company-name {
-        font-weight: 600;
-        color: #224abe;
-        margin: 0 0 4px;
-      }
-  
-      .slogan {
-        margin: 0;
-        font-style: italic;
-        color: #777;
-      }
-    }
-  
-    .contact-info {
-      p {
-        margin: 0;
-        a {
-          color: #224abe;
-          text-decoration: none;
-  
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
-  
+  background-color: #f8f9fc;
+  padding: 24px;
+  border-top: 1px solid #e3e6f0;
+  font-size: 14px;
+  color: #555;
+  margin-top: 40px;
+}
+
+.dashboard-footer .footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashboard-footer .company-info .company-name {
+  font-weight: 600;
+  color: #224abe;
+  margin: 0 0 4px;
+}
+
+.dashboard-footer .company-info .slogan {
+  font-style: italic;
+  color: #777;
+  margin: 0;
+}
+
+.dashboard-footer .contact-info p {
+  margin: 0;
+}
+
+.dashboard-footer .contact-info a {
+  color: #224abe;
+  text-decoration: none;
+}
+
+.dashboard-footer .contact-info a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-top: 3%;
+  margin-left: 1%;
+  width: 98%;
+  min-height: 600px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+}
+
+mat-divider {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.name {
+  margin-top: 8px;
+  font-weight: normal;
+}
+
+.description {
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: lightgrey;
+}

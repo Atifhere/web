@@ -1,0 +1,31 @@
+.menu-container {
+  overflow-y: auto;
+  padding-right: 4px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #c2d1e0 transparent; /* For Firefox */
+}
+
+/* For Chrome, Edge, Safari */
+.menu-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.menu-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+  background-color: #c2d1e0;
+  border-radius: 4px;
+}
+
+/* Optional fade effect */
+.menu-container::-webkit-scrollbar {
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.menu-container:hover::-webkit-scrollbar {
+  opacity: 1;
+}

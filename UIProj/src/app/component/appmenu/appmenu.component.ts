@@ -70,4 +70,16 @@ export class AppmenuComponent implements OnInit, DoCheck {
   Logout() {
     this.tokenService.Logout();
   }
+
+  iconMap: { [key: string]: string } = {
+    company: 'business',
+    reports: 'bar_chart',
+    staff: 'groups',
+    category: 'category',
+    branch: 'store',
+    Appointments: 'event',
+    vat: 'receipt'
+  };
+
+
 }
