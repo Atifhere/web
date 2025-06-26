@@ -14,6 +14,7 @@ interface EmployeeRevenue {
   staffName: string;
   totalWorkRevenue: number;
   contributionPercentage: number;
+  branchName : string;
 }
 
 interface RevenueSummary {
@@ -24,7 +25,11 @@ interface RevenueSummary {
   vaT5Percent: number;
   employees: EmployeeRevenue[];
 }
-
+interface BranchRevenue {
+  branchName: string;
+  totalRevenue: number;
+  vatAmount: number;
+}
 @Component({
   selector: 'app-revenuereport',
   standalone: true,
@@ -35,11 +40,12 @@ interface RevenueSummary {
 export class RevenueReportComponent implements OnInit {
   filterForm: FormGroup;
   dataSource: MatTableDataSource<EmployeeRevenue> = new MatTableDataSource<EmployeeRevenue>([]);
-  displayedColumns = ['staffName', 'totalWorkRevenue', 'contributionPercentage'];
+  displayedColumns = ['staffName', 'branchName', 'totalWorkRevenue', 'contributionPercentage'];
   pageSize = Constants.PAGE_SIZE;
   summary: RevenueSummary | null = null;
   years: number[] = [];
   noDataFound = false;
+  branchRevenues: BranchRevenue[] = [];
 
   months = [
     { value: 1, label: 'January' },
@@ -75,6 +81,27 @@ export class RevenueReportComponent implements OnInit {
     this.generateYears();
     this.loadReport();
   }
+calculateBranchRevenues(): void {
+    if (!this.summary?.employees) {
+      this.branchRevenues = [];
+      return;
+    }
+
+    const branchMap = new Map<string, number>();
+
+    // Sum revenue by branch
+    for (const emp of this.summary.employees) {
+      const currentSum = branchMap.get(emp.branchName) ?? 0;
+      branchMap.set(emp.branchName, currentSum + emp.totalWorkRevenue);
+    }
+
+    // Convert to array with VAT
+    this.branchRevenues = Array.from(branchMap.entries()).map(([branchName, totalRevenue]) => ({
+      branchName,
+      totalRevenue,
+      vatAmount: +(totalRevenue * 0.05).toFixed(2) // 5% VAT
+    }));
+  }
 
   // loadReport(): void {
   //   const { month, year } = this.filterForm.value;
@@ -92,7 +119,7 @@ export class RevenueReportComponent implements OnInit {
   //     this.dataSource.sort = this.sort;
   //   });
   // }
-  loadReport() {
+ loadReport() {
     const filters = this.filterForm.value;
 
     this.revenueService.getCompanyRevenue(filters.month, filters.year).subscribe({
@@ -101,10 +128,14 @@ export class RevenueReportComponent implements OnInit {
           this.noDataFound = false;
           this.summary = response[0]; // assuming single company
           this.dataSource = new MatTableDataSource(this.summary?.employees ?? []);
+
+          // Calculate branch-wise revenues & VAT
+          this.calculateBranchRevenues();
         } else {
           this.noDataFound = true;
           this.summary = null;
           this.dataSource.data = [];
+          this.branchRevenues = [];
         }
       },
       error: (err) => {
@@ -112,6 +143,7 @@ export class RevenueReportComponent implements OnInit {
         this.noDataFound = true;
         this.summary = null;
         this.dataSource.data = [];
+        this.branchRevenues = [];
       }
     });
   }
