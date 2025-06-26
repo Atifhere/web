@@ -5,7 +5,7 @@
     <button mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Saloon Management System</span>
+   <h4 class="company-name">MANAGE SALONS</h4>
     <span class="spacer"></span>
     <!-- <marquee onMouseOver="this.stop()" onMouseOut="this.start()"
      style="font-size: small; margin-right: 1%;">Welcome to Saloon management system with Company management, 
@@ -35,36 +35,28 @@
       <img class="avatar mat-elevation-z8 mt-4" style="border-radius: 50%;" src="assets/images/AppLogo.png"
         alt="Manage Salons Logo" />
       <mat-divider></mat-divider>
-      <h3 class="name">
+      <!-- <h3 class="name">
         <p class="mb-1 small" style="font-weight: 300; font-size: 12px">
           Powered by
         </p>
         Manage Salons
-      </h3>
+      </h3> -->
       <div class="menu-container">
         <mat-nav-list>
           <mat-list-item>
             <button mat-button routerLink="/home" style="
               color: white;
-              text-transform: uppercase;
               display: flex;
               align-items: center;
               justify-content: flex-start;
-              font-size: 12px;
+              font-size: 13px;
             ">
               <mat-icon style="margin-right: 8px">home</mat-icon>Dashboard Insights
             </button>
           </mat-list-item>
           @for (item of menuList; track item) {
           <mat-list-item>
-            <button mat-button [routerLink]="item.code" style="
-        color: white;
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 12px;
-      ">
+            <button mat-button [routerLink]="item.code" style="color: white; display: flex; align-items: center; justify-content: flex-start;font-size: 13px;">
               <mat-icon>{{ iconMap[item.code] || 'menu' }}</mat-icon>
               {{ item.name }}
             </button>
@@ -88,7 +80,7 @@
           <div class="contact-info">
             <p>
               Email:
-              <a href="mailto:support@mysalonpro.com">managesalons.com</a>
+              <a href="mailto:support@mysalonpro.com">{{email}}</a>
             </p>
             <p>Phone: +971 55 377 2347</p>
           </div>

@@ -3,8 +3,7 @@
 }
 
 mat-toolbar {
-  background: #004a9f;
-  color: white;
+  flex-shrink: 0;
 }
 
 mat-drawer {
@@ -20,32 +19,38 @@ mat-drawer {
 }
 
 mat-drawer-container {
-  height: calc(100vh - 65px);
-  /* Adjust if toolbar height changes */
+  flex: 1;
+  display: flex;min-height: 0;
 }
 
 mat-drawer-content {
-  margin-left: 2%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* This is key */
 }
+
 
 .page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
 }
 
 .content-wrap {
   flex: 1;
-  margin: 1%;
+  padding: 1%;
+  overflow: auto;
 }
 
 .dashboard-footer {
-  background-color: #f8f9fc;
-  padding: 24px;
+  margin-top: auto; /* Sticky behavior */
+  background-color: #dee4f6;
+  padding: 10px;
   border-top: 1px solid #e3e6f0;
   font-size: 14px;
   color: #555;
-  margin-top: 40px;
 }
 
 .dashboard-footer .footer-content {
@@ -84,7 +89,8 @@ mat-drawer-content {
 .content {
   margin-top: 3%;
   margin-left: 1%;
-  width: 98%;
+  width: 100%;
+  box-sizing: border-box;
   min-height: 600px;
   text-align: left;
   border: 1px solid #ccc;
@@ -110,4 +116,13 @@ mat-divider {
   margin-top: 2px;
   font-size: 0.7rem;
   color: lightgrey;
+}
+
+.menuItem {
+  color: white;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 12px;
 }

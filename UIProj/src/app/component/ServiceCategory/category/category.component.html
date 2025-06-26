@@ -1,34 +1,32 @@
 <mat-card class="company-list-card mb-4">
     <mat-card-header class="page-header d-flex flex-column align-items-center text-center">
-        <h1 class="form-title mb-2">📂 Categories</h1>
+        <h1 class="form-title mb-2">📂 Service List</h1>
         <p class="form-subtitle mb-3">
-            View and manage all service categories and their subcategories.
+            View and manage all service categories and their sub categories.
         </p>
         <button mat-raised-button color="primary" class="add-button mb-4" (click)="openAddCategoryDialog()"
             style="min-width: 180px;">
-            <mat-icon class="me-2">add</mat-icon>New Sub Category
+            <mat-icon class="me-2">add</mat-icon>New Sub Service
         </button>
     </mat-card-header>
 
     <mat-card-content class="table-container mat-elevation-z2 px-3 py-4">
 
         <!-- Tabs Group -->
-        <mat-tab-group [animationDuration]="'150ms'" class="custom-tab-group" mat-stretch-tabs="false" (selectedIndexChange)="onTabChange($event)">
+        <mat-tab-group [animationDuration]="'150ms'" class="custom-tab-group" mat-stretch-tabs="false"
+            (selectedIndexChange)="onTabChange($event)">
             <mat-tab *ngFor="let category of categoryList" [label]="category.description">
 
                 <div class="subcategory-container">
-                    <h3 class="section-title">Sub Categories</h3>
-                    <div class="mr-4">
-                        <mat-form-field appearance="outline" class="">
-                            <mat-label>🔍 Search</mat-label>
-                            <input matInput [(ngModel)]="subcategorySearchTerm"
-                                placeholder="Type subcategory name or description" />
-                            <button *ngIf="subcategorySearchTerm" matSuffix mat-icon-button aria-label="Clear"
-                                (click)="subcategorySearchTerm = ''">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>🔍 Search</mat-label>
+                        <input matInput [(ngModel)]="subcategorySearchTerm"
+                            placeholder="Type subcategory name or description" />
+                        <button *ngIf="subcategorySearchTerm" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="subcategorySearchTerm = ''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
                     <!-- Table -->
                     <div class="table-wrapper">
                         <table mat-table [dataSource]="getFilteredSubcategories(category.subcategories)"

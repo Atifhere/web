@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
     private staffService: StaffService,
     private dialog: MatDialog,
     private loaderService: LoaderService
-  ) {}
+  ) { }
   private destroy$ = new Subject<void>();
   monthlyRevenueData: MonthlyRevenueChartDto[] = [];
 
@@ -65,20 +65,17 @@ export class HomeComponent implements OnInit {
     this.loaderService.show(); // Show the loader when the component initializes
     this.loaderService.hide(); // Hide the loader when the data is loaded
     this.MonthlyYearData();
-    this.getMonthlyRevenue();
-    this.fetchLatestTransactions();
-    this.GetDashboardStatistics();
     // this.getDashboardInsights();
 
     interval(20000) // every 20 seconds
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.MonthlyYearData());
-    interval(20000) // every 20 seconds
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.getMonthlyRevenue());
-    interval(20000) // every 20 seconds
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => this.fetchLatestTransactions());
+    // interval(20000) // every 20 seconds
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(() => this.GetDashboardStatistics());
+    // interval(20000) // every 20 seconds
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(() => this.fetchLatestTransactions());
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -93,6 +90,7 @@ export class HomeComponent implements OnInit {
       this.amountEarnedToday = this.response.amountEarnedToday;
       this.bestPerformer = this.response.bestPerformer.name;
       this.bestPerformerValue = this.response.bestPerformer.workedFor;
+      this.GetDashboardStatistics();
     });
   }
 
@@ -102,6 +100,7 @@ export class HomeComponent implements OnInit {
     this.companyService.getMonthlyRevenue().subscribe((item) => {
       this.monthlyRevenueData = item;
       this.RenderChart();
+      this.fetchLatestTransactions();  // live transactions table data 
     });
   }
 
@@ -210,6 +209,8 @@ export class HomeComponent implements OnInit {
         this.topPerformerMax = Math.max(
           ...this.insights.topPerformersTimeline.map((p) => p.workedFor)
         );
+
+        this.getMonthlyRevenue();// chrt data 
       },
       (error) => {
         console.error('Error fetching transactions', error);
@@ -218,9 +219,9 @@ export class HomeComponent implements OnInit {
   }
 
   get serviceRevenueMax(): number {
-  return Math.max(
-    ...(this.insights?.allServiceStats?.map((s) => s.totalRevenue) || [1])
-  );
-}
+    return Math.max(
+      ...(this.insights?.allServiceStats?.map((s) => s.totalRevenue) || [1])
+    );
+  }
 
 }

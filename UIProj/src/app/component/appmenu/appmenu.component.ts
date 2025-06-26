@@ -21,7 +21,7 @@ export class AppmenuComponent implements OnInit, DoCheck {
   showMenu: boolean = false;
   formattedDate !: string;
   isLoading = false;
-
+  email = 'atif@salonmanger.com';
   constructor(
     private Service: UserService,
     private router: Router,
