@@ -8,3 +8,20 @@ export interface BillingRecord {
   createdBy?: string;
   createdDate?: Date;
 }
+
+export interface DynamicBillingSummaryDTO {
+  companyBranchId: string;
+  salonName: string;
+  year: number;
+  month: number;
+  monthName: string;
+  totalServicesCompleted: number;
+  totalRevenue: number;
+  commissionAmount: number;
+  fixedMonthlyFee: number;
+  totalAmountDue: number;
+  isPaid: boolean;
+  receiptNumber?: string | null;
+  paidOn?: string | null;
+}
+

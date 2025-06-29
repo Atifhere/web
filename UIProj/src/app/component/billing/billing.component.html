@@ -1,148 +1,136 @@
 <div class="p-6">
-    <div class="d-flex justify-between items-center mb-4">
-        <!-- <h2 class="text-2xl font-bold">📋 Payment Records</h2> -->
-        <h2 class="text-lg font-semibold mt-2 ml-3" style="cursor: pointer;" (click)="toggleAddBilling()">
-            ➕ {{ showAddBilling ? 'Hide Payment Form' : 'New Payment' }}
-        </h2>
-    </div>
 
-    <!-- Billing Form -->
-    <mat-card class="mb-3">
-        <form [formGroup]="billingForm">
-            <div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Year</mat-label>
-                            <mat-select formControlName="year" (selectionChange)="fetchBillingRecords()">
-                                <mat-option *ngFor="let y of years" [value]="y">{{ y }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Month</mat-label>
-                            <mat-select formControlName="month" (selectionChange)="fetchBillingRecords()">
-                                <mat-option *ngFor="let m of months" [value]="m.value">{{ m.name }}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <!-- <div class="ml-2 mb-2">
-                    <button *ngIf="!showAddBilling" mat-flat-button color="accent" type="button"
-                        (click)="fetchBillingRecords()">
-                        🔍 Search
-                    </button>
-                </div> -->
+    <!-- Policy Notice -->
+    <mat-card class="mb-4 policy-card mat-elevation-z2">
+        <mat-card-content class="d-flex align-items-center gap-3">
+            <mat-icon color="primary" aria-hidden="true">info</mat-icon>
+            <p class="policy-text m-0">
+                Our billing policy includes a fixed monthly fee of <strong>AED 100</strong> plus a <strong>1%
+                    commission</strong> on total revenue.
+            </p>
+
+            <!-- Bank Transfer Instructions -->
+            <div class="d-flex justify-content-end mt-2">
+                <button mat-raised-button color="primary" (click)="openBankTransferDialog()">
+                    💳 View Bank Transfer Instructions
+                </button>
             </div>
+        </mat-card-content>
+    </mat-card>
 
 
-            <!-- Add Form -->
-            @if(showAddBilling)
-            {
 
-            <div class="d-flex flex-column gap-4">
-                <div class="form-grid ml-2  mr-2">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Company Branch</mat-label>
-                        <mat-select formControlName="companyBranchId" required>
-                            <mat-option *ngFor="let branch of branches" [value]="branch.id">
-                                {{ branch.branchName }}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="billingForm.get('companyBranchId')?.hasError('required')">
-                            Branch is required
-                        </mat-error>
-                    </mat-form-field>
+    <!-- Billing Summary -->
+    <mat-card class="mat-elevation-z2">
+        <mat-card-content>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Amount</mat-label>
-                        <input matInput type="number" formControlName="amount"  min="100" max="5000" required />
-                        <mat-error *ngIf="billingForm.get('amount')?.hasError('required')">
-                            Amount is required
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Receipt Number</mat-label>
-                        <input matInput formControlName="receiptNumber" maxlength="20" required />
-                        <mat-error *ngIf="billingForm.get('receiptNumber')?.hasError('required')">
-                            Receipt Number is required
-                        </mat-error>
-                    </mat-form-field>
+            <div class="filter-container mb-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Search by Company</mat-label>
+                            <input matInput [(ngModel)]="companySearch" (input)="onCompanySearchChange()"
+                                placeholder="Enter company name (min 3 chars)" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Search by Branch</mat-label>
+                            <input matInput [(ngModel)]="branchSearch" (input)="onBranchSearchChange()"
+                                placeholder="Enter branch name (min 3 chars)" />
+                        </mat-form-field>
+                    </div>
                 </div>
 
-
-                <!-- Row 2: Submit Button -->
-                <div class="d-flex justify-end mt-2 ml-2 mb-2">
-                    <button mat-flat-button color="primary" type="button" [disabled]="billingForm.invalid"
-                        (click)="submitBilling()">
-                        Submit
+                <div class="d-flex justify-content-end mt-2">
+                    <button mat-stroked-button color="primary" (click)="clearFilters()" [disabled]="isFilterEmpty()">
+                        Clear Filters
                     </button>
                 </div>
             </div>
 
+            <!-- Table -->
+            <table mat-table [dataSource]="displayedSummaries" class="mat-elevation-z1 w-100" matSort>
 
-            }
-        </form>
+                <!-- Columns -->
+                <ng-container matColumnDef="salonName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Salon</th>
+                    <td mat-cell *matCellDef="let item">{{ item.salonName }}</td>
+                </ng-container>
 
+                <ng-container matColumnDef="month">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Month</th>
+                    <td mat-cell *matCellDef="let item">{{ item.monthName }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="year">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
+                    <td mat-cell *matCellDef="let item">{{ item.year }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalServices">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Services</th>
+                    <td mat-cell *matCellDef="let item">{{ item.totalServicesCompleted }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="revenue">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+                    <td mat-cell *matCellDef="let item">{{ item.totalRevenue }} AED</td>
+                </ng-container>
+
+                <ng-container matColumnDef="commission">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Commission</th>
+                    <td mat-cell *matCellDef="let item">{{ item.commissionAmount }} AED</td>
+                </ng-container>
+
+                <ng-container matColumnDef="fixedFee">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Fixed Fee</th>
+                    <td mat-cell *matCellDef="let item">{{ item.fixedMonthlyFee }} AED</td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalDue">
+                    <th mat-header-cell *matHeaderCellDef>Total Due</th>
+                    <td mat-cell *matCellDef="let item"><strong>{{ item.totalAmountDue }} AED</strong></td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let item">
+                        <span [ngClass]="item.isPaid ? 'text-success' : 'text-danger'">
+                            {{ item.isPaid ? 'Paid' : 'Unpaid' }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="[
+          'salonName',
+          'month',
+          'year',
+          'totalServices',
+          'revenue',
+          'commission',
+          'fixedFee',
+          'totalDue',
+          'status'
+        ]"></tr>
+                <tr mat-row *matRowDef="let row; columns: [
+          'salonName',
+          'month',
+          'year',
+          'totalServices',
+          'revenue',
+          'commission',
+          'fixedFee',
+          'totalDue',
+          'status'
+        ]"></tr>
+            </table>
+
+            <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageIndex]="currentPage"
+                [pageSizeOptions]="[10, 20, 50, 100]" (page)="onPageChange($event)">
+            </mat-paginator>
+
+        </mat-card-content>
     </mat-card>
 
-    @if(!showAddBilling)
-    {
-    <!-- Billing Records Table -->
-    <mat-card>
-        <div class="flex items-center justify-between">
-            <!-- <h3 class="text-lg font-semibold">📋 Billing Records</h3> -->
-            <!-- <mat-form-field appearance="outline">
-                <mat-label>Filter</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Search By Receipt No..." />
-            </mat-form-field> -->
-        </div>
-
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 w-full">
-
-            <!-- Branch -->
-            <ng-container matColumnDef="companyBranchId">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch</th>
-                <td mat-cell *matCellDef="let row">{{ row.companyBranch.branchName }}</td>
-            </ng-container>
-
-            <!-- Month -->
-            <ng-container matColumnDef="month">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Month</th>
-                <td mat-cell *matCellDef="let row">{{ getMonthName(row.month) }}</td>
-            </ng-container>
-
-            <!-- Year -->
-            <ng-container matColumnDef="year">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
-                <td mat-cell *matCellDef="let row">{{ row.year }}</td>
-            </ng-container>
-
-            <!-- Amount -->
-            <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-                <td mat-cell *matCellDef="let row">{{ row.amount }} AED</td>
-            </ng-container>
-
-            <!-- Receipt -->
-            <ng-container matColumnDef="receiptNumber">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Receipt #</th>
-                <td mat-cell *matCellDef="let row">{{ row.receiptNumber }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="createdDate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Created On</th>
-                <td mat-cell *matCellDef="let record">{{ record.createdDate | date:'medium' }}</td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-
-        <mat-paginator [pageSizeOptions]="pageSize" showFirstLastButtons>
-        </mat-paginator>
-    </mat-card>
-    }
 </div>

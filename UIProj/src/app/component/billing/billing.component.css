@@ -21,3 +21,41 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
 }
+
+.policy-card {
+  background-color: #e3f2fd; /* light blue */
+  border-left: 5px solid #1976d2; /* primary color */
+  font-size: 1.1rem;
+  color: #0d47a1;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.policy-text {
+  font-weight: 600;
+  margin: 0;
+  user-select: none;
+}
+
+.mat-card-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.filter-container {
+  margin-bottom: 1rem;
+}
+
+.mat-elevation-z1 {
+  border-radius: 6px;
+}
+
+.text-success {
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.text-danger {
+  color: #d32f2f;
+  font-weight: 600;
+}

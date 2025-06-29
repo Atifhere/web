@@ -1,123 +1,128 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BillingService } from '../../_Service/Billing/billing.service';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MaterialModule } from '../../material.module';
-import { CompanyBranchService } from '../../_Service/Company/company-branch.service';
+import { DynamicBillingSummaryDTO } from '../../_model/BillingRecord.modal';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
-import { Constants } from '../../_model/Constants';
-import { GSTDatePipe } from '../../Pipes/GSTDatePipe.pipe';
+import { MaterialModule } from '../../material.module';
+import { FormsModule } from '@angular/forms';
+import { BankTransferDialogComponent } from './bank-transfer.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   standalone: true,
   selector: 'app-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss'],
-  imports: [MaterialModule, ReactiveFormsModule, CommonModule,  GSTDatePipe],
+  imports: [CommonModule, MaterialModule, FormsModule],
 })
 export class BillingComponent implements OnInit {
-  billingForm!: FormGroup;
-  showAddBilling = false;
-  NewBillingRecord = "New Billing Record";
-  displayedColumns: string[] = ['companyBranchId', 'amount', 'receiptNumber', 'month', 'year', 'createdDate'];
-  dataSource = new MatTableDataSource<any>();
-  branches: any[] = [];
-  pageSize = Constants.PAGE_SIZE;
+  billingSummaries: DynamicBillingSummaryDTO[] = [];
+  displayedSummaries: DynamicBillingSummaryDTO[] = [];
+  companySearch = '';
+  pageSize = 10;
+  currentPage = 0;
+  totalCount = 0;
+  branchSearch = '';
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
-  months = [
-    { name: 'January', value: 1 },
-    { name: 'February', value: 2 },
-    { name: 'March', value: 3 },
-    { name: 'April', value: 4 },
-    { name: 'May', value: 5 },
-    { name: 'June', value: 6 },
-    { name: 'July', value: 7 },
-    { name: 'August', value: 8 },
-    { name: 'September', value: 9 },
-    { name: 'October', value: 10 },
-    { name: 'November', value: 11 },
-    { name: 'December', value: 12 }
-  ];
-  years: number[] = [];
-
-  constructor(private fb: FormBuilder, private billingService: BillingService, private companyBranch: CompanyBranchService) { }
+  constructor(private billingService: BillingService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.billingForm = this.fb.group({
-      companyBranchId: ['', Validators.required],
-      year: [new Date().getFullYear(), Validators.required],
-      month: [new Date().getMonth() + 1, Validators.required],
-      amount: [null, [Validators.required ,Validators.maxLength(10)]],
-      receiptNumber: ['', Validators.required]
-    });
-
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // load branches from API or service
-    this.loadBranches();
-    this.fetchBillingRecords();
-    const currentYear = new Date().getFullYear();
-    this.years = [currentYear - 2, currentYear - 1, currentYear];
-
+    this.loadData();
   }
 
-  toggleAddBilling(): void {
-    this.showAddBilling = !this.showAddBilling;
-  }
-
-  fetchBillingRecords(): void {
-    const { companyBranchId, year, month } = this.billingForm.value;
-    this.billingService.getBillingRecords(companyBranchId, year, month).subscribe(data => {
-      this.dataSource.data = data;
-    });
-  }
-
-  submitBilling(): void {
+  loadData(): void {
+    // only load if companySearch or branchSearch are empty or length >= 3
     if (
-      this.billingForm.controls['amount'].valid &&
-      this.billingForm.controls['receiptNumber'].valid
+      (this.companySearch && this.companySearch.trim().length > 0 && this.companySearch.trim().length < 3) ||
+      (this.branchSearch && this.branchSearch.trim().length > 0 && this.branchSearch.trim().length < 3)
     ) {
-      const { companyBranchId, year, month, amount, receiptNumber } = this.billingForm.value;
-      this.billingService
-        .addBillingRecord({ companyBranchId, year, month, amount, receiptNumber })
-        .subscribe(() => {
-          this.fetchBillingRecords();
-          this.billingForm.get('amount')?.reset();
-          this.billingForm.get('receiptNumber')?.reset();
-          this.showAddBilling = false;
-        });
+      // Don't load data if search terms are shorter than 3 chars
+      this.billingSummaries = [];
+      this.displayedSummaries = [];
+      this.totalCount = 0;
+      return;
+    }
+
+    this.billingService
+      .getBillingSummaryPaged(
+        undefined,
+        this.companySearch.trim() || undefined,
+        this.branchSearch.trim() || undefined
+      )
+      .subscribe((response) => {
+        this.billingSummaries = response.items;
+        this.totalCount = response.totalCount;
+
+        this.currentPage = 0;
+        if (this.paginator) {
+          this.paginator.firstPage();
+        }
+        this.updateDisplayedSummaries();
+      });
+  }
+
+  updateDisplayedSummaries(): void {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedSummaries = this.billingSummaries.slice(startIndex, endIndex);
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.updateDisplayedSummaries();
+  }
+
+
+  onSearchChange(): void {
+    if (this.companySearch.length >= 3) {
+      this.applyCompanyFilter(this.companySearch.trim().toLowerCase());
+    } else {
+      // If less than 3 chars, clear filter and show all
+      this.displayedSummaries = [...this.billingSummaries];
+      this.totalCount = this.billingSummaries.length;
+      this.currentPage = 0;
+      if (this.paginator) {
+        this.paginator.firstPage();
+      }
     }
   }
+  applyCompanyFilter(searchTerm: string): void {
+    const filtered = this.billingSummaries.filter(item =>
+      item.salonName.toLowerCase().includes(searchTerm)
+    );
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    this.displayedSummaries = filtered;
+    this.totalCount = filtered.length;
+    this.currentPage = 0;
+    if (this.paginator) {
+      this.paginator.firstPage();
     }
   }
-
-  getBranchName(branchId: string): string {
-    const branch = this.branches.find(b => b.id === branchId);
-    return branch ? branch.branchName : 'Unknown';
+  onCompanySearchChange(): void {
+    this.currentPage = 0;
+    this.loadData();
   }
 
-  loadBranches(): void {
-    this.companyBranch.GetAll('null').subscribe(data => {
-      this.branches = data;
+  onBranchSearchChange(): void {
+    this.currentPage = 0;
+    this.loadData();
+  }
+  clearFilters(): void {
+    this.companySearch = '';
+    this.branchSearch = '';
+    this.currentPage = 0;
+    this.loadData();
+  }
+  isFilterEmpty(): boolean {
+    return !this.companySearch?.trim() && !this.branchSearch?.trim();
+  }
+  openBankTransferDialog(): void {
+    this.dialog.open(BankTransferDialogComponent, {
+      width: '600px',
     });
   }
-  getMonthName(monthNumber: number): string {
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    return monthNames[monthNumber - 1] || 'Invalid';
-  }
-
 }
