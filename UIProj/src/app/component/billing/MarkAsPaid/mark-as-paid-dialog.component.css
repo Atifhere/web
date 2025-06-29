@@ -1,0 +1,84 @@
+.dialog-title {
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.intro-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 1.25rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .info-label {
+    font-weight: 600;
+    color: #34495e;
+    min-width: 120px;
+  }
+
+  .info-value {
+    color: #2c3e50;
+  }
+}
+
+.amount-row .amount {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1976d2; 
+}
+
+.file-upload-wrapper {
+  margin-top: 1.5rem;
+
+  .file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1976d2;
+    user-select: none;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #bbdefb;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+.text-muted {
+  display: block;
+  margin-top: 8px;
+  color: #888;
+  font-size: 12px;
+}
+
+.dialog-actions {
+  margin-top: 1.5rem;
+
+  button {
+    min-width: 100px;
+  }
+}

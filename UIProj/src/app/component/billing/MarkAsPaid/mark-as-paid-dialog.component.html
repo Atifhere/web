@@ -1,0 +1,55 @@
+<h2 mat-dialog-title class="dialog-title">💳 Mark as Paid</h2>
+
+<mat-dialog-content>
+    <p class="intro-text">
+        Please upload the receipt for the following billing period:
+    </p>
+
+    <div class="info-row">
+        <div class="info-label">Salon:</div>
+        <div class="info-value">{{ data.salonName }}</div>
+    </div>
+
+    <div class="info-row">
+        <div class="info-label">Month:</div>
+        <div class="info-value">{{ data.monthName }} {{ data.year }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Fixed Amount:</div>
+        <div class="info-value">{{ data.fixedAmount | currency:'AED ':'symbol':'1.2-2' }}</div>
+    </div>
+
+    <div class="info-row">
+        <div class="info-label">Commission Amount:</div>
+        <div class="info-value">{{ data.commissionAmount | currency:'AED ':'symbol':'1.2-2' }}</div>
+    </div>
+
+    <div class="info-row amount-row">
+        <div class="info-label">Amount Due:</div>
+        <div class="info-value amount">
+            {{ data.totalAmountDue | currency:'AED ':'symbol':'1.2-2' }}
+        </div>
+    </div>
+
+    <div class="file-upload-wrapper">
+        <label for="receiptUpload" class="file-label">
+            <input id="receiptUpload" type="file" (change)="onFileSelected($event)" class="file-input"
+                accept=".pdf,.jpg,.jpeg,.png" />
+            <span>
+                📎 Choose File
+                <span *ngIf="uploadedFile"> - {{ uploadedFile?.name }}</span>
+            </span>
+        </label>
+    </div>
+
+    <small class="text-muted">
+        Accepted formats: PDF, JPG, PNG. Max size: 5MB
+    </small>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button color="warn" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!uploadedFile" (click)="confirm()">
+        Confirm & Upload
+    </button>
+</mat-dialog-actions>

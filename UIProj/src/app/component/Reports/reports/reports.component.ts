@@ -156,7 +156,6 @@ export class ReportsComponent implements OnInit {
 
   printSelectedReceipts() {
     const selectedData = this.selection.selected;
-
     if (!selectedData.length) {
       this.toastr.ShowInfo('Please select at least one record to print.', '');
       return;
@@ -175,8 +174,11 @@ export class ReportsComponent implements OnInit {
     };
 
     const commonStyle = `
+    @page {
+      size: auto;
+      margin: 0;
+    }
     .receipt {
-      page-break-after: always;
       padding: 8px 0;
       border-bottom: 1px dashed #000;
     }
@@ -206,47 +208,27 @@ export class ReportsComponent implements OnInit {
     }
   `;
 
-    const grouped = new Map<string, any>();
+    const firstItem = selectedData[0];
 
-    selectedData.forEach(item => {
-      const key = `${item.branchName}-${new Date(item.createdDate).toDateString()}`;
-      if (!grouped.has(key)) {
-        grouped.set(key, {
-          branchName: item.branchName,
-          createdDate: item.createdDate,
-          services: [],
-        });
-      }
-      grouped.get(key).services.push({
-        serviceName: item.serviceName,
-        serviceFee: item.serviceFee,
-      });
-    });
+    const serviceRows = selectedData.map((item, i) => `
+    <div class="row"><div class="label">Service:</div><div>${item.serviceName}</div></div>
+    <div class="row"><div class="label">Fee:</div><div>AED ${item.serviceFee}</div></div>
+    ${i < selectedData.length - 1 ? '<div class="divider"></div>' : ''}
+  `).join('');
 
-    const groupedReceipts = Array.from(grouped.values());
-
-    const content = groupedReceipts.map((item, index) => {
-      const serviceRows = item.services.map(
-        (s: { serviceName: string; serviceFee: number }, i: number, arr: { serviceName: string; serviceFee: number }[]) => `
-  <br /><div class="row"><div class="label">Service Provided:</div><div>${s.serviceName}</div></div>
-  <div class="row"><div class="label">Service Fee:</div><div>AED ${s.serviceFee}</div></div>
-  ${i < arr.length - 1 ? `<div class="divider"></div>` : ''}
-`
-      ).join('');
-
-      return `
-      <div class="receipt">
-        <div class="header">
-          <h2>Service Receipt</h2>
-          <h4>${item.branchName}</h4>
-        </div>
-        <div class="row"><div class="label">Receipt No:</div><div>${Date.now()}-${index + 1}</div></div>
-        <div class="row"><div class="label">Date:</div><div>${new Date(item.createdDate).toLocaleDateString()}</div></div>
-        ${serviceRows}
-        <div class="footer">Thank you for visiting!</div>
+    const content = `
+    <div class="receipt">
+      <div class="header">
+        <h2>Service Receipt</h2>
+        <h4>${firstItem.branchName}</h4>
       </div>
-    `;
-    }).join('');
+      <div class="row"><div class="label">Receipt No:</div><div>${Date.now()}</div></div>
+      <div class="row"><div class="label">Date:</div><div>${new Date(firstItem.createdDate).toLocaleDateString()}</div></div><br>
+      <div class="divider"></div>
+      ${serviceRows}
+      <div class="footer">Thank you for visiting!</div>
+    </div>
+  `;
 
     const popupWin = window.open('', '_blank', 'width=400,height=600');
     if (!popupWin) {
@@ -264,15 +246,27 @@ export class ReportsComponent implements OnInit {
           ${commonStyle}
         </style>
       </head>
-      <body onload="window.print(); window.close();">
+      <body>
         ${content}
+        <script>
+          window.onload = function () {
+            setTimeout(() => {
+              window.print();
+              window.close();
+            }, 500);
+          };
+        </script>
       </body>
     </html>
   `);
-    popupWin.document.close();
 
+    popupWin.document.close();
     this.selection.clear();
   }
+
+
+
+
   isFilterEmpty(): boolean {
     const { fromDate, toDate, branchName, serviceName, employeeName } = this.filterForm.value;
     return !fromDate && !toDate && !branchName && !serviceName && !employeeName;

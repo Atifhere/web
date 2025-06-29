@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { BillingRecord, DynamicBillingSummaryDTO } from '../../_model/BillingRecord.modal';
+import { BillingRecord, DynamicBillingSummaryDTO, RejectBillingDto } from '../../_model/BillingRecord.modal';
 
 @Injectable({
   providedIn: 'root',
@@ -51,8 +51,20 @@ export class BillingService {
       { params }
     );
   }
+  markAsPaid(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/mark-as-paid`, formData);
+  }
+  approveBilling(billingId: string) {
+    // Your backend expects the billingId as a query param in a POST to /approve
+    return this.http.post(`${this.baseUrl}/approve?billingId=${encodeURIComponent(billingId)}`, {});
+  }
+  downloadReceipt(billingId: string): Observable<Blob> {
+    const url = `${this.baseUrl}/download-receipt/${billingId}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
 
-
-
+rejectBilling(dto: { billingId: string; reason: string }): Observable<string> {
+  return this.http.post<string>(`${this.baseUrl}/reject`, dto);
+}
 
 }

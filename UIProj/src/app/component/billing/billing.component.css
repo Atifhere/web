@@ -59,3 +59,17 @@
   color: #d32f2f;
   font-weight: 600;
 }
+
+::ng-deep .yellow-chip {
+  background-color: #fbc02d !important; /* amber[700] */
+  color: black !important;
+}
+
+::ng-deep .green-chip {
+  background-color: #4caf50 !important; /* material green[500] */
+  color: white !important;
+}
+::ng-deep .red-chip {
+  background-color: #ee4d24 !important; /* material green[500] */
+  color: white !important;
+}

@@ -10,6 +10,7 @@ export interface BillingRecord {
 }
 
 export interface DynamicBillingSummaryDTO {
+  id: string;
   companyBranchId: string;
   salonName: string;
   year: number;
@@ -25,3 +26,7 @@ export interface DynamicBillingSummaryDTO {
   paidOn?: string | null;
 }
 
+export interface RejectBillingDto {
+  billingId: string;
+  reason: string;
+}
