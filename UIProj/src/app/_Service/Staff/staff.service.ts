@@ -4,12 +4,14 @@ import { environment } from '../../../environments/environment.development';
 import { Staff } from '../../_model/staff.model';
 import { LatestTransactionDto } from '../../_model/Chart.modal';
 import { Observable } from 'rxjs';
+import { LogWorkRequest } from '../../_model/LogWork.modal';
+import { APIResponse } from '../../_model/Expenses.modal';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StaffService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   baseUrl = environment.apiUrl + 'Staff/';
   GetAll(branchId: string) {
     // passing the token through http interceptor.
@@ -37,7 +39,8 @@ export class StaffService {
     return this.http.get<LatestTransactionDto[]>(`${this.baseUrl}GetLatestTransactions`);
   }
 
+  logWork(payload: LogWorkRequest): Observable<APIResponse> {
+    return this.http.post<APIResponse>(`${this.baseUrl}/LogWork`, payload);
+  }
 
-
-  
 }

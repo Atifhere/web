@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <mat-form-field>
+    <mat-label>Branch</mat-label>
+    <mat-select formControlName="branchId" (selectionChange)="onBranchChange()">
+      <mat-option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Staff</mat-label>
+    <mat-select formControlName="staffId">
+      <mat-option *ngFor="let staff of staffList" [value]="staff.id">{{ staff.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Business Category</mat-label>
+    <mat-select formControlName="businessCategoryId" (selectionChange)="onCategoryChange()">
+      <mat-option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div formArrayName="workItem">
+    <div *ngFor="let group of workItemControls.controls; let i = index" [formGroupName]="i">
+      <mat-form-field>
+        <mat-label>Service</mat-label>
+        <mat-select formControlName="subCategoryId">
+          <mat-option *ngFor="let sub of subCategories" [value]="sub.id">{{ sub.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="number" placeholder="Fee" formControlName="serviceFee" />
+      </mat-form-field>
+
+      <button mat-button color="warn" (click)="removeWorkItem(i)">Remove</button>
+    </div>
+  </div>
+
+  <button mat-button (click)="addWorkItem()">Add Work Item</button>
+
+  <mat-form-field>
+    <input matInput placeholder="Customer Name" formControlName="customerName" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Customer Phone" formControlName="customerPhone" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

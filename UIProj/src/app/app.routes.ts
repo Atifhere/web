@@ -24,6 +24,7 @@ import { AddAppointmentDialogComponent } from './component/login/Appointments/ad
 import { CompanyProfileComponent } from './component/Company/company-profile/company-profile.component';
 import { RevenueReportComponent } from './component/revenuereport/revenuereport.component';
 import { CategoryComponent } from './component/ServiceCategory/category/category.component';
+import { LogWorkComponent } from './component/log-work/log-work.component';
 // test
 export const routes: Routes = [
     { path: 'home', component: HomeComponent, canActivate:[authGuard] },
@@ -56,4 +57,5 @@ export const routes: Routes = [
     { path: 'privacy', component:PrivacyComponent}, 
     { path: 'companyProfile', component:CompanyProfileComponent},
     { path: 'category', component:CategoryComponent},
+    { path: 'work', component:LogWorkComponent},
 ];
