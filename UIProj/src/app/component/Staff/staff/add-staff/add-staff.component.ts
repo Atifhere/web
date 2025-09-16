@@ -73,7 +73,7 @@ export class AddStaffComponent {
 
     if (this.editCode) {
       this.isEdit = true;
-      this.Title = 'Edit Company';
+      this.Title = 'Edit Staff Details';
 
       this.staffService.GetStaffBycode(this.editCode).subscribe((item) => {
         this.editData = item;
