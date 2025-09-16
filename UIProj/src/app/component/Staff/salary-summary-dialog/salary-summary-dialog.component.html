@@ -1,0 +1,97 @@
+<!-- src/app/features/staff/salary-summary-dialog/salary-summary-dialog.component.html -->
+<h2 mat-dialog-title>Employee Salary Summary</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form" class="filters pb-5" (ngSubmit)="fetch()">
+        <div class="filter-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Month</mat-label>
+                <mat-select formControlName="month" required>
+                    <mat-option *ngFor="let m of months" [value]="m.value">
+                        {{ m.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('month')?.hasError('required')">
+                    Month is required
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Year</mat-label>
+                <input matInput type="number" formControlName="year" placeholder="e.g. 2025" required>
+                <mat-error *ngIf="form.get('year')?.hasError('required')">
+                    Year is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+            Get Summary
+        </button>
+    </form>
+
+    <!-- <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar> -->
+    <mat-error *ngIf="error" style="margin-top:8px;">{{ error }}</mat-error>
+
+    <div *ngIf="!loading && rows.length" class="table-wrap">
+        <table mat-table [dataSource]="rows" class="mat-elevation-z2 full-width">
+
+            <!-- Employee -->
+            <ng-container matColumnDef="employeeName">
+                <th mat-header-cell *matHeaderCellDef>Employee</th>
+                <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+            </ng-container>
+
+            <!-- Payment Type -->
+            <ng-container matColumnDef="paymentType">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let row">{{ getPaymentTypeLabel(row.paymentType) }}</td>
+            </ng-container>
+
+            <!-- Monthly Salary -->
+            <ng-container matColumnDef="monthlySalary">
+                <th mat-header-cell *matHeaderCellDef>Monthly Salary</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.monthlySalary || 0 | currency:'AED':'symbol' }}
+                </td>
+            </ng-container>
+
+            <!-- % Share -->
+            <ng-container matColumnDef="percentageShare">
+                <th mat-header-cell *matHeaderCellDef>% Share</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.percentageShare != null ? (row.percentageShare + '%') : 'N/A' }}
+                </td>
+            </ng-container>
+
+            <!-- Service Fees -->
+            <ng-container matColumnDef="totalServiceFees">
+                <th mat-header-cell *matHeaderCellDef>Service Fees</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.totalServiceFees | currency:'AED':'symbol' }}
+                </td>
+            </ng-container>
+
+            <!-- Calculated Salary -->
+            <ng-container matColumnDef="calculatedSalary">
+                <th mat-header-cell *matHeaderCellDef>Calculated Salary</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.calculatedSalary | currency:'AED':'symbol' }}
+                </td>
+            </ng-container>
+
+            <!-- Rows -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+
+    </div>
+
+    <p *ngIf="!loading && !rows.length && !error" class="muted">No data yet. Choose a month & year, then click “Get
+        Summary”.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="primary" (click)="close()">Close</button>
+</mat-dialog-actions>

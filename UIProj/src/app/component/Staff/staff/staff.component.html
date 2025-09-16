@@ -23,7 +23,15 @@
         Add Employee
       </button>
       }
+
+      <!-- New action: Get Employee Salary -->
+      <button mat-stroked-button color="accent" class="mb-3" style="margin-left: 8px"
+        matTooltip="View salaries for a month" (click)="openSalaryDialog()">
+        <mat-icon>payments</mat-icon>
+        &nbsp;Get Employee Salary
+      </button>
     </div>
+
   </mat-card-header>
   <!-- <h2 style="color: rgb(227, 150, 25);"><u> EMPLOYEE LIST</u></h2> -->
   <mat-card-content class="table-container mat-elevation-z2 mb-3">
@@ -64,22 +72,22 @@
           <div class="payment-container">
             <ng-container [ngSwitch]="element.paymentType">
               <!-- Salary Based -->
-              <div *ngSwitchCase="0" class="payment-item">
+              <div *ngSwitchCase="1" class="payment-item">
                 <span class="label">Fixed Salary:</span>
                 <span class="value">{{ (element.monthlySalary || 0) | currency:'AED':'symbol' }}</span>
               </div>
 
               <!-- Commission Based -->
-              <div *ngSwitchCase="1" class="payment-item">
+              <div *ngSwitchCase="2" class="payment-item">
                 <span class="label">Commission:</span>
                 <span class="value">{{ element.percentageShare != null ? element.percentageShare + '%' : 'N/A' }}</span>
               </div>
 
               <!-- Commission + Target -->
-              <div *ngSwitchCase="2" class="payment-item">
+              <!-- <div *ngSwitchCase="2" class="payment-item">
                 <span class="label">Commission:</span>
                 <span class="value">{{ element.percentageShare != null ? element.percentageShare + '%' : 'N/A' }}</span>
-              </div>
+              </div> -->
 
               <!-- Fixed Salary + Commission -->
               <div *ngSwitchCase="3" class="payment-item">

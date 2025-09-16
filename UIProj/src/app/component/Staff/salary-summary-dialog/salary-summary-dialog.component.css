@@ -1,0 +1,70 @@
+/* Dialog size */
+.dialog-content {
+  width: 800px;        /* wider */
+  max-width: 90vw;     /* stay responsive */
+}
+
+/* Row layout */
+.filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: nowrap;   /* keep in one line (wrap on very small screens if you want) */
+}
+
+/* Make fields share space nicely */
+.filter-row mat-form-field {
+  flex: 1 1 0;         /* grow and share space evenly */
+  min-width: 220px;    /* don’t collapse too small */
+}
+
+/* Make the button visually aligned */
+.filter-row button {
+  align-self: stretch; /* match field height */
+  height: 56px;        /* outline form-field height */
+  white-space: nowrap; /* keep label on one line */
+}
+
+.full-width {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.header-row {
+  background: #f5f5f5; /* light grey header */
+}
+
+.mat-header-cell {
+  font-weight: 600;
+  font-size: 13px;
+  color: #444;
+  padding: 12px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #ddd;
+}
+
+.mat-cell {
+  padding: 10px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid #eee;
+}
+.header-row {
+  background: #1976d2; /* Material Blue */
+}
+
+.mat-header-cell {
+  color: white;
+  font-weight: 600;
+}
+
+.dialog-actions {
+  background: #f9f9f9;   /* subtle light background */
+  padding: 12px 20px;    /* space around actions */
+  border-top: 1px solid #e0e0e0; /* subtle separator line */
+}
+
+.dialog-actions button {
+  min-width: 100px;      /* ensure consistent button width */
+  padding: 6px 16px;     /* adjust button padding */
+  font-weight: 500;
+}

@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrSrvc } from '../../../_Service/Toastr/toastr-service.service';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
+import { SalarySummaryDialogComponent } from '../salary-summary-dialog/salary-summary-dialog.component'; // adjust path
 
 @Component({
   selector: 'app-staff',
@@ -30,7 +31,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatTooltipModule,
     FormsModule,
     CommonModule,
-    MatChipsModule
+    MatChipsModule,
+    SalarySummaryDialogComponent
   ],
   templateUrl: './staff.component.html',
   styleUrl: './staff.component.css',
@@ -65,7 +67,8 @@ export class StaffComponent {
     private userService: UserService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    private toastrService: ToastrSrvc
+    private toastrService: ToastrSrvc,
+    private dialog: MatDialog
   ) { }
   ngOnInit() {
     this.companyId = localStorage.getItem('selectedCompanyId') as string;
@@ -168,15 +171,34 @@ export class StaffComponent {
         return 'Unknown';
     }
   }
+  paymentTypeMap: Record<number, string> = {
+    1: 'Monthly Salary',
+    2: 'Commission Based',
+    3: 'Salary + Commission'
+  };
+
   getPaymentTypeLabel(type: number): string {
-    switch (type) {
-      case 0: return 'Salary';
-      case 1: return 'Commission';
-      case 2: return 'Commission + Target';
-      case 3: return 'Fixed + Commission';
-      default: return 'Not Defined';
-    }
+    return this.paymentTypeMap[type] || 'Not Defined';
   }
 
+
+
+  openSalaryDialog(): void {
+    const today = new Date();
+    this.dialog.open(SalarySummaryDialogComponent, {
+      width: '1200px',
+      data: {
+        defaultMonth: today.getMonth() + 1,
+        defaultYear: today.getFullYear(),
+        branchId: this.selectedBranchId        // useful if API filters by branch
+      },
+      disableClose: true
+    }).afterClosed().subscribe(result => {
+      // optional: refresh anything after dialog closes
+      if (result?.refresh) {
+        this.LoadEmployees(this.selectedBranchId);
+      }
+    });
+  }
 
 }
